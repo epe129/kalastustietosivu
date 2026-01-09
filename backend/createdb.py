@@ -11,7 +11,7 @@ mydb = mysql.connector.connect(
 cursor = mydb.cursor()
 
 # luodaan taulut
-cursor.execute("CREATE TABLE IF NOT EXISTS kalastaja (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, name TEXT)")
+cursor.execute("CREATE TABLE IF NOT EXISTS kalastaja (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, nimi TEXT)")
 
 cursor.execute("CREATE TABLE IF NOT EXISTS viehe (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, viehe TEXT)")
 

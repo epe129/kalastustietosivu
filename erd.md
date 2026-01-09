@@ -7,7 +7,7 @@ config:
 erDiagram
     KALASTAJA {
         int id PK
-        string name
+        string nimi
     } 
 
     TARPPI {
