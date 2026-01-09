@@ -12,21 +12,49 @@ mysql = MySQL(app)
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
-    if request.method == 'POST':
-        pass
+    
+    cursor = mysql.connection.cursor()
 
-    # cursor = mysql.connection.cursor()
- 
-    # #Executing SQL Statements
-    # cursor.execute(''' CREATE TABLE table_name(field1, field2...) ''')
-    # cursor.execute(''' INSERT INTO table_name VALUES(v1,v2...) ''')
-    # cursor.execute(''' DELETE FROM table_name WHERE condition ''')
-    
-    # #Saving the Actions performed on the DB
-    # mysql.connection.commit()
-    
-    # #Closing the cursor
-    # cursor.close()
+    if request.method == 'POST':
+        # saa inputtien arvon html fomista
+        nimi = request.form.get("nimi")
+        pituus = request.form.get("pituus")
+        paino = request.form.get("paino")
+        laji = request.form.get("laji")
+        aika = request.form.get("aika")
+        paikka = request.form.get("paikka")
+        viehe = request.form.get("viehe")
+        vapa = request.form.get("vapa")
+        print(nimi)
+        print(pituus)
+        print(paino)
+        print(laji)
+        print(aika)
+        print(paikka)
+        print(viehe)
+        print(vapa)
+
+        cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')
+
+        # kalastaja_id = cursor.lastrowid
+
+        # cursor.execute(f'INSERT INTO viehe (viehe) VALUES ({viehe})')
+
+        # viehe_id = cursor.lastrowid
+
+        # cursor.execute(f'INSERT INTO vapa (vapa) VALUES ({vapa})')
+
+        # vapa_id = cursor.lastrowid
+            
+        # cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ({aika}, {kalastaja_id}, {viehe_id}, {vapa_id}, {paikka})')
+
+        # tarppi_id = cursor.lastrowid
+
+        # cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji) VALUES ({tarppi_id}, {pituus}, {paino}, {laji})')
+
+        mysql.connection.commit()
+        
+        cursor.close()
 
     return render_template('index.html')
 
