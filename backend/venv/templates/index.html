@@ -8,57 +8,55 @@
 </head>
 <body>
     <div class="main-div">
+
         <h1 class="otsikko">Kalastustiedot</h1>
 
         <form class="form" action="{{ url_for("index")}}" method="post">
             
             <label class="label" for="nimi">Nimi:</label>
-            <input type="text" id="nimi" name="nimi" placeholder="Henkilönnimi" required>
+            <input type="text" id="nimi" name="nimi" placeholder="Henkilönnimi" class="input" required>
             
             <br/>
 
-            <label class="label" for="pituus">Pituus cm:</label>
-            <input type="number" step="0.001" id="pituus" name="pituus" placeholder="Kalan pituus" required>
+            <label class="label" for="pituus">Pituus (cm):</label>
+            <input type="number" step="0.001" id="pituus" name="pituus" placeholder="Kalan pituus" class="input" required>
             
             <br/>        
             
-            <label class="label" for="paino">Paino kg:</label>
-            <input type="number" step="0.001" id="paino" name="paino" placeholder="Kalan paino" required>
+            <label class="label" for="paino">Paino (kg):</label>
+            <input type="number" step="0.001" id="paino" name="paino" placeholder="Kalan paino" class="input" required>
 
             <br/>
 
-            <label class="label" for="laji">Laji:</label>
-            <input type="text" id="laji" name="laji" placeholder="Kalalaji" required>        
+            <label class="label" for="laji">Kalalaji:</label>
+            <input type="text" id="laji" name="laji" placeholder="Kalalaji" class="input" required>        
 
             <br/>
         
             <label class="label" for="paikka">Paikka:</label>
-            <input type="text" id="paikka" name="paikka" placeholder="Kalansaanti paikka" required>
+            <input type="text" id="paikka" name="paikka" placeholder="Kalansaanti paikka" class="input" required>
 
             <br/>
         
             <label class="label" for="viehe">Viehe:</label>
-            <input type="text" id="viehe" name="viehe" placeholder="Viehe esim. uistin" required>
+            <input type="text" id="viehe" name="viehe" placeholder="Viehe esim. uistin" class="input" required>
 
             <br/>
         
             <label class="label" for="vapa">Vapa:</label>
-            <input type="text" id="vapa" name="vapa" placeholder="Vapa esim. avokelavapa" required>
+            <input type="text" id="vapa" name="vapa" placeholder="Vapa esim. avokelavapa" class="input" required>
 
             <br/>
 
             <label class="label" for="aika">Aika:</label>
-            <input type="datetime-local" id="aika" name="aika" required>
+            <input type="datetime-local" id="aika" name="aika" class="input" required>
 
             <button type="submit" class="button">Lähetä</button>
+        
         </form>
+
     </div>
 
-    <script>
-        let nyt = new Date();
-        // automaattisesti laitta nykya ajan
-        nyt.setMinutes(nyt.getMinutes() - nyt.getTimezoneOffset());
-        document.getElementById('aika').value = nyt.toISOString().slice(0,16);
-    </script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

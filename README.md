@@ -1,6 +1,25 @@
 # Kalastustieto sivu
 
-Tehty käyttäen: 
-- pythonia
-- php:ta
-- SQL tietokantaa
+Tämä on nettisivu, jossa on flask backend josta voit lisätä kalasaaliin tiedot tietokantaan form lomakkeesta. fronendissä on php sivu joka näyttää eri tietoja kalasaaliista käyttäjälle esim. eri kalalajien saanti määrät.
+
+# Tehty käyttäen: 
+- Flask
+- php
+- SQL database
+
+# Tarvitaan:
+- xampp
+- python
+- phpmyadmin database
+- pip install flask
+- pip install flask-mysqldb
+- pip install mysql-connector-python
+- pip install python-dotenv
+
+# Ohjelman suorittaminen
+```
+flask run --debug
+```
+
+# License
+Not open source, educational purposes only.
