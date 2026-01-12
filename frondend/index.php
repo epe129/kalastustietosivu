@@ -17,10 +17,13 @@ if ($yhteys->connect_error) {
         <style>
             .otsikko {
                 text-align: center;
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             .main {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px 25px;
                 margin-left: auto;
                 margin-right: auto;
                 width: fit-content;
@@ -28,8 +31,18 @@ if ($yhteys->connect_error) {
 
             .main div {
                 padding: 20px;
+                font-size: 1.5rem;
+                height: 100%;
+                width: auto;
                 float: left;
+                border: 1px solid gray;
+                border-radius: 5px;
             }
+
+            .main h2 {
+                font-size: 2rem;
+            }
+
         </style>
     </head>
 <body>
@@ -82,7 +95,7 @@ if ($yhteys->connect_error) {
 
         
         <div>
-            <h2>Kalat saanti määrät</h2>
+            <h2>Kalalajien saanti määrät</h2>
             <?php
             
             // haetaan dataa tietokannasta
@@ -93,7 +106,7 @@ if ($yhteys->connect_error) {
             // tarkistaa että tivejä on enemmän kuin nolla
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
-                    echo $rivi["laji"]. " ".$rivi["maara"]."<br/>";
+                    echo $rivi["laji"]. " ".$rivi["maara"]." kpl"."<br/>";
                 }
             } else {
                 echo "Mitään ei löytynyt";
