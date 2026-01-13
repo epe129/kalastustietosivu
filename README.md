@@ -28,6 +28,14 @@ pip install python-dotenv
 ```
 flask run --debug
 ```
+php sivu:
+```
+http://localhost/kalastustietosivu/frondend/
+```
+flask sivu:
+```
+http://127.0.0.1:5000/
+```
 
 # License
 Not open source, educational purposes only.
