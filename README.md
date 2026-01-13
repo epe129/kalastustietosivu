@@ -11,10 +11,18 @@ Tämä on nettisivu, jossa on flask backend josta voit lisätä kalasaaliin tied
 - xampp
 - python
 - phpmyadmin database
-- pip install flask
-- pip install flask-mysqldb
-- pip install mysql-connector-python
-- pip install python-dotenv
+```
+pip install flask
+```
+```
+pip install flask-mysqldb
+```
+```
+pip install mysql-connector-python
+```
+```
+pip install python-dotenv
+```
 
 # Ohjelman suorittaminen
 ```
