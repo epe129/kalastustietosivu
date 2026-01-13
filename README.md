@@ -10,7 +10,7 @@ Tämä on nettisivu, jossa on flask backend josta voit lisätä kalasaaliin tied
 # Tarvitaan:
 - XAMPP
 - Python
-- PHPmyadmin database
+- phpmyadmin database
 ```
 pip install flask
 ```
