@@ -20,7 +20,7 @@ if ($yhteys->connect_error) {
                 font-size: 3rem;
             }
 
-            .main {
+            .div {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 20px 25px;
@@ -29,17 +29,17 @@ if ($yhteys->connect_error) {
                 width: fit-content;
             }
 
-            .main div {
+            .div div {
                 padding: 20px;
                 font-size: 1.5rem;
                 height: 100%;
                 width: auto;
-                float: left;
+                /* float: left; */
                 border: 1px solid gray;
                 border-radius: 5px;
             }
 
-            .main h2 {
+            .div h2 {
                 font-size: 2rem;
             }
 
@@ -48,7 +48,7 @@ if ($yhteys->connect_error) {
 <body>
     <h1 class="otsikko">Kalastustietoja</h1> 
 
-    <div class="main">
+    <div class="div">
 
         <div>
             <h2>Kalat painon mukaan</h2>
@@ -112,6 +112,73 @@ if ($yhteys->connect_error) {
                 echo "Mitään ei löytynyt";
             }
 
+            ?>
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="div">
+
+         <div>
+            <h2>Kalalajien saanti määrät eri vavoilla</h2>
+            <?php
+            
+            // haetaan dataa tietokannasta
+            $sql_hae = "SELECT vapa, COUNT(vapa) as maara FROM vapa GROUP BY vapa ORDER BY maara DESC";
+
+            $tulos = $yhteys->query($sql_hae);
+
+            // tarkistaa että tivejä on enemmän kuin nolla
+            if ($tulos->num_rows > 0) {
+                while($rivi = $tulos->fetch_assoc()) {
+                    echo $rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
+                }
+            } else {
+                echo "Mitään ei löytynyt";
+            }
+
+            ?>
+        </div>
+
+        <div>
+            <h2>Kalalajien saanti määrät eri vieheillä</h2>
+            <?php
+            
+            // haetaan dataa tietokannasta
+            $sql_hae = "SELECT laji, viehe, COUNT(viehe) as maara FROM viehe, tarppi, kala WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id GROUP BY viehe";
+
+            $tulos = $yhteys->query($sql_hae);
+
+            // tarkistaa että tivejä on enemmän kuin nolla
+            if ($tulos->num_rows > 0) {
+                while($rivi = $tulos->fetch_assoc()) {
+                    echo $rivi["viehe"]. " ".$rivi["maara"]." kpl"."<br/>";
+                }
+            } else {
+                echo "Mitään ei löytynyt";
+            }
+
+            ?>
+        </div>
+        
+        <div>
+            <h2>Kalalajien saanti määrät eri vieheillä</h2>
+            <?php
+            
+            // haetaan dataa tietokannasta
+            $sql_hae = "SELECT laji, viehe FROM viehe, tarppi, kala WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id";
+
+            $tulos = $yhteys->query($sql_hae);
+
+            // tarkistaa että tivejä on enemmän kuin nolla
+            if ($tulos->num_rows > 0) {
+                while($rivi = $tulos->fetch_assoc()) {
+                    echo $rivi["viehe"]. " ".$rivi["laji"]."<br/>";
+                }
+            } else {
+                echo "Mitään ei löytynyt";
+            }
             ?>
         </div>
 

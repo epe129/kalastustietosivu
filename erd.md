@@ -24,7 +24,7 @@ erDiagram
         int tarppi_id
         float pituus
         float paino
-        string laji
+        int laji_id
     }
 
     VIEHE {
@@ -37,9 +37,14 @@ erDiagram
         string vapa
     }
     
+    LAJI {
+        int id PK
+        string laji
+    }
 
 
     KALASTAJA ||--o{ TARPPI: saa
     VIEHE ||--o{ TARPPI: liittyy
     VAPA ||--o{ TARPPI: liittyy
     KALA ||--|| TARPPI: saa
+    LAJI ||--o{ KALA: liittyy
