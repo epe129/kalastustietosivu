@@ -55,7 +55,7 @@ if ($yhteys->connect_error) {
             <?php
 
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, paino FROM kala ORDER BY paino DESC";
+            $sql_hae = "SELECT laji, paino FROM kala, laji WHERE kala.laji_id=laji.id ORDER BY paino DESC";
 
             
             $tulos = $yhteys->query($sql_hae);
@@ -76,7 +76,7 @@ if ($yhteys->connect_error) {
             <?php
             
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, pituus FROM kala ORDER BY pituus DESC";
+            $sql_hae = "SELECT laji, pituus FROM kala, laji WHERE kala.laji_id=laji.id ORDER BY pituus DESC";
 
             
             $tulos = $yhteys->query($sql_hae);
@@ -99,7 +99,7 @@ if ($yhteys->connect_error) {
             <?php
             
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, COUNT(laji) as maara FROM kala GROUP BY laji ORDER BY maara DESC";
+            $sql_hae = "SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC";
 
             $tulos = $yhteys->query($sql_hae);
 
@@ -120,7 +120,7 @@ if ($yhteys->connect_error) {
     
     <div class="div">
 
-         <div>
+        <div>
             <h2>Kalalajien saanti määrät eri vavoilla</h2>
             <?php
             
@@ -146,7 +146,7 @@ if ($yhteys->connect_error) {
             <?php
             
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, viehe, COUNT(viehe) as maara FROM viehe, tarppi, kala WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id GROUP BY viehe";
+            $sql_hae = "SELECT viehe, COUNT(viehe) as maara FROM viehe, tarppi, kala WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id GROUP BY viehe";
 
             $tulos = $yhteys->query($sql_hae);
 
@@ -165,20 +165,20 @@ if ($yhteys->connect_error) {
         <div>
             <h2>Kalalajien saanti määrät eri vieheillä</h2>
             <?php
-            
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, viehe FROM viehe, tarppi, kala WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id";
-
-            $tulos = $yhteys->query($sql_hae);
-
+            $sql_hae = "SELECT laji, viehe FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id AND kala.laji_id=laji.id AND laji='ahven' AND viehe='uistin'";
+            $sql_hae = "SELECT laji, viehe FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id AND kala.laji_id=laji.id AND laji='ahven' AND viehe='jigi'";
+            
+            $yhteys->multi_query($sql_hae);
             // tarkistaa että tivejä on enemmän kuin nolla
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
-                    echo $rivi["viehe"]. " ".$rivi["laji"]."<br/>";
+                    echo $rivi["laji"]."<br/>";
                 }
-            } else {
-                echo "Mitään ei löytynyt";
             }
+            
+
+            
             ?>
         </div>
 
