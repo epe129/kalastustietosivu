@@ -1,14 +1,7 @@
-import mysql.connector
+import pymysql
 
-# yhteys tietokantaan
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="kalastustietosivu",
-    password="2007",
-    database="kalastustietosivu"
-)
-
-cursor = mydb.cursor()
+connection = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="", database="kalastustietosivu")
+cursor = connection.cursor()
 
 # luodaan taulut
 cursor.execute("CREATE TABLE IF NOT EXISTS kalastaja (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, nimi TEXT)")

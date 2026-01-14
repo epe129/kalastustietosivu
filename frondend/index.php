@@ -52,7 +52,7 @@ if ($yhteys->connect_error) {
 
         <div>
             <h2>Kalat painon mukaan</h2>
-            <?php
+            <!-- <?php
 
             // haetaan dataa tietokannasta
             $sql_hae = "SELECT laji, paino FROM kala, laji WHERE kala.laji_id=laji.id ORDER BY paino DESC";
@@ -180,7 +180,7 @@ if ($yhteys->connect_error) {
 
             
             ?>
-        </div>
+        </div> -->
 
     </div>
 </body>
