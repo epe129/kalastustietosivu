@@ -30,6 +30,7 @@ if ($yhteys->connect_error) {
                 display: none;
                 border: 1px solid gray;
                 border-radius: 5px;
+                box-shadow: 2px 2px 5px black;
             }
 
             h2 {
