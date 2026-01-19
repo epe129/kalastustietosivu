@@ -34,20 +34,36 @@ body {
 /* form label css */
 .label {
     display: block;
+    font-size: 1.2rem;
 }
 
 /* form input css */
 .input {
     width: 80%;
     padding: 2px;
-    margin: 8px 0;
-    font-size: 1rem;
 }
 
 .inputMuu {
     display: none;
     width: 80%;
     padding: 2px;
-    margin: 8px 0;
-    font-size: 1rem;
+}
+
+/* select css */
+select {
+  border: 1px solid #a9a9a9;
+  background: #eeeeee;
+  padding: 2px;
+  transition: 0.4s;
+  width: 83%;
+  text-align: center;
+}
+
+select:hover, select:focus {
+  background: #dddddd;
+}
+
+select, input {
+    margin: 8px 0px;
+    font-size: 1.1rem;
 }

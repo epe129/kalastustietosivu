@@ -1,6 +1,6 @@
 ```mermaid
 ---
-title:  Kalastustieto sivu database
+title:  Kalastus tietosivu database
 config:
     layout: elk
 ---

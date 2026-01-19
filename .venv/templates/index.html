@@ -28,18 +28,34 @@
 
             <br/>
 
-            <label class="label" for="laji">Kalalaji:</label>
-            <input list="Kalalaji" id="laji" name="laji" class="input" placeholder="Valitse jokin vaihtoehdoista" pattern="Ahven|Hauki|Kuha|Siika|Taimen|Made|Lohi|Muu">     
-            <datalist id="Kalalaji">
-                <option value="Ahven"></option>
-                <option value="Hauki"></option>
-                <option value="Kuha"></option>
-                <option value="Siika"></option>
-                <option value="Taimen"></option>
-                <option value="Made"></option>
-                <option value="Lohi"></option>
-                <option value="Muu"></option>
-            </datalist>
+            <label class="label">Valitse kalalaji:</label>
+            <select id="KalaLaji" name="laji">
+                <option value="">Valitse kalalaji</option>
+                <option value="Ahven">
+                    <span>Ahven</span>
+                </option>
+                <option value="Hauki">
+                    <span>Hauki</span>
+                </option>
+                <option value="Kuha">
+                    <span>Kuha</span>
+                </option>
+                <option value="Siika">
+                    <span>Siika</span>
+                </option>
+                <option value="Taimen">
+                    <span>Taimen</span>
+                </option>
+                <option value="Made">
+                    <span>Made</span>
+                </option>
+                <option value="Lohi">
+                    <span>Lohi</span>
+                </option>
+                <option value="Muu">
+                    <span>Muu</span>
+                </option>
+            </select>
 
             <input id="lajiMuu" name="lajiMuu" class="inputMuu" placeholder="Muu mikä">     
 

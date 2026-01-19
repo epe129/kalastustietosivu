@@ -1,0 +1,21 @@
+.otsikko {
+    text-align: center;
+    font-size: 3rem;
+}
+
+div {
+    position: relative;
+    padding: 20px;
+    font-size: 1.5rem;
+    height: 100%;
+    width: auto;
+    /* float: left; */
+    display: none;
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px black;
+}
+
+h2 {
+    font-size: 2rem;
+}

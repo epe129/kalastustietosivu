@@ -9,9 +9,9 @@ document.getElementById('aika').value = nyt.toISOString().slice(0,16);
 document.getElementsByName("laji")[0].addEventListener('change', doThing);
 
 function doThing(){
-    let arvo = document.getElementById("laji").value
+    let arvo = document.getElementById("KalaLaji").value
+    console.log(arvo)
     if (arvo == "Muu") {
         document.getElementById("lajiMuu").style.display = "block";
-        c
     }
 }
