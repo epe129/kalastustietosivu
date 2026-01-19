@@ -3,20 +3,17 @@ from flask_mysqldb import MySQL
 import os
 
 app = Flask(__name__)
-
 # tietokannan yhdistämis tiedot
 app.config['MYSQL_HOST'] = os.getenv("HOST")
 app.config['MYSQL_USER'] = os.getenv("USER")
 app.config['MYSQL_PASSWORD'] = os.getenv("PASSWORD")
 app.config['MYSQL_DB'] = os.getenv("DBNIMI")
-
 mysql = MySQL(app)
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     # luo yhteyden tietokannan taluihin
     cursor = mysql.connection.cursor()
-    
     if request.method == 'POST':
         # saa inputtien arvot html formista
         nimi = request.form.get("nimi")
@@ -29,9 +26,7 @@ def index():
         paikka = request.form.get("paikka")
         viehe = request.form.get("viehe")
         vapa = request.form.get("vapa")
-
         print(nimi, pituus, paino, laji, aika, paikka, viehe, vapa)
-        
         # lähettää datan tietokantaan
         cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
         # saa aina edellisen taulun id:n
