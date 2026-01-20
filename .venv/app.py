@@ -19,9 +19,9 @@ def index():
         nimi = request.form.get("nimi")
         pituus = request.form.get("pituus")
         paino = request.form.get("paino")
-        laji = request.form.get("laji")
-        if laji == "Muu": 
-            laji = request.form.get("lajiMuu")
+        laji = request.form.get("laji").lower()
+        if laji == "muu": 
+            laji = request.form.get("lajiMuu").lower()
         aika = request.form.get("aika")
         paikka = request.form.get("paikka")
         viehe = request.form.get("viehe")

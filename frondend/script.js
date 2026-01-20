@@ -1,13 +1,15 @@
-// näyttää diat aina noin 800 millisekunnin välein
+// näyttää diat aina noin 1000 millisekunnin välein
 let nayttaa = 0;
 let div_numero = 1;
 let display = setInterval(Nayta, 1000);
 function Nayta() {
     nayttaa += 1
     document.getElementById(div_numero).style.display = "block";
-    if (nayttaa == 10) {
+    document.getElementById("main").style.display = "block";
+    if (nayttaa == 12) {
         console.log("vaihtu")
         document.getElementById(div_numero).style.display = "none";
+        document.getElementById("main").style.display = "none";
         VaihdaDiv()
     }
 }
