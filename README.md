@@ -6,7 +6,7 @@ Tämä on nettisivu, jossa on flask backend josta voit lisätä kalasaaliin tied
 - Flask
 - PHP
 - SQL database
-- tkinter
+- Python tkinter
 
 # Tarvitaan:
 - XAMPP
