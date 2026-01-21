@@ -28,7 +28,7 @@ if ($tulos->num_rows > 0) {
 }
 ?>
 <!DOCTYPE html>
-<html style="background-image: url('tausta.jpg'); background-repeat: no-repeat; background-size: 100% 100%; height: 100%;">
+<html style="background-image: url('tausta2.jpg'); background-repeat: no-repeat; background-size: 100% 100%; height: 100%;">
     <head>
         <!-- <link rel="stylesheet" href="style.css"> -->
         <!-- <script src="script.js"></script> -->
