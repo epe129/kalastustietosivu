@@ -4,6 +4,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
+# tarkistaa aina että tietokanta on olemassa
 createdb.db()
 # yhteys tietokantaan
 connection = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="", database="kalastustietosivu")
