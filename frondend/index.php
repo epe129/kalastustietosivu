@@ -1,6 +1,7 @@
 <?php
 // luodaan yhteys tietokantaan 
 // saa configista databasen yhteyden luomiseen arvot
+session_start();
 $configs = include('config.php');
 $serverinnimi = $configs["serverinnimi"];
 $kayttajannimi = $configs["kayttajannimi"];
@@ -26,6 +27,14 @@ if ($tulos->num_rows > 0) {
             }
     }
 }
+$sql_hae = "SELECT MAX(diaNopeus) as max FROM integraatiot;";
+$tulos = $yhteys->query($sql_hae);
+if ($tulos->num_rows > 0) {
+    // lisää laji arrayhyn jos lajia ei ole array:ssa
+    while($rivi = $tulos->fetch_assoc()) {
+        $_SESSION["nopeus"] =  $rivi["max"];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html style="background-image: url('tausta2.jpg'); background-repeat: no-repeat; background-size: 100% 100%; height: 100%;">
@@ -36,6 +45,7 @@ if ($tulos->num_rows > 0) {
             .otsikko {
                 text-align: center;
                 font-size: 3rem;
+                color: white;
             }
 
             .show {
@@ -45,7 +55,6 @@ if ($tulos->num_rows > 0) {
                 font-size: 1.5rem;
                 height: 100%;
                 width: 450px;
-                display: none;
                 border: 1px solid gray;
                 border-radius: 5px;
                 box-shadow: 2px 2px 5px black;
@@ -57,37 +66,13 @@ if ($tulos->num_rows > 0) {
                 position: relative;
                 height: 100%;
                 width: 100%;
-                display: none;
             }
 
             h2 {
                 font-size: 2rem;
             }
         </style>
-        <script>
-            // näyttää diat aina noin 1000 millisekunnin välein
-            let nayttaa = 0;
-            let div_numero = 1;
-            let display = setInterval(Nayta, 1000);
-            function Nayta() {
-                nayttaa += 1
-                document.getElementById(div_numero).style.display = "block";
-                document.getElementById("main").style.display = "block";
-                if (nayttaa == 12) {
-                    console.log("vaihtu")
-                    document.getElementById(div_numero).style.display = "none";
-                    document.getElementById("main").style.display = "none";
-                    VaihdaDiv()
-                }
-            }
-            function VaihdaDiv() {
-                div_numero += 1
-                nayttaa = 0
-                if (div_numero == 6) {
-                    div_numero = 1
-                }
-            }
-        </script>
+        
     </head>
 <body>
     <h1 class="otsikko">Kalastustietoja</h1> 
@@ -221,5 +206,23 @@ if ($tulos->num_rows > 0) {
             ?>
         </div>
     </div>
+
+    <script>
+        // diat vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
+        let session_nopeus = <?php echo $_SESSION['nopeus']; ?>;
+        let div_numero = 0;
+        Nayta();
+        function Nayta() {
+            let i;
+            let slides = document.getElementsByClassName("show");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            div_numero++;
+            if (div_numero > slides.length) {div_numero = 1}
+            slides[div_numero-1].style.display = "block"; 
+            setTimeout(Nayta, session_nopeus);
+        }
+    </script>
 </body>
 </html>

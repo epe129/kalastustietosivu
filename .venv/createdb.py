@@ -4,6 +4,8 @@ connection = pymysql.connect(host="127.0.0.1", port=3306, user="root", password=
 cursor = connection.cursor()
 
 # luodaan taulut
+cursor.execute("CREATE TABLE IF NOT EXISTS integraatiot (diaNopeus INT)")
+
 cursor.execute("CREATE TABLE IF NOT EXISTS kalastaja (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, nimi TEXT)")
 
 cursor.execute("CREATE TABLE IF NOT EXISTS viehe (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, viehe TEXT)")
