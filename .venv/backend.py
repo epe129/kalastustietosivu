@@ -1,13 +1,22 @@
 import pymysql
 import createdb
+import dbinfo
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
+import os
 # tarkistaa aina että tietokanta on olemassa
 createdb.db()
 # yhteys tietokantaan
-connection = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="", database="kalastustietosivu")
+
+USER = dbinfo.data["USER"]
+PASSWORD = dbinfo.data["PASSWORD"]
+DBNIMI = dbinfo.data["DBNIMI"]
+PORT = dbinfo.data["PORT"]
+HOST = dbinfo.data["HOST"]
+
+connection = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, database=DBNIMI)
 cursor = connection.cursor()
 # luodaan ikkuna
 root = tk.Tk()
