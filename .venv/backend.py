@@ -1,8 +1,10 @@
 import pymysql
+import createdb
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
+createdb.db()
 # yhteys tietokantaan
 connection = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="", database="kalastustietosivu")
 cursor = connection.cursor()
@@ -40,7 +42,6 @@ def get_input():
     # tallettaa tapahtuneen tietokantaan
     connection.commit()
     # sulkee yhteyden tietokannan tauluihin
-    cursor.close()
 
 # saa näytön leveyden
 window_width = root.winfo_width()
@@ -151,7 +152,6 @@ def intecraatio():
         # tallettaa tapahtuneen tietokantaan
         connection.commit()
         # sulkee yhteyden tietokannan tauluihin
-        cursor.close()
     nopeus_var = tk.IntVar()
     nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus(millisekuntteina):", font=('calibre',15))
     nopeus_input = tk.Entry(uusi_ikkuna, textvariable=nopeus_var, font=('calibre',15,'normal'))
