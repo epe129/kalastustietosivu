@@ -141,7 +141,7 @@ button.place(x=button_paikka, y=425)
 # voit vaihtaa kuinka nopeaa dia esityse menee sivulla
 def intecraatio():
     uusi_ikkuna = Toplevel(root)  
-    uusi_ikkuna.title("New Window")
+    uusi_ikkuna.title("Diaesityksen nopeus")
     uusi_ikkuna.geometry("400x250")  
     uusi_ikkuna.resizable(width=False, height=False)
     def get_input():
@@ -153,7 +153,7 @@ def intecraatio():
         # sulkee yhteyden tietokannan tauluihin
         cursor.close()
     nopeus_var = tk.IntVar()
-    nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus(ml):", font=('calibre',15))
+    nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus(millisekuntteina):", font=('calibre',15))
     nopeus_input = tk.Entry(uusi_ikkuna, textvariable=nopeus_var, font=('calibre',15,'normal'))
     nopeus.pack()  
     nopeus_input.pack()  
