@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
+    <ul>
+        <li><a href="{{ url_for('index') }}">Kalastustiedot</a></li>
+        <li><a href="{{ url_for('esitys') }}">Diaesitys</a></li>
+    </ul>
+
     <div class="main-div">
         <h1 class="otsikko">Kalastustiedot</h1>
         <form class="form" action="{{ url_for("index")}}" method="post">

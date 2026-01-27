@@ -122,7 +122,7 @@ def get_index(*args):
 
 # katsoo mikä arvo on valittu
 laji_var.trace('w', get_index)
-print(str(laji_var.get()))
+# print(str(laji_var.get()))
 
 aika_text = tk.Label(root, text="Aika:", font=('calibre',15))
 aika = DateEntry(root, width=12, background="darkblue", foreground="white", borderwidth=2, font=('calibre',15,'normal'), date_pattern="dd.mm.yyyy")
@@ -155,20 +155,29 @@ def intecraatio():
     uusi_ikkuna.title("Diaesityksen nopeus")
     uusi_ikkuna.geometry("400x250")  
     uusi_ikkuna.resizable(width=False, height=False)
+    window_width = uusi_ikkuna.winfo_width()
+    x = (window_width)
+    nopeus_x = (x + 10)
+    nopeus_input_x = (x + 90)
+    button_x = (x + 135)
+    error_x = (x + 90)
+
     def get_input():
         nopeus = nopeus_input.get()
-        print(nopeus)
-        cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{nopeus}")')            
-        # tallettaa tapahtuneen tietokantaan
-        connection.commit()
-        # sulkee yhteyden tietokannan tauluihin
+        if len(nopeus) < 4 :
+            error = tk.Label(uusi_ikkuna, text="Et antanut millisekuntteina", font=('calibre',15))
+            error.place(x=error_x, y=100)
+        else:
+            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{nopeus}")')            
+            # tallettaa tapahtuneen tietokantaan
+            connection.commit()
     nopeus_var = tk.IntVar()
     nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus(millisekuntteina):", font=('calibre',15))
     nopeus_input = tk.Entry(uusi_ikkuna, textvariable=nopeus_var, font=('calibre',15,'normal'))
-    nopeus.pack()  
-    nopeus_input.pack()  
+    nopeus.place(x=nopeus_x, y=30) 
+    nopeus_input.place(x=nopeus_input_x, y=70)
     button = ttk.Button(uusi_ikkuna, text="Lähetä", command=get_input, style='TButton', cursor="hand2")
-    button.pack()
+    button.place(x=button_x, y=140)
 valikko.add_command(label ='Vaihda dia esityksen nopeutta', command = intecraatio)
 if __name__=="__main__":
     root.config(menu = valikko)

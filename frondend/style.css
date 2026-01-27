@@ -1,8 +1,25 @@
-.otsikko {
-    text-align: center;
-    font-size: 3rem;
+/* html css */
+html {
+    background-image: url('./kuvat/tausta.jpg'); 
+    background-repeat: no-repeat; 
+    background-size: 100% 100%; 
+    height: 100%;
 }
 
+/* otsikon css */
+.title {
+    text-align: center;
+    margin: auto;
+    font-size: 3rem;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    width: 350px;
+    margin-top: 50px;
+    margin-bottom: 55px;
+}
+
+/* show css */
 .show {
     margin: 0 auto;
     position: relative;
@@ -10,20 +27,21 @@
     font-size: 1.5rem;
     height: 100%;
     width: 450px;
-    display: none;
     border: 1px solid gray;
     border-radius: 5px;
     box-shadow: 2px 2px 5px black;
+    background-color: white;
 }
 
+/* main div css */
 .main {
     margin: 0 auto;
     position: relative;
     height: 100%;
     width: 100%;
-    display: none;
 }
 
+/* h2 otsikon css */
 h2 {
     font-size: 2rem;
 }

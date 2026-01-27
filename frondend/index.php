@@ -37,47 +37,14 @@ if ($tulos->num_rows > 0) {
 }
 ?>
 <!DOCTYPE html>
-<html style="background-image: url('tausta2.jpg'); background-repeat: no-repeat; background-size: 100% 100%; height: 100%;">
+<html>
     <head>
-        <!-- <link rel="stylesheet" href="style.css"> -->
-        <!-- <script src="script.js"></script> -->
-        <style>
-            .otsikko {
-                text-align: center;
-                font-size: 3rem;
-                color: white;
-            }
-
-            .show {
-                margin: 0 auto;
-                position: relative;
-                padding: 20px;
-                font-size: 1.5rem;
-                height: 100%;
-                width: 450px;
-                border: 1px solid gray;
-                border-radius: 5px;
-                box-shadow: 2px 2px 5px black;
-                background-color: white;
-            }
-
-            .main {
-                margin: 0 auto;
-                position: relative;
-                height: 100%;
-                width: 100%;
-            }
-
-            h2 {
-                font-size: 2rem;
-            }
-        </style>
-        
+        <link rel="stylesheet" href="style.css">
     </head>
 <body>
-    <h1 class="otsikko">Kalastustietoja</h1> 
-    <div id="main" class="main">
-        <div id="1" class="show">
+    <h1 class="title">Kalastustietoja</h1> 
+    <div class="main">
+        <div class="show">
             <h2>Kalat painon mukaan</h2>
             <?php
             // haetaan dataa tietokannasta
@@ -110,7 +77,7 @@ if ($tulos->num_rows > 0) {
             }            
             ?>
         </div>
-        <div id="2" class="show">
+        <div class="show">
             <h2>Kalat pituuden mukaan</h2>
             <?php
             // haetaan dataa tietokannasta
@@ -143,7 +110,7 @@ if ($tulos->num_rows > 0) {
             }
             ?>
         </div>
-        <div id="3" class="show">
+        <div class="show">
             <h2>Kalalajien saanti määrät</h2>
             <?php
             // haetaan dataa tietokannasta
@@ -167,7 +134,7 @@ if ($tulos->num_rows > 0) {
             }
             ?>
         </div>
-        <div id="4" class="show">
+        <div class="show">
             <h2>Kalalajien saanti määrät eri vavoilla</h2>
             <?php
             // haetaan dataa tietokannasta
@@ -183,7 +150,7 @@ if ($tulos->num_rows > 0) {
             }
             ?>
         </div>
-        <div id="5" class="show">
+        <div class="show">
             <h2>Kalalajien saanti määrät eri vieheillä</h2>
             <?php
             // käy lajit arraysta
@@ -209,7 +176,12 @@ if ($tulos->num_rows > 0) {
 
     <script>
         // diat vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
-        let session_nopeus = <?php echo $_SESSION['nopeus']; ?>;
+        let session_nopeus;
+        session_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
+        if (session_nopeus == "") {
+            session_nopeus = 5000
+        }
+        console.log(parseInt(session_nopeus))
         let div_numero = 0;
         Nayta();
         function Nayta() {
@@ -221,7 +193,7 @@ if ($tulos->num_rows > 0) {
             div_numero++;
             if (div_numero > slides.length) {div_numero = 1}
             slides[div_numero-1].style.display = "block"; 
-            setTimeout(Nayta, session_nopeus);
+            setTimeout(Nayta, parseInt(session_nopeus));
         }
     </script>
 </body>

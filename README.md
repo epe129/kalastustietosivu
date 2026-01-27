@@ -1,6 +1,7 @@
 # Kalastustieto sivu
 
-Tämä on nettisivu, jossa on flask backend josta voit lisätä kalasaaliin tiedot tietokantaan form lomakkeesta. frond:endissä on PHP sivu joka näyttää eri tietoja kalasaaleista käyttäjälle esim. eri kalalajien saanti määrät.
+Tämä on nettisivu, jossa on tkinter backend, josta voit lisätä kalasaaliin tiedot tietokantaan lomakkeesta sekä voit muuttaa 
+fronedissä olevan dia esityksen nopeutta. On myös flask backend josta voi lisätä samat tiedot tietokantaan. Frontendissä on PHP sivu joka näyttää eri tietoja kalasaaleista käyttäjälle esim. eri kalalajien saanti määrät.
 
 # Tehty käyttäen: 
 - Flask
@@ -12,33 +13,22 @@ Tämä on nettisivu, jossa on flask backend josta voit lisätä kalasaaliin tied
 - XAMPP
 - Python
 - phpmyadmin database
+
+# lataa tarvittavat paketit
 ```
-pip install flask
+pip install -r requirements.txt
 ```
-```
-pip install flask-mysqldb
-```
-```
-pip install pymysql
-```
-```
-pip install python-dotenv
-```
-```
-pip install tkcalendar
-```
+
 # Ohjelman suorittaminen
-```
-flask run --debug
 ```
 php sivu:
 ```
 http://localhost/kalastustietosivu/frondend/
 ```
-flask sivu:
+tkinter ohjelma:
 ```
-http://127.0.0.1:5000/
+python backend.py
 ```
 
 # License
-Not open source, educational purposes only.
+Not open source.

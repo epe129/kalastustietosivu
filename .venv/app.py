@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
-import os
+import dbinfo
 
 app = Flask(__name__)
 # tietokannan yhdistämis tiedot
-app.config['MYSQL_HOST'] = os.getenv("HOST")
-app.config['MYSQL_USER'] = os.getenv("USER")
-app.config['MYSQL_PASSWORD'] = os.getenv("PASSWORD")
-app.config['MYSQL_DB'] = os.getenv("DBNIMI")
+app.config['MYSQL_HOST'] = dbinfo.data["HOST"]
+app.config['MYSQL_USER'] = dbinfo.data["USER"]
+app.config['MYSQL_PASSWORD'] = dbinfo.data["PASSWORD"]
+app.config['MYSQL_DB'] = dbinfo.data["DBNIMI"]
 mysql = MySQL(app)
 
 @app.route('/', methods = ['POST', 'GET'])
@@ -45,5 +45,22 @@ def index():
         # sulkee yhteyden tietokannan tauluihin
         cursor.close()
     return render_template('index.html')
+@app.route('/esitys', methods = ['POST', 'GET'])
+def esitys():
+    error = ""
+    cursor = mysql.connection.cursor()
+    if request.method == 'POST':
+        # saa inputtien arvot html formista
+        nopeus = request.form.get("nopeus")
+        print(len(nopeus))
+        if len(nopeus) < 4:
+            error = "Et antanut millisekuntteina"
+        else:        
+            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{nopeus}")')            
+            # tallettaa tapahtuneen tietokantaan
+            mysql.connection.commit()
+            # sulkee yhteyden tietokannan tauluihin
+            cursor.close()
+    return render_template('esitys.html', error=error)
 if __name__=="__main__":
     app.run()
