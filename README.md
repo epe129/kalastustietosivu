@@ -20,7 +20,6 @@ pip install -r requirements.txt
 ```
 
 # Ohjelman suorittaminen
-```
 php sivu:
 ```
 http://localhost/kalastustietosivu/frondend/
