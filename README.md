@@ -14,7 +14,7 @@ fronedissä olevan dia esityksen nopeutta. On myös flask backend josta voi lis�
 - Python
 - phpmyadmin database
 
-# lataa tarvittavat paketit
+# Lataa tarvittavat paketit
 ```
 pip install -r requirements.txt
 ```

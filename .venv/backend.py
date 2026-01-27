@@ -100,7 +100,6 @@ paino = tk.Label(root, text="Paino(kg):", font=('calibre',15))
 paino_input = tk.Entry(root, textvariable=paino_var, font=('calibre',15,'normal'))
 paino.place(x=paino_paikka, y=150)
 paino_input.place(x=x, y=150)
-    
 
 laji = tk.Label(root, text="Valiset kalalaji:", font=('calibre',15))
 laji.place(x=laji_paikka, y=190)
@@ -156,12 +155,12 @@ def intecraatio():
     uusi_ikkuna.geometry("400x250")  
     uusi_ikkuna.resizable(width=False, height=False)
     window_width = uusi_ikkuna.winfo_width()
+    # asetetaan elementtien sijainnit
     x = (window_width)
     nopeus_x = (x + 10)
     nopeus_input_x = (x + 90)
     button_x = (x + 135)
     error_x = (x + 90)
-
     def get_input():
         nopeus = nopeus_input.get()
         if len(nopeus) < 4 :
