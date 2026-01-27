@@ -1,11 +1,8 @@
-import pymysql
-import createdb
-import dbinfo
+import pymysql, createdb, dbinfo 
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
-import os
 # tarkistaa aina että tietokanta on olemassa
 createdb.db()
 # otetaan db tiedot python tiedostosta
@@ -23,6 +20,7 @@ root.resizable(width=False, height=False)
 root.geometry("1000x600")
 root.title("Admin")
 valikko = Menu(root)
+
 # saadaan inputit
 def get_input():
     nimi = nimi_input.get()
@@ -49,11 +47,8 @@ def get_input():
     cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
     # tallettaa tapahtuneen tietokantaan
     connection.commit()
-    # sulkee yhteyden tietokannan tauluihin
-
 # saa näytön leveyden
 window_width = root.winfo_width()
-
 # lasketaan x(leveys suunta) coordinaatiot keskelle sivua
 x = (window_width + 400)
 z = (window_width + 400)
@@ -153,21 +148,22 @@ def intecraatio():
     window_width = uusi_ikkuna.winfo_width()
     # asetetaan elementtien sijainnit
     x = (window_width)
-    nopeus_x = (x + 10)
+    nopeus_x = (x + 5)
     nopeus_input_x = (x + 90)
     button_x = (x + 135)
-    error_x = (x + 90)
+    error_x = (x + 40)
     def get_input():
-        nopeus = nopeus_input.get()
-        if len(nopeus) < 4 :
-            error = tk.Label(uusi_ikkuna, text="Et antanut millisekuntteina", font=('calibre',15))
+        nopeus = nopeus_input.get() 
+        s = int(nopeus) * 1000
+        if str(s) > "20000" or str(s) < "1":
+            error = tk.Label(uusi_ikkuna, text="Annoit joko liian suurenluvun tai nollan", font=('calibre',15))
             error.place(x=error_x, y=100)
         else:
-            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{nopeus}")')            
+            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
             # tallettaa tapahtuneen tietokantaan
             connection.commit()
     nopeus_var = tk.IntVar()
-    nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus(millisekuntteina):", font=('calibre',15))
+    nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus sekunteina(1-20):", font=('calibre',15))
     nopeus_input = tk.Entry(uusi_ikkuna, textvariable=nopeus_var, font=('calibre',15,'normal'))
     nopeus.place(x=nopeus_x, y=30) 
     nopeus_input.place(x=nopeus_input_x, y=70)

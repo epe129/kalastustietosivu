@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
-import dbinfo
+import dbinfo, createdb
 
+createdb.db()
 app = Flask(__name__)
 # tietokannan yhdistämistiedot
 app.config['MYSQL_HOST'] = dbinfo.data["HOST"]
@@ -42,8 +43,6 @@ def index():
         cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
         # tallettaa tapahtuneen tietokantaan
         mysql.connection.commit()
-        # sulkee yhteyden tietokannan tauluihin
-        cursor.close()
     return render_template('index.html')
 @app.route('/esitys', methods = ['POST', 'GET'])
 def esitys():
@@ -51,14 +50,13 @@ def esitys():
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
         nopeus = request.form.get("nopeus")
-        if len(nopeus) < 4:
-            error = "Et antanut millisekuntteina"
+        s = int(nopeus) * 1000
+        if str(s) > "20000" or str(s) < "1":
+            error = "Annoit joko liian suurenluvun tai nollan"
         else:        
-            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{nopeus}")')            
+            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
             # tallettaa tapahtuneen tietokantaan
             mysql.connection.commit()
-            # sulkee yhteyden tietokannan tauluihin
-            cursor.close()
     return render_template('esitys.html', error=error)
 if __name__=="__main__":
     app.run()

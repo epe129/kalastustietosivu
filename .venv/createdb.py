@@ -1,5 +1,4 @@
-import pymysql
-import dbinfo
+import pymysql, dbinfo
 connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"], user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"], database=dbinfo.data["DBNIMI"])
 cursor = connection.cursor()
 def db():
