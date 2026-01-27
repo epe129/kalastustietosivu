@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 import dbinfo
 
 app = Flask(__name__)
-# tietokannan yhdistämis tiedot
+# tietokannan yhdistämistiedot
 app.config['MYSQL_HOST'] = dbinfo.data["HOST"]
 app.config['MYSQL_USER'] = dbinfo.data["USER"]
 app.config['MYSQL_PASSWORD'] = dbinfo.data["PASSWORD"]
@@ -50,9 +50,7 @@ def esitys():
     error = ""
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
-        # saa inputtien arvot html formista
         nopeus = request.form.get("nopeus")
-        print(len(nopeus))
         if len(nopeus) < 4:
             error = "Et antanut millisekuntteina"
         else:        

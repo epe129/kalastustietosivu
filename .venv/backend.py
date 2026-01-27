@@ -8,14 +8,13 @@ from tkcalendar import DateEntry
 import os
 # tarkistaa aina että tietokanta on olemassa
 createdb.db()
-# yhteys tietokantaan
-
+# otetaan db tiedot python tiedostosta
 USER = dbinfo.data["USER"]
 PASSWORD = dbinfo.data["PASSWORD"]
 DBNIMI = dbinfo.data["DBNIMI"]
 PORT = dbinfo.data["PORT"]
 HOST = dbinfo.data["HOST"]
-
+# yhteys tietokantaan
 connection = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, database=DBNIMI)
 cursor = connection.cursor()
 # luodaan ikkuna
@@ -36,7 +35,6 @@ def get_input():
     paikka = paikka_input.get()
     viehe = viehe_input.get()
     vapa = vapa_input.get()
-    # print(nimi, pituus, paino, laji, saatu_aika, paikka, viehe, vapa)
     cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
     # saa aina edellisen taulun id:n
     kalastaja_id = cursor.lastrowid
@@ -118,17 +116,15 @@ def get_index(*args):
         laji_input_muu = tk.Entry(root, textvariable=laji_var_muu, font=('calibre',15,'normal'))
         laji_input_muu.place(x=x, y=230)
         laji_muu.place(x=laji_muu_paikka, y=230)
-
 # katsoo mikä arvo on valittu
 laji_var.trace('w', get_index)
-# print(str(laji_var.get()))
 
 aika_text = tk.Label(root, text="Aika:", font=('calibre',15))
 aika = DateEntry(root, width=12, background="darkblue", foreground="white", borderwidth=2, font=('calibre',15,'normal'), date_pattern="dd.mm.yyyy")
 aika_input = tk.Entry(root, textvariable=aika_var, font=('calibre',15,'normal'))
 aika_text.place(x=aika_paikka, y=270)
 aika.place(x=x, y=270)
-    
+
 paikka = tk.Label(root, text="Paikka:", font=('calibre',15))
 paikka_input = tk.Entry(root, textvariable=paikka_var, font=('calibre',15,'normal'))
 paikka.place(x=paikka_paikka, y=310)
@@ -143,11 +139,11 @@ vapa = tk.Label(root, text="Vapa:", font=('calibre',15))
 vapa_input = tk.Entry(root, textvariable=vapa_var, font=('calibre',15,'normal'))
 vapa.place(x=vapa_paikka, y=390)
 vapa_input.place(x=x, y=390)
+
 style = ttk.Style()
 style.configure('TButton', font = ('calibri', 15, 'bold'), borderwidth = '4')
 button = ttk.Button(text="Lähetä", command=get_input, style='TButton', cursor="hand2")
 button.place(x=button_paikka, y=425)
-
 # voit vaihtaa kuinka nopeaa dia esityse menee sivulla
 def intecraatio():
     uusi_ikkuna = Toplevel(root)  

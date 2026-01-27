@@ -17,7 +17,7 @@ $lajit = array("ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "k
 $sql_hae = "SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC";
 $tulos = $yhteys->query($sql_hae);
 if ($tulos->num_rows > 0) {
-    // lisää laji arrayhyn jos lajia ei ole array:ssa
+    // lisää lajin arrayhyn jos lajia ei ole array:ssa
     while($rivi = $tulos->fetch_assoc()) {
         if (in_array($rivi["laji"], $lajit))
             {
@@ -30,7 +30,6 @@ if ($tulos->num_rows > 0) {
 $sql_hae = "SELECT MAX(diaNopeus) as max FROM integraatiot;";
 $tulos = $yhteys->query($sql_hae);
 if ($tulos->num_rows > 0) {
-    // lisää laji arrayhyn jos lajia ei ole array:ssa
     while($rivi = $tulos->fetch_assoc()) {
         $_SESSION["nopeus"] =  $rivi["max"];
     }
@@ -80,11 +79,9 @@ if ($tulos->num_rows > 0) {
         <div class="show">
             <h2>Kalat pituuden mukaan</h2>
             <?php
-            // haetaan dataa tietokannasta
             $sql_hae = "SELECT laji, pituus FROM kala, laji WHERE kala.laji_id=laji.id ORDER BY pituus DESC";
             $rivien_maarat = 0;
             $tulos = $yhteys->query($sql_hae);
-            // tarkistaa että tivejä on enemmän kuin nolla
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
                     $rivien_maarat += 1;
@@ -113,12 +110,9 @@ if ($tulos->num_rows > 0) {
         <div class="show">
             <h2>Kalalajien saanti määrät</h2>
             <?php
-            // haetaan dataa tietokannasta
             $sql_hae = "SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC";
             $tulos = $yhteys->query($sql_hae);
-            // tarkistaa että tivejä on enemmän kuin nolla
             if ($tulos->num_rows > 0) {
-                // lisää laji arrayhyn jos lajia ei ole array:ssa
                 while($rivi = $tulos->fetch_assoc()) {
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
@@ -137,10 +131,8 @@ if ($tulos->num_rows > 0) {
         <div class="show">
             <h2>Kalalajien saanti määrät eri vavoilla</h2>
             <?php
-            // haetaan dataa tietokannasta
             $sql_hae = "SELECT vapa, COUNT(vapa) as maara FROM vapa GROUP BY vapa ORDER BY maara DESC";
             $tulos = $yhteys->query($sql_hae);
-            // tarkistaa että tivejä on enemmän kuin nolla
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
                     echo $rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
@@ -173,15 +165,15 @@ if ($tulos->num_rows > 0) {
             ?>
         </div>
     </div>
-
     <script>
+        // Täällä sen takia jotta pystyy ottaa php tietokannasta dia esityksen nopeuden
         // diat vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
-        let session_nopeus;
-        session_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
-        if (session_nopeus == "") {
-            session_nopeus = 5000
+        let dia_nopeus;
+        dia_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
+        // perusnopeus jos tietokannassa ei ole nopeutta
+        if (dia_nopeus == "") {
+            dia_nopeus = 5000
         }
-        console.log(parseInt(session_nopeus))
         let div_numero = 0;
         Nayta();
         function Nayta() {
@@ -193,7 +185,7 @@ if ($tulos->num_rows > 0) {
             div_numero++;
             if (div_numero > slides.length) {div_numero = 1}
             slides[div_numero-1].style.display = "block"; 
-            setTimeout(Nayta, parseInt(session_nopeus));
+            setTimeout(Nayta, parseInt(dia_nopeus));
         }
     </script>
 </body>
