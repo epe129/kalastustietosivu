@@ -19,7 +19,6 @@ root = tk.Tk()
 root.resizable(width=False, height=False)
 root.geometry("1000x600")
 root.title("Admin")
-valikko = Menu(root)
 
 # saadaan inputit
 def get_input():
@@ -169,7 +168,10 @@ def intecraatio():
     nopeus_input.place(x=nopeus_input_x, y=70)
     button = ttk.Button(uusi_ikkuna, text="Lähetä", command=get_input, style='TButton', cursor="hand2")
     button.place(x=button_x, y=140)
-valikko.add_command(label ='Vaihda dia esityksen nopeutta', command = intecraatio)
+
+style.configure('W.TButton', font = ('calibri', 17, 'bold'), borderwidth = '4')
+button = ttk.Button(text="Vaihda diaesityksen nopeutta", command=intecraatio, style='W.TButton', cursor="hand2")
+button.place(x=5, y=5)
+
 if __name__=="__main__":
-    root.config(menu = valikko)
     root.mainloop()
