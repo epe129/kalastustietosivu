@@ -46,7 +46,7 @@ def index():
         cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
         # tallettaa tapahtuneen tietokantaan
         mysql.connection.commit()        
-        text = "Kaikki lisätty onnistuneesti"
+        text = "Tiedot lisättiin onnistuneesti"
     return render_template('index.html', text=text)
 @app.route('/esitys', methods = ['POST', 'GET'])
 def esitys():
