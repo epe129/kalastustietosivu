@@ -13,6 +13,7 @@ mysql = MySQL(app)
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
+    text = ""
     # luo yhteyden tietokannan taluihin
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
@@ -28,6 +29,8 @@ def index():
         viehe = request.form.get("viehe")
         vapa = request.form.get("vapa")
         print(nimi, pituus, paino, laji, aika, paikka, viehe, vapa)
+        if nimi == "" or pituus == "" or laji == "" or paikka == "" or viehe == "" or vapa == "":
+            text = "Jokin kohta oli tyhjä"
         # lähettää datan tietokantaan
         cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
         # saa aina edellisen taulun id:n
@@ -42,21 +45,23 @@ def index():
         tarppi_id = cursor.lastrowid
         cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
         # tallettaa tapahtuneen tietokantaan
-        mysql.connection.commit()
-    return render_template('index.html')
+        mysql.connection.commit()        
+        text = "Kaikki lisätty onnistuneesti"
+    return render_template('index.html', text=text)
 @app.route('/esitys', methods = ['POST', 'GET'])
 def esitys():
-    error = ""
+    text = ""
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
         nopeus = request.form.get("nopeus")
         s = int(nopeus) * 1000
         if str(s) > "20000" or str(s) < "1":
-            error = "Annoit joko liian suurenluvun tai nollan"
+            text = "Annoit joko liian suuren tai liian pienen luvun"
         else:        
             cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
             # tallettaa tapahtuneen tietokantaan
             mysql.connection.commit()
-    return render_template('esitys.html', error=error)
+            text = "Vaihtui onnistuneesti"
+    return render_template('esitys.html', text=text)
 if __name__=="__main__":
     app.run()

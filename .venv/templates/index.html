@@ -32,7 +32,7 @@
             <br/>
 
             <label class="label">Valitse kalalaji:</label>
-            <select id="KalaLaji" name="laji">
+            <select id="KalaLaji" name="laji" required>
                 <option value="">Valitse kalalaji</option>
                 <option value="ahven">
                     <span>ahven</span>
@@ -83,7 +83,7 @@
             <input type="datetime-local" id="aika" name="aika" class="input" required>
 
             <button type="submit" class="button">Lähetä</button>
-        
+            <span id="text">{{ text }}</span>
         </form>
     </div>
     <script src="/static/script.js"></script>

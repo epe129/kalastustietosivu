@@ -27,11 +27,11 @@ if ($tulos->num_rows > 0) {
             }
     }
 }
-$sql_hae = "SELECT MAX(diaNopeus) as max FROM integraatiot;";
+$sql_hae = "SELECT diaNopeus FROM integraatiot;";
 $tulos = $yhteys->query($sql_hae);
 if ($tulos->num_rows > 0) {
     while($rivi = $tulos->fetch_assoc()) {
-        $_SESSION["nopeus"] =  $rivi["max"];
+        $_SESSION["nopeus"] =  $rivi["diaNopeus"];
     }
 }
 ?>
@@ -174,6 +174,7 @@ if ($tulos->num_rows > 0) {
         if (dia_nopeus == "") {
             dia_nopeus = 5000
         }
+        console.log(dia_nopeus)
         let div_numero = 0;
         Nayta();
         function Nayta() {

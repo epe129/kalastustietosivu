@@ -22,30 +22,41 @@ root.title("Admin")
 
 # saadaan inputit
 def get_input():
-    nimi = nimi_input.get()
-    pituus = pituus_input.get()
-    paino = paino_input.get()
-    laji = laji_input.get()
-    if laji == "muu":
-        laji = laji_input_muu.get()
-    saatu_aika = aika.get_date()
-    paikka = paikka_input.get()
-    viehe = viehe_input.get()
-    vapa = vapa_input.get()
-    cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
-    # saa aina edellisen taulun id:n
-    kalastaja_id = cursor.lastrowid
-    cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
-    viehe_id = cursor.lastrowid
-    cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
-    vapa_id = cursor.lastrowid
-    cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
-    laji_id = cursor.lastrowid
-    cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{saatu_aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
-    tarppi_id = cursor.lastrowid
-    cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
-    # tallettaa tapahtuneen tietokantaan
-    connection.commit()
+    try:
+        nimi = nimi_input.get()
+        pituus = pituus_input.get()
+        paino = paino_input.get()
+        laji = laji_input.get()
+        print(laji)
+        if laji == "muu":
+            laji = laji_input_muu.get()
+        saatu_aika = aika.get_date()
+        paikka = paikka_input.get()
+        viehe = viehe_input.get()
+        vapa = vapa_input.get()
+        if nimi == "" or pituus == "" or paino == "0" or pituus == "0" or laji == "Valiset kalalaji" or laji == "" or paikka == "" or viehe == "" or vapa == "":
+            text = tk.Label(root, text="Et täyttänyt kaikkia kohtia", font=('calibre',15))
+            text.place(x=window_width + 390, y=425)
+            return
+        cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
+        # saa aina edellisen taulun id:n
+        kalastaja_id = cursor.lastrowid
+        cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
+        viehe_id = cursor.lastrowid
+        cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
+        vapa_id = cursor.lastrowid
+        cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
+        laji_id = cursor.lastrowid
+        cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{saatu_aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
+        tarppi_id = cursor.lastrowid
+        cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
+        # tallettaa tapahtuneen tietokantaan
+        connection.commit()
+        text = tk.Label(root, text="Tiedot lisättiin onnistuneesti", font=('calibre',15))
+        text.place(x=window_width + 390, y=425)
+    except:
+        text = tk.Label(root, text="Jokin meni vikaan", font=('calibre',15))
+        text.place(x=window_width + 390, y=425)
 # saa näytön leveyden
 window_width = root.winfo_width()
 # lasketaan x(leveys suunta) coordinaatiot keskelle sivua
@@ -137,7 +148,7 @@ vapa_input.place(x=x, y=390)
 style = ttk.Style()
 style.configure('TButton', font = ('calibri', 15, 'bold'), borderwidth = '4')
 button = ttk.Button(text="Lähetä", command=get_input, style='TButton', cursor="hand2")
-button.place(x=button_paikka, y=425)
+button.place(x=button_paikka, y=475)
 # voit vaihtaa kuinka nopeaa dia esityse menee sivulla
 def intecraatio():
     uusi_ikkuna = Toplevel(root)  
@@ -155,12 +166,14 @@ def intecraatio():
         nopeus = nopeus_input.get() 
         s = int(nopeus) * 1000
         if str(s) > "20000" or str(s) < "1":
-            error = tk.Label(uusi_ikkuna, text="Annoit joko liian suurenluvun tai nollan", font=('calibre',15))
-            error.place(x=error_x, y=100)
+            text = tk.Label(uusi_ikkuna, text="Annoit joko liian suuren tai liian pienen luvun", font=('calibre',15))
+            text.place(x=error_x-35, y=100)
         else:
             cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
             # tallettaa tapahtuneen tietokantaan
             connection.commit()
+            text = tk.Label(uusi_ikkuna, text="Vaihtui onnistuneesti", font=('calibre',15))
+            text.place(x=error_x+70, y=100)
     nopeus_var = tk.IntVar()
     nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus sekunteina(1-20):", font=('calibre',15))
     nopeus_input = tk.Entry(uusi_ikkuna, textvariable=nopeus_var, font=('calibre',15,'normal'))
