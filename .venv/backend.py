@@ -59,14 +59,13 @@ def get_input():
             text.place(x=window_width + 335, y=425)
             my_string_var.set("Et täyttänyt kaikkia kohtia tai valinnut lajia")
             return   
-        print(len(nimi))
         if len(nimi) > 24 or len(laji) > 24 or len(viehe) > 24 or len(paikka) > 24 or len(vapa) > 24:
             text.place(x=window_width + 370, y=425)
             my_string_var.set("Maksimi merkkien määrä on 24")
             return
         if len(str(pituus)) > 6 or len(str(paino)) > 6:
             text.place(x=window_width + 300, y=425)
-            my_string_var.set("Painon ja pituuden maksimi merkkien määrä on 6")
+            my_string_var.set("Painon ja pituuden maksimi merkkien määrä on 4")
             return
         # lähettää tiedot tietokantaan  
         cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
