@@ -13,8 +13,9 @@ LaitaNykyAika()
 document.getElementsByName("laji")[0].addEventListener('change', Tee);
 
 function Tee(){
+    // saa arvon
     let arvo = document.getElementById("KalaLaji").value
-    console.log(arvo)
+    // tarkistaa on muu
     if (arvo == "muu") {
         document.getElementById("lajiMuu").style.display = "block";
     }

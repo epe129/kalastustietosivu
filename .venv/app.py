@@ -2,7 +2,9 @@ from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
 import dbinfo, createdb
 
+# tarkistaa aina että tietokanta on olemassa
 createdb.db()
+# luodaan flask app
 app = Flask(__name__)
 # tietokannan yhdistämistiedot
 app.config['MYSQL_HOST'] = dbinfo.data["HOST"]
@@ -22,12 +24,14 @@ def index():
         pituus = request.form.get("pituus")
         paino = request.form.get("paino")
         laji = request.form.get("laji").lower()
-        if laji == "muu": 
-            laji = request.form.get("lajiMuu").lower()
         aika = request.form.get("aika")
         paikka = request.form.get("paikka")
         viehe = request.form.get("viehe")
         vapa = request.form.get("vapa")
+        # tarkistaa pitääkö ottaa muu input
+        if laji == "muu": 
+            laji = request.form.get("lajiMuu").lower()
+        # vielä tarkistus ettei mikään ole tyhjä 
         if nimi == "" or pituus == "" or paino == "" or laji == "" or paikka == "" or viehe == "" or vapa == "":
             text = "Jokin kohta oli tyhjä"
         # lähettää datan tietokantaan

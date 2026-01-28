@@ -100,12 +100,12 @@ if ($tulos->num_rows > 0) {
                         echo "🥉".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
                     } else {
                         echo $rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
-                }
-            }
+                    }
+                } 
             } else {
                 echo "Mitään ei löytynyt";
             }
-            ?>
+        ?>
         </div>
         <div class="show">
             <h2>Kalalajien saanti määrät</h2>
@@ -129,22 +129,9 @@ if ($tulos->num_rows > 0) {
             ?>
         </div>
         <div class="show">
-            <h2>Kalalajien saanti määrät eri vavoilla</h2>
-            <?php
-            $sql_hae = "SELECT vapa, COUNT(vapa) as maara FROM vapa GROUP BY vapa ORDER BY maara DESC";
-            $tulos = $yhteys->query($sql_hae);
-            if ($tulos->num_rows > 0) {
-                while($rivi = $tulos->fetch_assoc()) {
-                    echo $rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
-                }
-            } else {
-                echo "Mitään ei löytynyt";
-            }
-            ?>
-        </div>
-        <div class="show">
             <h2>Kalalajien saanti määrät eri vieheillä</h2>
             <?php
+            $rivien_maarat = 0;
             // käy lajit arraysta
             foreach ($lajit as $x) {
                 $tulos = $yhteys->query("SELECT COUNT(laji) AS maara, laji, viehe FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND tarppi.id=kala.tarppi_id AND kala.laji_id=laji.id AND laji='$x' GROUP BY viehe;");
@@ -159,14 +146,33 @@ if ($tulos->num_rows > 0) {
                             echo "🐟";
                         }
                         echo $rivi["laji"]. " ".$rivi["viehe"]. " ".$rivi["maara"]." kpl"."<br/>";
+                        $rivien_maarat += 1;
                     }
                 } 
+            }
+            // jos tulos on nolla
+            if ($rivien_maarat == 0) {
+                echo "Mitään ei löytynyt";
+            }
+            ?>
+        </div>
+        <div class="show">
+            <h2>Kalalajien saanti määrät eri vavoilla</h2>
+            <?php
+            $sql_hae = "SELECT vapa, COUNT(vapa) as maara FROM vapa GROUP BY vapa ORDER BY maara DESC";
+            $tulos = $yhteys->query($sql_hae);
+            if ($tulos->num_rows > 0) {
+                while($rivi = $tulos->fetch_assoc()) {
+                    echo $rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
+                }
+            } else {
+                echo "Mitään ei löytynyt";
             }
             ?>
         </div>
     </div>
     <script>
-        // Täällä sen takia jotta pystyy ottaa php tietokannasta dia esityksen nopeuden
+        // javacsript on täällä sen takia jotta pystyy ottaa php tietokannasta dia esityksen nopeuden
         // diat vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
         let dia_nopeus;
         dia_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
@@ -177,15 +183,20 @@ if ($tulos->num_rows > 0) {
         console.log(dia_nopeus)
         let div_numero = 0;
         Nayta();
+        // tekee slide shown
         function Nayta() {
             let i;
             let slides = document.getElementsByClassName("show");
             for (i = 0; i < slides.length; i++) {
+                // asettaa että muut divit ei näy
                 slides[i].style.display = "none";
             }
             div_numero++;
+            // jos on kaikki käyty aloittaa alusta
             if (div_numero > slides.length) {div_numero = 1}
+            // asettaa aina että yksi div näkyy
             slides[div_numero-1].style.display = "block"; 
+            // kutsuu aina functiota määritetyn ajan välein
             setTimeout(Nayta, parseInt(dia_nopeus));
         }
     </script>

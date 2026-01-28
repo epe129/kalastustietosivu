@@ -7,30 +7,24 @@
     <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
+    <!-- navbar -->
     <ul>
         <li><a href="{{ url_for('index') }}">Kalastustiedot</a></li>
         <li><a href="{{ url_for('esitys') }}">Vaihda diaesityksen nopeutta</a></li>
     </ul>
-
     <div class="main-div">
         <h1 class="otsikko">Kalastustiedot</h1>
+        <!-- form lomake -->
         <form class="form" action="{{ url_for("index")}}" method="post">
-            
             <label class="label" for="nimi">Nimi:</label>
-            <input type="text" id="nimi" name="nimi" placeholder="Henkilönnimi" class="input" required>
-            
+            <input type="text" id="nimi" name="nimi" placeholder="Henkilönnimi" class="input" maxlength="24" required>
             <br/>
-
             <label class="label" for="pituus">Pituus (cm):</label>
-            <input type="number" step="0.001" id="pituus" name="pituus" placeholder="Kalan pituus" class="input" required>
-            
+            <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 6);" maxlength="6" step="0.001" id="pituus" name="pituus" placeholder="Kalan pituus" class="input" required>
             <br/>        
-            
             <label class="label" for="paino">Paino (kg):</label>
-            <input type="number" step="0.001" id="paino" name="paino" placeholder="Kalan paino" class="input" required>
-
+            <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 6);" maxlength="6" step="0.001" id="paino" name="paino" placeholder="Kalan paino" class="input" required>
             <br/>
-
             <label class="label">Valitse kalalaji:</label>
             <select id="KalaLaji" name="laji" required>
                 <option value="">Valitse kalalaji</option>
@@ -59,30 +53,21 @@
                     <span>muu</span>
                 </option>
             </select>
-
-            <input id="lajiMuu" name="lajiMuu" class="inputMuu" placeholder="Muu mikä">     
-
+            <input id="lajiMuu" name="lajiMuu" class="inputMuu" placeholder="Muu mikä" maxlength="24">     
             <br/>
-        
             <label class="label" for="paikka">Paikka:</label>
-            <input type="text" id="paikka" name="paikka" placeholder="Kalansaanti paikka" class="input" required>
-
+            <input type="text" id="paikka" name="paikka" placeholder="Kalansaanti paikka" class="input" maxlength="24" required>
             <br/>
-        
             <label class="label" for="viehe">Viehe:</label>
-            <input type="text" id="viehe" name="viehe" placeholder="Viehe esim. uistin" class="input" required>
-
+            <input type="text" id="viehe" name="viehe" placeholder="Viehe esim. uistin" class="input" maxlength="24" required>
             <br/>
-        
             <label class="label" for="vapa">Vapa:</label>
-            <input type="text" id="vapa" name="vapa" placeholder="Vapa esim. avokelavapa" class="input" required>
-
+            <input type="text" id="vapa" name="vapa" placeholder="Vapa esim. avokelavapa" class="input" maxlength="24" required>
             <br/>
-
             <label class="label" for="aika">Aika:</label>
             <input type="datetime-local" id="aika" name="aika" class="input" required>
-
             <button type="submit" class="button">Lähetä</button>
+            <!-- teksti onnistuko syöttö vai ei -->
             <span id="text">{{ text }}</span>
         </form>
     </div>
