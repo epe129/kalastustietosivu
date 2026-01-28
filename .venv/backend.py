@@ -163,17 +163,21 @@ def intecraatio():
     button_x = (x + 135)
     error_x = (x + 40)
     def get_input():
-        nopeus = nopeus_input.get() 
+        nopeus = nopeus_input.get()
+        if nopeus == "": 
+            text = tk.Label(uusi_ikkuna, text="Annoit tyhjän arvon", font=('calibre',15)) 
+            text.place(x=error_x+70, y=100)  
+            return
         s = int(nopeus) * 1000
-        if str(s) > "20000" or str(s) < "1":
+        if s > 20000 or s < 1000:
             text = tk.Label(uusi_ikkuna, text="Annoit joko liian suuren tai liian pienen luvun", font=('calibre',15))
             text.place(x=error_x-35, y=100)
-        else:
-            cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
-            # tallettaa tapahtuneen tietokantaan
-            connection.commit()
-            text = tk.Label(uusi_ikkuna, text="Vaihtui onnistuneesti", font=('calibre',15))
-            text.place(x=error_x+70, y=100)
+            return
+        cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
+        # tallettaa tapahtuneen tietokantaan
+        connection.commit()
+        text = tk.Label(uusi_ikkuna, text="Vaihtui onnistuneesti", font=('calibre',15))
+        text.place(x=error_x+70, y=100)
     nopeus_var = tk.IntVar()
     nopeus = tk.Label(uusi_ikkuna, text="Anna diaesityksen nopeus sekunteina(1-20):", font=('calibre',15))
     nopeus_input = tk.Entry(uusi_ikkuna, textvariable=nopeus_var, font=('calibre',15,'normal'))

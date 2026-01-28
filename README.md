@@ -20,13 +20,21 @@ pip install -r requirements.txt
 ```
 
 # Ohjelman suorittaminen
-php sivu:
-```
-http://localhost/kalastustietosivu/frondend/
-```
+
 tkinter ohjelma:
 ```
 python backend.py
+```
+Flask sivu:
+```
+flask run --debug
+```
+
+# Sivu
+
+PHP sivu:
+```
+http://localhost/kalastustietosivu/frondend/
 ```
 Flask sivu:
 ```

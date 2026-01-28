@@ -28,8 +28,7 @@ def index():
         paikka = request.form.get("paikka")
         viehe = request.form.get("viehe")
         vapa = request.form.get("vapa")
-        print(nimi, pituus, paino, laji, aika, paikka, viehe, vapa)
-        if nimi == "" or pituus == "" or laji == "" or paikka == "" or viehe == "" or vapa == "":
+        if nimi == "" or pituus == "" or paino == "" or laji == "" or paikka == "" or viehe == "" or vapa == "":
             text = "Jokin kohta oli tyhjä"
         # lähettää datan tietokantaan
         cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
@@ -55,7 +54,7 @@ def esitys():
     if request.method == 'POST':
         nopeus = request.form.get("nopeus")
         s = int(nopeus) * 1000
-        if str(s) > "20000" or str(s) < "1":
+        if s > 20000 or s < 1000:
             text = "Annoit joko liian suuren tai liian pienen luvun"
         else:        
             cursor.execute(f'INSERT INTO integraatiot (diaNopeus) VALUES ("{s}")')            
