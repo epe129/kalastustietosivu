@@ -59,10 +59,12 @@ def get_input():
             text.place(x=window_width + 335, y=425)
             my_string_var.set("Et täyttänyt kaikkia kohtia tai valinnut lajia")
             return   
+        # tarkistaa että kirjaimia ei ole yli 24 merkki
         if len(nimi) > 24 or len(laji) > 24 or len(viehe) > 24 or len(paikka) > 24 or len(vapa) > 24:
             text.place(x=window_width + 370, y=425)
             my_string_var.set("Maksimi merkkien määrä on 24")
             return
+        # tarkistaa että kirjaimia ei ole yli 4 merkki
         if len(str(pituus)) > 6 or len(str(paino)) > 6:
             text.place(x=window_width + 300, y=425)
             my_string_var.set("Painon ja pituuden maksimi merkkien määrä on 4")
@@ -196,7 +198,7 @@ def tyhjenna_inputit():
    paikka_input.delete(0, END)
    viehe_input.delete(0, END)
    vapa_input.delete(0, END)
-   # jos on käytetty muu inputtia tuhoaa sen muuten jos ei ole käytetty jättää huomioimatta siitä saadun errorin    
+   # jos on käytetty muu inputtia poistaa sen kun lähetetää, muuten jos ei ole käytetty jättää huomioimatta siitä saadun errorin    
    try:
     laji_input_muu.destroy()
     laji_muu.destroy()
