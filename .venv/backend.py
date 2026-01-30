@@ -193,7 +193,7 @@ def tyhjenna_inputit():
    nimi_input.delete(0, END)
    pituus_input.delete(0, END)
    paino_input.delete(0, END)
-   laji_input.set("Valiset kalalaji")
+   laji_input.set("Valitse kalalaji")
    paikka_input.delete(0, END)
    viehe_input.delete(0, END)
    vapa_input.delete(0, END)
