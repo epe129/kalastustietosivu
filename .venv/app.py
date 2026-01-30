@@ -34,30 +34,34 @@ def index():
         # vielä tarkistus ettei mikään ole tyhjä 
         if nimi == "" or pituus == "" or paino == "" or laji == "" or paikka == "" or viehe == "" or vapa == "":
             text = "Jokin kohta oli tyhjä"
-        # lähettää datan tietokantaan
-        cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
-        # saa aina edellisen taulun id:n
-        kalastaja_id = cursor.lastrowid
-        cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
-        viehe_id = cursor.lastrowid
-        cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
-        vapa_id = cursor.lastrowid
-        cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
-        laji_id = cursor.lastrowid
-        cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
-        tarppi_id = cursor.lastrowid
-        cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
-        # tallettaa tapahtuneen tietokantaan
-        mysql.connection.commit()        
-        text = "Tiedot lisättiin onnistuneesti"
+        else:
+            # lähettää datan tietokantaan
+            cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
+            # saa aina edellisen taulun id:n
+            kalastaja_id = cursor.lastrowid
+            cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
+            viehe_id = cursor.lastrowid
+            cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
+            vapa_id = cursor.lastrowid
+            cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
+            laji_id = cursor.lastrowid
+            cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
+            tarppi_id = cursor.lastrowid
+            cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
+            # tallettaa tapahtuneen tietokantaan
+            mysql.connection.commit()        
+            text = "Tiedot lisättiin onnistuneesti"
     return render_template('index.html', text=text)
 @app.route('/esitys', methods = ['POST', 'GET'])
 def esitys():
     text = ""
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
+        # saa nopeuden arvon
         nopeus = request.form.get("nopeus")
+        # laskee dian esityksen nopeuden
         s = int(nopeus) * 1000
+        # tarkistaa ettei dian esityksen nopeus ole liian suuri tai liian pieni
         if s > 20000 or s < 1000:
             text = "Annoit joko liian suuren tai liian pienen luvun"
         else:        

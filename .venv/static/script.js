@@ -4,8 +4,8 @@ let nyt = new Date();
 function LaitaNykyAika() {
     // laittaa automaattisesti nykyajan aikaan
     nyt.setMinutes(nyt.getMinutes() - nyt.getTimezoneOffset());
-    document.getElementById('aika').value = nyt.toISOString().slice(0,16);
-    document.getElementById("aika").max = nyt.toISOString().slice(0,16)
+    document.getElementById('aika').value = nyt.toISOString().slice(0,10);
+    document.getElementById("aika").max = nyt.toISOString().slice(0,10);
 }
 LaitaNykyAika()
 
@@ -14,9 +14,11 @@ document.getElementsByName("laji")[0].addEventListener('change', Tee);
 
 function Tee(){
     // saa arvon
-    let arvo = document.getElementById("KalaLaji").value
+    let arvo = document.getElementById("KalaLaji").value;
     // tarkistaa on muu
     if (arvo == "muu") {
         document.getElementById("lajiMuu").style.display = "block";
+        // jos muu valittu laittaa että arvo tarvitaan
+        document.getElementById("lajiMuu").required = true;
     }
 }

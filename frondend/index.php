@@ -31,8 +31,12 @@ $sql_hae = "SELECT diaNopeus FROM integraatiot;";
 $tulos = $yhteys->query($sql_hae);
 if ($tulos->num_rows > 0) {
     while($rivi = $tulos->fetch_assoc()) {
+        // asettaa nopeuden divin vaihdolle tietokannasta 
         $_SESSION["nopeus"] =  $rivi["diaNopeus"];
     }
+} else {
+    // jos ei ole tietokannassa nopeutta laittaa tämän divin vaihdon nopeudeksi
+    $_SESSION["nopeus"] =  5000;
 }
 ?>
 <!DOCTYPE html>
@@ -172,14 +176,10 @@ if ($tulos->num_rows > 0) {
         </div>
     </div>
     <script>
-        // javacsript on täällä sen takia jotta pystyy ottaa php tietokannasta dia esityksen nopeuden
-        // diat vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
-        let dia_nopeus;
+        // javacsript on täällä sen takia jotta pystyy ottaa php tietokannasta div nopeuden
+        let dia_nopeus = "";
+        // divit vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
         dia_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
-        // perusnopeus jos tietokannassa ei ole nopeutta
-        if (dia_nopeus == "") {
-            dia_nopeus = 5000
-        }
         console.log(dia_nopeus)
         let div_numero = 0;
         Nayta();

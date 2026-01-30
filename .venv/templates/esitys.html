@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
+    <!-- navbar -->
     <ul>
         <li><a href="{{ url_for('index') }}">Kalastustiedot</a></li>
         <li><a href="{{ url_for('esitys') }}">Vaihda diaesityksen nopeutta</a></li>
@@ -16,7 +17,7 @@
         <!-- form lomake -->
         <form class="form" action="{{ url_for("esitys")}}" method="post">    
             <label class="label" for="nopeus">Anna diaesityksen nopeus sekunteina(1-20):</label>
-            <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 2);" maxlength="2" id="nopeus" name="nopeus" placeholder="nopeus. esim 2" class="input" required>
+            <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 2);" maxlength="2" id="nopeus" step="0" name="nopeus" placeholder="nopeus. esim 2" class="input" required>
             <br/>
             <!-- teksti onnistuko syöttö vai ei -->
             <span id="text">{{ text }}</span>

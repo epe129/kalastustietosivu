@@ -55,7 +55,7 @@ def get_input():
             my_string_var.set("Et voi laitta nykyaikaa suurempaa aikaa")
             return
         # tarkistaa ettei arvot ole tyhjiä tai jos on arvoja jotka ei kelpaa
-        if nimi == "" or pituus == "" or paino == "" or paino == "0" or pituus == "0" or laji == "Valiset kalalaji" or laji == "" or paikka == "" or viehe == "" or vapa == "":
+        if nimi == "" or pituus == "" or paino == "" or paino == "0" or pituus == "0" or laji == "Valitse kalalaji" or laji == "" or paikka == "" or viehe == "" or vapa == "":
             text.place(x=window_width + 335, y=425)
             my_string_var.set("Et täyttänyt kaikkia kohtia tai valinnut lajia")
             return   
@@ -121,7 +121,7 @@ l.place(x=x, y=25)
 # luodaan inpu teille tyyppi
 nimi_var=tk.StringVar()
 pituus_var=tk.IntVar()
-paino_var=tk.IntVar()
+paino_var=tk.DoubleVar()
 laji_var=tk.StringVar()
 laji_var_muu=tk.StringVar()
 aika_var=tk.StringVar()
@@ -134,26 +134,16 @@ nimi = tk.Label(root, text="Nimi:", font=('calibre',15))
 nimi_input = tk.Entry(root, textvariable=nimi_var, font=('calibre',15,'normal'), width=25)
 nimi.place(x=nimi_paikka, y=70)
 nimi_input.place(x=x, y=70)
-    
-pituus = tk.Label(root, text="Pituus(cm):", font=('calibre',15))
-pituus_input = tk.Entry(root, textvariable=pituus_var, font=('calibre',15,'normal'), width=25)
-pituus.place(x=pituus_paikka, y=110)
-pituus_input.place(x=x, y=110)
-    
-paino = tk.Label(root, text="Paino(kg):", font=('calibre',15))
-paino_input = tk.Entry(root, textvariable=paino_var, font=('calibre',15,'normal'), width=25)
-paino.place(x=paino_paikka, y=150)
-paino_input.place(x=x, y=150)
 
-laji = tk.Label(root, text="Valiset kalalaji:", font=('calibre',15))
-laji.place(x=laji_paikka, y=190)
+laji = tk.Label(root, text="Valitse kalalaji:", font=('calibre',15))
+laji.place(x=laji_paikka, y=110)
     
 luettelo_lajit = ["ahven", "hauki", "kuha", "siika", "taimen", "made", "lohi", "muu"]
 
 laji_input = ttk.Combobox(root, values=luettelo_lajit, font=('calibre',15), textvariable=laji_var, state="readonly")
-laji_input.set("Valiset kalalaji")
-laji_input.place(x=x, y=190)
-    
+laji_input.set("Valitse kalalaji")
+laji_input.place(x=x, y=110)
+
 def saa_arvon(*args):
     # jos arvo on muu laittaa input johon käyttäjä voi itse kirjoittaa lajin
     if str(laji_var.get()) == "muu":
@@ -161,24 +151,33 @@ def saa_arvon(*args):
         global laji_muu
         laji_muu = tk.Label(root, text="Mikä laji:", font=('calibre',15))
         laji_input_muu = tk.Entry(root, textvariable=laji_var_muu, font=('calibre',15,'normal'), width=25)
-        laji_input_muu.place(x=x, y=230)
-        laji_muu.place(x=laji_muu_paikka, y=230)
-   
+        laji_input_muu.place(x=x, y=150)
+        laji_muu.place(x=laji_muu_paikka, y=150)
 
 # katsoo mikä arvo on valittu luettelosta
 laji_var.trace('w', saa_arvon)
 
-aika_text = tk.Label(root, text="Aika:", font=('calibre',15))
-aika = DateEntry(root, width=12, background="darkblue", foreground="white", borderwidth=2, font=('calibre',15,'normal'), date_pattern="dd.mm.yyyy")
-aika_input = tk.Entry(root, textvariable=aika_var, font=('calibre',15,'normal'))
-aika_text.place(x=aika_paikka, y=270)
-aika.place(x=x, y=270)
+pituus = tk.Label(root, text="Pituus(cm):", font=('calibre',15))
+pituus_input = tk.Entry(root, textvariable=pituus_var, font=('calibre',15,'normal'), width=25)
+pituus.place(x=pituus_paikka, y=190)
+pituus_input.place(x=x, y=190)
+    
+paino = tk.Label(root, text="Paino(kg):", font=('calibre',15))
+paino_input = tk.Entry(root, textvariable=paino_var, font=('calibre',15,'normal'), width=25)
+paino.place(x=paino_paikka, y=230)
+paino_input.place(x=x, y=230)
 
 paikka = tk.Label(root, text="Paikka:", font=('calibre',15))
 paikka_input = tk.Entry(root, textvariable=paikka_var, font=('calibre',15,'normal'), width=25)
-paikka.place(x=paikka_paikka, y=310)
-paikka_input.place(x=x, y=310)
-    
+paikka.place(x=paikka_paikka, y=270)
+paikka_input.place(x=x, y=270)
+
+aika_text = tk.Label(root, text="Aika:", font=('calibre',15))
+aika = DateEntry(root, width=12, background="darkblue", foreground="white", borderwidth=2, font=('calibre',15,'normal'), date_pattern="dd.mm.yyyy")
+aika_input = tk.Entry(root, textvariable=aika_var, font=('calibre',15,'normal'))
+aika_text.place(x=aika_paikka, y=310)
+aika.place(x=x, y=310)
+
 viehe = tk.Label(root, text="Viehe:", font=('calibre',15))
 viehe_input = tk.Entry(root, textvariable=viehe_var, font=('calibre',15,'normal'), width=25)
 viehe.place(x=viehe_paikka, y=350)
@@ -226,18 +225,20 @@ def intecraatio():
     button_x = (x + 135)
     def get_input():
         s = 0
-        nopeus = nopeus_input.get()
+        # tarkistaa että nopeus on int
+        try:
+            nopeus = int(nopeus_input.get())
+        except:
+            text.place(x=x+10, y=100)
+            # asettaa tekstin
+            text_var.set("Annoit kirjaimia, pitää olla numero väliltä 1-20")
+            return
         # tarkistaa ettei ole tyhjä
         if nopeus == "": 
             # asettaa tekstin
             text_var.set("Annoit tyhjän arvon")
             text.place(x=x+110, y=100)
             return
-        # tarkistaa että nopeus on int
-        if isinstance(nopeus, str):
-            text.place(x=x+10, y=100)
-            # asettaa tekstin
-            text_var.set("Annoit kirjaimia, pitää olla numero väliltä 1-20")
         # laskee millisekunteiksi
         s = int(nopeus) * 1000
         # tarkistaa että nopeus on oikealla arvo alueeella
