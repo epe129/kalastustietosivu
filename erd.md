@@ -1,15 +1,11 @@
 ```mermaid
 ---
-title:  Kalastus tietosivu database
+title:  Kalastus ER-kaavio
 config:
     layout: elk
 ---
 erDiagram
-    KALASTAJA {
-        int id PK
-        string nimi
-    } 
-
+    direction RL
     TARPPI {
         int id PK
         datetime aika
@@ -18,6 +14,22 @@ erDiagram
         int vapa_id
         string paikka
     }
+    KALASTAJA ||--o{ TARPPI: saa
+    KALASTAJA {
+        int id PK
+        string nimi
+    } 
+    VIEHE ||--o{ TARPPI: liittyy
+    VIEHE {
+        int id PK
+        string viehe
+    }
+    VAPA ||--o{ TARPPI: liittyy
+    KALA ||--|| TARPPI: saa
+    LAJI ||--o{ KALA: liittyy
+
+    
+    
     
     KALA {
         int id PK
@@ -27,10 +39,7 @@ erDiagram
         int laji_id
     }
 
-    VIEHE {
-        int id PK
-        string viehe
-    }
+   
 
     VAPA {
         int id PK
@@ -41,10 +50,3 @@ erDiagram
         int id PK
         string laji
     }
-
-
-    KALASTAJA ||--o{ TARPPI: saa
-    VIEHE ||--o{ TARPPI: liittyy
-    VAPA ||--o{ TARPPI: liittyy
-    KALA ||--|| TARPPI: saa
-    LAJI ||--o{ KALA: liittyy

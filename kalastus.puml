@@ -1,0 +1,50 @@
+@startuml kalastus
+left to right direction
+
+entity KALASTAJA {
+  +id : int <<PK>>
+  nimi : string
+}
+ 
+entity TARPPI {
+  +id : int <<PK>>
+  aika : datetime
+  kalastaja_id : int <<FK>>
+  viehe_id : int <<FK>>
+  vapa_id : int <<FK>>
+  kala_id : int <<FK>>
+  paikka : string
+}
+ 
+entity VIEHE {
+  +id : int <<PK>>
+  viehe : string
+}
+ 
+entity VAPA {
+  +id : int <<PK>>
+  vapa : string
+}
+ 
+entity KALA {
+  +id : int <<PK>>
+  tarppi_id : int <<FK>>
+  pituus : float
+  paino : float
+  laji_id : int <<FK>>
+}
+ 
+entity LAJI {
+  +id : int <<PK>>
+  laji : string
+}
+ 
+' suhteet: kentästä kenttään
+KALASTAJA::id ||--o{ TARPPI::kalastaja_id : saa
+VIEHE::id     ||--o{ TARPPI::viehe_id    : liittyy
+VAPA::id      ||--o{ TARPPI::vapa_id     : liittyy
+KALA::id      ||--o{ TARPPI::kala_id     : liittyy
+' TARPPI::id ||--|| KALA::tarppi_id : saa
+LAJI::id   ||--o{ KALA::laji_id   : liittyy
+ 
+@enduml
