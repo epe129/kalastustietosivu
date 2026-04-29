@@ -6,6 +6,12 @@ config:
 ---
 erDiagram
     direction RL
+    KALASTAJA ||--o{ TARPPI: saa
+    VIEHE ||--o{ TARPPI: liittyy
+    VAPA ||--o{ TARPPI: liittyy
+    KALA }o--|| TARPPI: saa
+    LAJI ||--o{ KALA: liittyy
+
     TARPPI {
         int id PK
         datetime aika
@@ -14,22 +20,16 @@ erDiagram
         int vapa_id
         string paikka
     }
-    KALASTAJA ||--o{ TARPPI: saa
+
     KALASTAJA {
         int id PK
         string nimi
     } 
-    VIEHE ||--o{ TARPPI: liittyy
+
     VIEHE {
         int id PK
         string viehe
-    }
-    VAPA ||--o{ TARPPI: liittyy
-    KALA ||--|| TARPPI: saa
-    LAJI ||--o{ KALA: liittyy
-
-    
-    
+    }    
     
     KALA {
         int id PK
@@ -38,8 +38,6 @@ erDiagram
         float paino
         int laji_id
     }
-
-   
 
     VAPA {
         int id PK

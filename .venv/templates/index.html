@@ -22,32 +22,14 @@
             <label class="label">Valitse kalalaji:</label>
             <select id="KalaLaji" name="laji" required>
                 <option value="">Valitse kalalaji</option>
-                <option value="ahven">
-                    <span>ahven</span>
+                {%for i in lajit%}
+                <option value="{{ i }}">
+                    <span>{{ i }}</span>
                 </option>
-                <option value="hauki">
-                    <span>hauki</span>
-                </option>
-                <option value="kuha">
-                    <span>kuha</span>
-                </option>
-                <option value="siika">
-                    <span>siika</span>
-                </option>
-                <option value="taimen">
-                    <span>taimen</span>
-                </option>
-                <option value="made">
-                    <span>made</span>
-                </option>
-                <option value="lohi">
-                    <span>lohi</span>
-                </option>
-                <option value="muu">
-                    <span>muu</span>
-                </option>
+                {%endfor%}
+
             </select>
-            <input id="lajiMuu" name="lajiMuu" class="inputMuu" placeholder="Muu mikä" maxlength="24">
+
             <br/>
             <label class="label" for="pituus">Pituus (cm):</label>
             <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 6);" maxlength="6" step="0" id="pituus" name="pituus" placeholder="Kalan pituus" class="input" required>
@@ -70,6 +52,13 @@
             <!-- teksti onnistuko syöttö vai ei -->
             <span id="text">{{ text }}</span>
         </form>
+        
+        <form class="laji_muu_div" id="laji_muu_div" action="{{ url_for("muu")}}" method="post">
+            <h2>Mikä kalalaji</h2>
+            <input  type="text" id="lajiMuu" name="lajiMuu" placeholder="Muu mikä" maxlength="24">
+            <button type="submit" class="button">Lähetä</button>
+        </form>    
+
     </div>
     <script src="/static/script.js"></script>
 </body>

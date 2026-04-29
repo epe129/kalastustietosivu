@@ -15,9 +15,10 @@ document.getElementsByName("laji")[0].addEventListener('change', Tee);
 function Tee(){
     // saa arvon
     let arvo = document.getElementById("KalaLaji").value;
+    console.log(arvo)
     // tarkistaa on muu
     if (arvo == "muu") {
-        document.getElementById("lajiMuu").style.display = "block";
+        document.getElementById("laji_muu_div").style.display = "flex";
         // jos muu valittu laittaa että arvo tarvitaan
         document.getElementById("lajiMuu").required = true;
     }

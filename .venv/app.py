@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 import dbinfo, createdb
 
@@ -16,8 +16,18 @@ mysql = MySQL(app)
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     text = ""
+    lajit = []
     # luo yhteyden tietokannan taluihin
     cursor = mysql.connection.cursor()
+
+    cursor.execute("SELECT laji FROM laji")
+
+    lajit_tulos = cursor.fetchall()
+
+    for x in lajit_tulos:
+        res = ' '.join(x)
+        lajit.append(res)
+    
     if request.method == 'POST':
         # saa inputtien arvot html formista
         nimi = request.form.get("nimi")
@@ -28,30 +38,50 @@ def index():
         paikka = request.form.get("paikka")
         viehe = request.form.get("viehe")
         vapa = request.form.get("vapa")
+        # print(laji)
         # tarkistaa pitääkö ottaa muu input
-        if laji == "muu": 
-            laji = request.form.get("lajiMuu").lower()
+
         # vielä tarkistus ettei mikään ole tyhjä 
         if nimi == "" or pituus == "" or paino == "" or laji == "" or paikka == "" or viehe == "" or vapa == "":
             text = "Jokin kohta oli tyhjä"
         else:
             # lähettää datan tietokantaan
-            cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
-            # saa aina edellisen taulun id:n
-            kalastaja_id = cursor.lastrowid
-            cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
-            viehe_id = cursor.lastrowid
-            cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
-            vapa_id = cursor.lastrowid
+            # cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
+            # # saa aina edellisen taulun id:n
+            # kalastaja_id = cursor.lastrowid
+            # cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
+            # viehe_id = cursor.lastrowid
+            # cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
+            # vapa_id = cursor.lastrowid
+            
+            cursor.execute(f"SELECT * FROM laji WHERE laji ='{laji}'")
+            select_laji = cursor.fetchall()
+            laji_id = [0][0]
+
+            # cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
+            # tarppi_id = cursor.lastrowid
+            # cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
+            # # tallettaa tapahtuneen tietokantaan
+            # mysql.connection.commit()        
+            # text = "Tiedot lisättiin onnistuneesti"
+    return render_template('index.html', text=text, lajit=lajit)
+
+@app.route('/muu', methods = ['POST', 'GET'])
+def muu():
+    if request.method == 'POST':
+        cursor = mysql.connection.cursor()
+        laji = request.form.get("lajiMuu")
+        print(laji)
+        cursor.execute(f"SELECT * FROM laji WHERE laji ='{laji}'")
+        laji_tarkistus = cursor.fetchall()
+        print(laji_tarkistus)
+        if len(laji_tarkistus) == 0:
             cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
-            laji_id = cursor.lastrowid
-            cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
-            tarppi_id = cursor.lastrowid
-            cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
-            # tallettaa tapahtuneen tietokantaan
-            mysql.connection.commit()        
-            text = "Tiedot lisättiin onnistuneesti"
-    return render_template('index.html', text=text)
+            mysql.connection.commit()    
+        else:
+            return redirect(url_for("index"))
+    return redirect(url_for("index"))
+
 @app.route('/esitys', methods = ['POST', 'GET'])
 def esitys():
     text = ""
