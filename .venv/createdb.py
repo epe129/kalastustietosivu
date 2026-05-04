@@ -19,9 +19,7 @@ def db():
         lajit = ["ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana" "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu"]
         for laji in lajit:
             cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
-        # cursor.execute(f'INSERT INTO laji (laji) VALUES ("muu")')
-        cursor.connection.commit()        
-        
+        cursor.connection.commit()          
     except Exception as e:
         print(f"Taulukon luominen epäonnistui {e}")
 db()

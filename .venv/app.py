@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
-import dbinfo, createdb
+import dbinfo
+# tarkistaa että db on olemassa
+import createdb
 
-# tarkistaa aina että tietokanta on olemassa
-createdb.db()
 # luodaan flask app
 app = Flask(__name__)
 # tietokannan yhdistämistiedot

@@ -1,11 +1,10 @@
-import pymysql, createdb, dbinfo, datetime 
+import pymysql, dbinfo, datetime 
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
-
-# tarkistaa aina että tietokanta on olemassa
-# createdb.db()
+# tarkistaa että db on olemassa
+import createdb
 
 # otetaan db tiedot python tiedostosta
 USER = dbinfo.data["USER"]
