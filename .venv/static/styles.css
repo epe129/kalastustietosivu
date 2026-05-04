@@ -37,15 +37,19 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin: 0 auto;
+    margin: 0;
     flex-direction: column;
-    width: 95%;
-    height: 95%;
-    padding: 10px 10px;
+    width: 100%;
+    height: 100%;
+    /* padding: 10px 10px; */
     color: black;
     font-size: 2rem;
 }
 
+.laji_muu_form {
+    margin-top: -500px;
+    flex-direction: column;
+}
 
 /* form button css */
 .button {

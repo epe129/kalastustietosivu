@@ -19,6 +19,7 @@ function Tee(){
     // tarkistaa on muu
     if (arvo == "muu") {
         document.getElementById("laji_muu_div").style.display = "flex";
+        document.getElementById("laji_muu_form").style.display = "flex";
         // jos muu valittu laittaa että arvo tarvitaan
         document.getElementById("lajiMuu").required = true;
     }

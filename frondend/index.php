@@ -114,7 +114,7 @@ if ($tulos->num_rows > 0) {
         <div class="show">
             <h2>Kalalajien saanti määrät</h2>
             <?php
-            $sql_hae = "SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC";
+            $sql_hae = "SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji WHERE kala.laji_id=laji.id GROUP BY laji_id ORDER BY maara DESC";
             $tulos = $yhteys->query($sql_hae);
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {

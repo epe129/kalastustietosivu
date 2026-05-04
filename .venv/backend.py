@@ -5,7 +5,7 @@ from tkinter import *
 from tkcalendar import DateEntry
 
 # tarkistaa aina että tietokanta on olemassa
-createdb.db()
+# createdb.db()
 
 # otetaan db tiedot python tiedostosta
 USER = dbinfo.data["USER"]
@@ -23,6 +23,18 @@ root = tk.Tk()
 root.resizable(width=False, height=False)
 root.geometry("1000x600")
 root.title("Admin")
+
+def luettelo():
+    # kalalaji luettelo
+    global luettelo_lajit
+    luettelo_lajit = []
+    cursor.execute("SELECT laji FROM laji")
+    lajit_tulos = cursor.fetchall()
+    for x in lajit_tulos:
+        res = ' '.join(x)
+        luettelo_lajit.append(res)
+    luettelo_lajit.append("muu")
+luettelo()
 
 def get_input():
     try:
@@ -44,11 +56,6 @@ def get_input():
             text.place(x=window_width + 350, y=425)
             my_string_var.set("Pituus ja paino kohtiin pitää laittaa luku")
             return
-        # jos on muu laji ottaa muu laji inputin
-        if laji == "muu":
-            laji = laji_input_muu.get()
-            # tuhoaa inputin
-            laji_input_muu.delete(0, END)
         # tarkistaa ettei päivämäärä ole nyky aikaa suurempi
         if str(saatu_aika) > str(nyky_aika):
             text.place(x=window_width + 325, y=425)
@@ -70,15 +77,26 @@ def get_input():
             my_string_var.set("Painon ja pituuden maksimi merkkien määrä on 4")
             return
         # lähettää tiedot tietokantaan  
-        cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
-        # saa aina edellisen taulun id:n
-        kalastaja_id = cursor.lastrowid
+        cursor.execute(f"SELECT * FROM kalastaja WHERE nimi ='{nimi}'")
+        select_nimi = cursor.fetchall()
+        print(len(select_nimi))
+        if len(select_nimi) == 0:
+            # lähettää datan tietokantaan
+            cursor.execute(f'INSERT INTO kalastaja (nimi) VALUES ("{nimi}")')        
+            # saa aina edellisen taulun id:n
+            kalastaja_id = cursor.lastrowid
+        else:
+            kalastaja_id = select_nimi[0][0]
+        
         cursor.execute(f'INSERT INTO viehe (viehe) VALUES ("{viehe}")')
         viehe_id = cursor.lastrowid
         cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
         vapa_id = cursor.lastrowid
-        cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
-        laji_id = cursor.lastrowid
+        
+        cursor.execute(f"SELECT * FROM laji WHERE laji ='{laji}'")
+        select_laji = cursor.fetchall()
+        laji_id = select_laji[0][0]
+        
         cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{saatu_aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
         tarppi_id = cursor.lastrowid
         cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')
@@ -123,7 +141,6 @@ nimi_var=tk.StringVar()
 pituus_var=tk.IntVar()
 paino_var=tk.DoubleVar()
 laji_var=tk.StringVar()
-laji_var_muu=tk.StringVar()
 aika_var=tk.StringVar()
 paikka_var=tk.StringVar()
 viehe_var=tk.StringVar()
@@ -137,56 +154,101 @@ nimi_input.place(x=x, y=70)
 
 laji = tk.Label(root, text="Valitse kalalaji:", font=('calibre',15))
 laji.place(x=laji_paikka, y=110)
-    
-luettelo_lajit = ["ahven", "hauki", "kuha", "siika", "taimen", "made", "lohi", "muu"]
 
 laji_input = ttk.Combobox(root, values=luettelo_lajit, font=('calibre',15), textvariable=laji_var, state="readonly")
 laji_input.set("Valitse kalalaji")
 laji_input.place(x=x, y=110)
 
+def muu():
+    uusi_ikkuna = Toplevel(root)  
+    uusi_ikkuna.title("Uusi kalalaji")
+    uusi_ikkuna.geometry("450x250")  
+    uusi_ikkuna.resizable(width=False, height=False)
+    window_width = uusi_ikkuna.winfo_width()
+    
+    def get_input():
+        try:
+            laji_text = laji_input_muu.get()
+        except:
+            pass
+        # tarkistaa ettei ole tyhjä
+        if laji_text == "": 
+            # asettaa tekstin
+            text_var.set("Annoit tyhjän arvon")
+            text.place(x=window_width+100, y=170)
+            return
+        
+        try:
+            id = 0
+            cursor.execute(f"SELECT * FROM laji WHERE laji ='{laji_text}'")
+            laji_tarkistus = cursor.fetchall()
+
+            if len(laji_tarkistus) == 0:
+                cursor.execute(f"SELECT * FROM laji")
+                laji_id = cursor.fetchall()
+                id = len(laji_id) + 1
+                cursor.execute(f'INSERT INTO laji (id, laji) VALUES ("{id}", "{laji_text}")')
+                # tallettaa tapahtuneen tietokantaan
+                connection.commit()
+                text_var.set("Arvo lisätty onnistuneesti")
+                text.place(x=window_width+100, y=170)
+                laji_input_muu.delete(0, END)
+            else:
+                pass
+        except ValueError as e:
+            print(e)
+
+    text_var = StringVar()
+    laji_var_muu=tk.StringVar()
+    text_var.set("")
+    # luodaan inputit ja labelit
+    text = tk.Label(uusi_ikkuna, textvariable = text_var, font=('calibre',15))
+    text.place(x=x+10, y=100)
+    laji_muu_text = tk.Label(uusi_ikkuna, text="Anna uusi kalalaji:", font=('calibre',15))
+    laji_input_muu = tk.Entry(uusi_ikkuna, textvariable=laji_var_muu, font=('calibre',15,'normal'), width=25)
+    laji_input_muu.place(x=window_width + 90, y=70)
+    laji_muu_text.place(x=window_width + 140, y=30)
+    button = ttk.Button(uusi_ikkuna, text="Lähetä", command=get_input, style='TButton', cursor="hand2")
+    button.place(x=window_width + 155, y=120)
+
 def saa_arvon(*args):
     # jos arvo on muu laittaa input johon käyttäjä voi itse kirjoittaa lajin
     if str(laji_var.get()) == "muu":
-        global laji_input_muu
-        global laji_muu
-        laji_muu = tk.Label(root, text="Mikä laji:", font=('calibre',15))
-        laji_input_muu = tk.Entry(root, textvariable=laji_var_muu, font=('calibre',15,'normal'), width=25)
-        laji_input_muu.place(x=x, y=150)
-        laji_muu.place(x=laji_muu_paikka, y=150)
+        muu()
 
 # katsoo mikä arvo on valittu luettelosta
 laji_var.trace('w', saa_arvon)
 
 pituus = tk.Label(root, text="Pituus(cm):", font=('calibre',15))
 pituus_input = tk.Entry(root, textvariable=pituus_var, font=('calibre',15,'normal'), width=25)
-pituus.place(x=pituus_paikka, y=190)
-pituus_input.place(x=x, y=190)
+pituus.place(x=pituus_paikka, y=150)
+pituus_input.place(x=x, y=150)
     
 paino = tk.Label(root, text="Paino(kg):", font=('calibre',15))
 paino_input = tk.Entry(root, textvariable=paino_var, font=('calibre',15,'normal'), width=25)
-paino.place(x=paino_paikka, y=230)
-paino_input.place(x=x, y=230)
+paino.place(x=paino_paikka, y=190)
+paino_input.place(x=x, y=190)
 
 paikka = tk.Label(root, text="Paikka:", font=('calibre',15))
 paikka_input = tk.Entry(root, textvariable=paikka_var, font=('calibre',15,'normal'), width=25)
-paikka.place(x=paikka_paikka, y=270)
-paikka_input.place(x=x, y=270)
+paikka.place(x=paikka_paikka, y=230)
+paikka_input.place(x=x, y=230)
 
 aika_text = tk.Label(root, text="Aika:", font=('calibre',15))
 aika = DateEntry(root, width=12, background="darkblue", foreground="white", borderwidth=2, font=('calibre',15,'normal'), date_pattern="dd.mm.yyyy")
 aika_input = tk.Entry(root, textvariable=aika_var, font=('calibre',15,'normal'))
-aika_text.place(x=aika_paikka, y=310)
-aika.place(x=x, y=310)
+aika_text.place(x=aika_paikka, y=270)
+aika.place(x=x, y=270)
 
 viehe = tk.Label(root, text="Viehe:", font=('calibre',15))
 viehe_input = tk.Entry(root, textvariable=viehe_var, font=('calibre',15,'normal'), width=25)
-viehe.place(x=viehe_paikka, y=350)
-viehe_input.place(x=x, y=350)
+viehe.place(x=viehe_paikka, y=310)
+viehe_input.place(x=x, y=310)
 
 vapa = tk.Label(root, text="Vapa:", font=('calibre',15))
 vapa_input = tk.Entry(root, textvariable=vapa_var, font=('calibre',15,'normal'), width=25)
-vapa.place(x=vapa_paikka, y=390)
-vapa_input.place(x=x, y=390)
+vapa.place(x=vapa_paikka, y=350)
+vapa_input.place(x=x, y=350)
 
 def tyhjenna_inputit():
    # tyhjen tää inputit kun arvot lähetetty
@@ -197,18 +259,13 @@ def tyhjenna_inputit():
    paikka_input.delete(0, END)
    viehe_input.delete(0, END)
    vapa_input.delete(0, END)
-   # jos on käytetty muu inputtia poistaa sen kun lähetetää, muuten jos ei ole käytetty jättää huomioimatta siitä saadun errorin    
-   try:
-    laji_input_muu.destroy()
-    laji_muu.destroy()
-   except:
-       pass
+   
    
 # luodaan tyylit buttoniin ja luodaan buttoni
 style = ttk.Style()
 style.configure('TButton', font = ('calibri', 15, 'bold'), borderwidth = '4')
 button = ttk.Button(text="Lähetä", command=get_input, style='TButton', cursor="hand2")
-button.place(x=button_paikka, y=475)
+button.place(x=button_paikka, y=390)
 
 # voit vaihtaa kuinka nopeaa dia esitys menee sivulla
 def intecraatio():
@@ -252,6 +309,8 @@ def intecraatio():
         connection.commit()
         text_var.set("Vaihtui onnistuneesti")
         text.place(x=x+110, y=100)
+        nopeus_input.delete(0, END)
+
     text_var = StringVar()
     text_var.set("")
     # luodaan inputit ja labelit
