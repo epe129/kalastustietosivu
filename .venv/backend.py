@@ -4,7 +4,6 @@ import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
 
-
 # otetaan db tiedot python tiedostosta
 USER = dbinfo.data["USER"]
 PASSWORD = dbinfo.data["PASSWORD"]

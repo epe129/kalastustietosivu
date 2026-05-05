@@ -30,9 +30,7 @@
                 <option value="muu">
                     <span>muu</span>
                 </option>
-
             </select>
-
             <br/>
             <label class="label" for="pituus">Pituus (cm):</label>
             <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 6);" maxlength="6" step="0" id="pituus" name="pituus" placeholder="Kalan pituus" class="input" required>
@@ -65,9 +63,9 @@
         </form>
         <div class="laji_muu_div" id="laji_muu_div">
             <form class="laji_muu_form" id="laji_muu_form" action="{{ url_for("muu")}}" method="post">
-                <h2>Mikä kalalaji</h2>
+                <h2 id="h2_muu">Anna uusi kalalaji:</h2>
                 <input  type="text" id="lajiMuu" name="lajiMuu" placeholder="Muu mikä" maxlength="24">
-                <button type="submit" class="button">Lähetä</button>
+                <button type="submit" class="button_muu">Lähetä</button>
             </form>    
         </div>
     </div>
