@@ -86,7 +86,7 @@ def muu():
             cursor.execute(f'INSERT INTO laji (id, laji) VALUES ("{id}", "{laji}")')
             mysql.connection.commit()    
             # teksti onnistuuko uuden lajin lisääminen
-            flash('Uusi laji lisättiin onnistuneesti ')
+            flash('Uusi laji lisättiin onnistuneesti tietokantaan ')
         else:
             flash('Laji on jo tietokannassa ')
             return redirect(url_for('index'))

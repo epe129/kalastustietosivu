@@ -186,8 +186,8 @@ def muu():
                 cursor.execute(f'INSERT INTO laji (id, laji) VALUES ("{id}", "{laji_text}")')
                 # tallettaa tapahtuneen tietokantaan
                 connection.commit()
-                text_var.set("Uusi laji lisättiin onnistuneesti")
-                text.place(x=window_width+90, y=170)
+                text_var.set("Uusi laji lisättiin onnistuneesti tietokantaan")
+                text.place(x=window_width+40, y=170)
                 # päivitää listaa
                 laji_input_muu.delete(0, END)
                 laji_input.set("Valitse kalalaji")
