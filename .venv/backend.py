@@ -3,8 +3,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
 from tkcalendar import DateEntry
-# tarkistaa että db on olemassa
-import createdb
+
 
 # otetaan db tiedot python tiedostosta
 USER = dbinfo.data["USER"]
@@ -157,7 +156,7 @@ laji.place(x=laji_paikka, y=110)
 laji_input = ttk.Combobox(root, values=luettelo_lajit, font=('calibre',15), textvariable=laji_var, state="readonly")
 laji_input.set("Valitse kalalaji")
 laji_input.place(x=x, y=110)
-
+# jos laitaa muu arvon, avaa ikkunan johon voi syöttää arvon
 def muu():
     uusi_ikkuna = Toplevel(root)  
     uusi_ikkuna.title("Uusi kalalaji")
@@ -174,9 +173,8 @@ def muu():
         if laji_text == "": 
             # asettaa tekstin
             text_var.set("Annoit tyhjän arvon")
-            text.place(x=window_width+100, y=170)
+            text.place(x=window_width+140, y=170)
             return
-        
         try:
             id = 0
             cursor.execute(f"SELECT * FROM laji WHERE laji ='{laji_text}'")
@@ -189,11 +187,19 @@ def muu():
                 cursor.execute(f'INSERT INTO laji (id, laji) VALUES ("{id}", "{laji_text}")')
                 # tallettaa tapahtuneen tietokantaan
                 connection.commit()
-                text_var.set("Arvo lisätty onnistuneesti")
-                text.place(x=window_width+100, y=170)
+                text_var.set("Uusi laji lisättiin onnistuneesti")
+                text.place(x=window_width+90, y=170)
+                # päivitää listaa
                 laji_input_muu.delete(0, END)
+                laji_input.set("Valitse kalalaji")
+                luettelo_lajit.remove("muu")
+                luettelo_lajit.append(laji_text)
+                luettelo_lajit.append("muu")
+                laji_input['values'] = luettelo_lajit
             else:
-                pass
+                laji_input.set("Valitse kalalaji")
+                text_var.set("Laji on jo tietokannassa")
+                text.place(x=window_width+110, y=170)
         except ValueError as e:
             print(e)
 
@@ -216,7 +222,7 @@ def saa_arvon(*args):
         muu()
 
 # katsoo mikä arvo on valittu luettelosta
-laji_var.trace('w', saa_arvon)
+laji_var.trace_add('write', saa_arvon)
 
 pituus = tk.Label(root, text="Pituus(cm):", font=('calibre',15))
 pituus_input = tk.Entry(root, textvariable=pituus_var, font=('calibre',15,'normal'), width=25)

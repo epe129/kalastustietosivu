@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 import dbinfo
-# tarkistaa että db on olemassa
-import createdb
+
 
 # luodaan flask app
 app = Flask(__name__)
+app.secret_key = 'dfhfdhfdhd'
 # tietokannan yhdistämistiedot
 app.config['MYSQL_HOST'] = dbinfo.data["HOST"]
 app.config['MYSQL_USER'] = dbinfo.data["USER"]
 app.config['MYSQL_PASSWORD'] = dbinfo.data["PASSWORD"]
 app.config['MYSQL_DB'] = dbinfo.data["DBNIMI"]
 mysql = MySQL(app)
+
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
@@ -88,8 +89,11 @@ def muu():
             id = len(laji_id) + 1
             cursor.execute(f'INSERT INTO laji (id, laji) VALUES ("{id}", "{laji}")')
             mysql.connection.commit()    
+            # teksti oniistuuko uuden lajin lisääminen
+            flash('Uusi laji lisättiin onnistuneesti ')
         else:
-            return redirect(url_for("index"))
+            flash('Laji on jo tietokannassa ')
+            return redirect(url_for('index'))
     return redirect(url_for("index"))
 
 @app.route('/esitys', methods = ['POST', 'GET'])

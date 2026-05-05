@@ -54,6 +54,7 @@ body {
 /* form button css */
 .button {
     margin-top: 5px;
+    margin-right: -10px;
     float: right;
     background-color: white;
     border: 1px solid black;
@@ -99,5 +100,5 @@ ul li a:hover {
 }
 /* teksti onnituiko vai menikö pieleen tietojen lähettäminen */
 #text {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
 }

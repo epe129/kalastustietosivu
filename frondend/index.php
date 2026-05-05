@@ -163,13 +163,25 @@ if ($tulos->num_rows > 0) {
         <div class="show">
             <h2>Kalalajien saanti määrät eri vavoilla</h2>
             <?php
-            $sql_hae = "SELECT vapa, COUNT(vapa) as maara FROM vapa GROUP BY vapa ORDER BY maara DESC";
-            $tulos = $yhteys->query($sql_hae);
-            if ($tulos->num_rows > 0) {
-                while($rivi = $tulos->fetch_assoc()) {
-                    echo $rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
-                }
-            } else {
+            foreach ($lajit as $x) {
+                $sql_hae = "SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND tarppi.id=kala.tarppi_id AND kala.laji_id=laji.id AND laji='$x' GROUP BY vapa;";
+                $tulos = $yhteys->query($sql_hae);
+                if ($tulos->num_rows > 0) {
+                    while($rivi = $tulos->fetch_assoc()) {
+                        $lajiKuvaHaku = $rivi["laji"];
+                        if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
+                        {
+                            echo "<img src='./kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                        } else {
+                            echo "🐟";
+                        }
+                        echo $rivi["laji"]. " ".$rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
+                        $rivien_maarat += 1;
+                    }
+                } 
+            }
+            // jos tulos on nolla
+            if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
             }
             ?>
