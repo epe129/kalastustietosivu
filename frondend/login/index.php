@@ -16,16 +16,6 @@
             min-height: 70vh;
         }
 
-        div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            margin: 0;
-
-        }
-
         form {
             background-color: white;
             padding: 20px 50px 40px 40px;
@@ -88,25 +78,19 @@
     </style>
 </head>
 <body>
-    <div>
-        <h1>Tervetuloa kalastus sivulle registeröidy aloittaaksesi omien kala tietojen tallennus</h1>
-        <form action="./data/handleRegister.php" method="POST">
-            <h1>Register</h1>
-            <br>
-            <label>name</label>
-            <input type="text" name="name" require>
-            <br>
-            <label>email</label>
-            <input type="email" name="email" require>
-            <br>
-            <label>password</label>
-            <input type="password" name="password" require>
-            <br>
-            <button type="submit">Läheta</button>
-            <br>
-            <br>
-            <a href="./login/index.php">Log in</a>
-        </form>
-    </div>
+    <form action="./data/handleLogin.php" method="POST">
+        <h1>Log in</h1>
+        <br>
+        <label>email</label>
+        <input type="email" name="email" require>
+        <br>
+        <label>password</label>
+        <input type="password" name="password" require>
+        <br>
+        <button type="submit">Lähetä</button>
+        <br>
+        <br>
+        <a href="../index.php">Register</a>
+    </form>
 </body>
 </html>
