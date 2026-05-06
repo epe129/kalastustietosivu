@@ -221,7 +221,7 @@ if (!isset($_SESSION['email'])) {
             <span style="font-size: 1.5rem;"></span>
         </form>
         <div class="laji_muu_div" id="laji_muu_div">
-            <form class="laji_muu_form" id="laji_muu_form" action="" method="post">
+            <form class="laji_muu_form" id="laji_muu_form" action="../data/handleMuuAdd.php" method="post">
                 <h2 style="margin-bottom: 10px;" id="h2_muu"></h2>
                 <input type="text" id="muu" placeholder="Muu mikä" maxlength="24" style="font-size: 1.5rem;">
                 <button type="submit" class="button_muu">Lähetä</button>
