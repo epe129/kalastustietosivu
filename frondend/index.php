@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,6 +105,20 @@
             <br>
             <button type="submit">Läheta</button>
             <br>
+            <?php
+            if (isset($_SESSION['errorMessage'])) {
+                echo "
+                <br/>
+                <span>Jokin meni pieleen</span>
+                <br/>";
+            }
+            if (isset($_SESSION['AlreadyExist'])) {
+                echo "
+                <br/>
+                <span>Sähköposti on jo käytössä</span>
+                <br/>";
+            }
+            ?>
             <br>
             <a href="./login/index.php">Log in</a>
         </form>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +79,7 @@
     </style>
 </head>
 <body>
-    <form action="./data/handleLogin.php" method="POST">
+    <form action="../data/handleLogin.php" method="POST">
         <h1>Log in</h1>
         <br>
         <label>email</label>
@@ -89,6 +90,15 @@
         <br>
         <button type="submit">Lähetä</button>
         <br>
+        <?php
+        if (isset($_SESSION['errorMessageUser'])) {
+            echo "
+            <br/>
+            <span>Sähköposti tai salasanasi on väärin</span>
+            <br/>
+            ";
+        }
+        ?>
         <br>
         <a href="../index.php">Register</a>
     </form>

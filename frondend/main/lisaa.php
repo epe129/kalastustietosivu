@@ -1,0 +1,233 @@
+<?php
+session_start();
+// Saadaan yhteys tietokantaan 
+$configs = include('../data/db_connection.php');
+// tarkistetaan että käyttäjä on kirjautunut
+if (!isset($_SESSION['email'])) {
+    header("Location: ../index.php");
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lisää kalastustietoja</title>
+    <style>
+        html {
+            background-image: url('../kuvat/tausta.jpg'); 
+            background-repeat: no-repeat; 
+            background-size: 100% 100%; 
+            height: 100%;
+        }
+        /* div css */
+        .main-div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+        .otsikko {
+            background-color: white;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 3rem;
+        }
+        /* form, input ja label css */
+        .form {
+            background-color: white;
+            padding: 25px;
+            width: 400px;
+            border: 1px solid rgb(101, 100, 100);
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px rgb(101, 100, 100);
+        }
+        .label {
+            display: block;
+            font-size: 1.2rem;
+        }
+        .input {
+            width: 100%;
+            padding: 2px;
+        }
+        /* laji muu form ja div css */
+        .laji_muu_div {
+            background-color: rgba(255, 255, 255, 0.4);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            display: none;
+            position: absolute;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            color: black;
+            font-size: 2rem;
+        }
+        .laji_muu_form {
+            margin-top: -500px;
+            flex-direction: column;
+        }
+        .button_muu {
+            margin-top: 5px;
+            float: right;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+        /* form button css */
+        .button {
+            margin-top: 5px;
+            margin-right: -10px;
+            float: right;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+        /* select css eli kalalaji valikon css */
+        select {
+            border: 1px solid #a9a9a9;
+            background: #eeeeee;
+            padding: 2px;
+            transition: 0.4s;
+            width: 100%;
+            text-align: center;
+        }
+        select:hover, select:focus {
+            background: #dddddd;
+        }
+        select, input {
+            margin: 8px 0px;
+            font-size: 1.1rem;
+        }
+        /* navbar css */
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #333333;
+            display: flex;
+            border-radius: 5px;
+            width: 100%;
+        }
+        ul li a {
+            display: block;
+            color: white;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        ul li a:hover {
+            background-color: #111111;
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar -->
+    <ul>
+        <li><a href="index.php">Kalastustiedot</a></li>
+        <li><a href="lisaa.php">Lisää kalastustietoja</a></li>
+    </ul>
+    <div class="main-div">
+        <h1 class="otsikko">Lisää kalastustiedot</h1>
+        <!-- form lomake -->
+        <form class="form" action="../data/handleAdd.php" method="post">
+            <label class="label" for="pituus">Kalalaji:</label>
+            <select id="KalaLaji" name="laji" required>
+                <option value="">Valitse kalalaji</option>
+                <?php
+                    $sql = "SELECT laji FROM laji";
+                    $tulos = $conn->query($sql);
+                    if ($tulos->num_rows > 0) {
+                        while($rivi = $tulos->fetch_assoc()) {
+                            echo "
+                            <option value='{$rivi['laji']}'>
+                            {$rivi['laji']}   
+                            </option>
+                            ";
+                        }
+                    }
+                ?>
+                <option value="muu">
+                    <span>muu</span>
+                </option>
+            </select>
+            <br/>
+            <label class="label" for="pituus">Pituus (cm):</label>
+            <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 6);" maxlength="6" step="0" id="pituus" name="pituus" placeholder="Kalan pituus" class="input" required>
+            <br/>        
+            <label class="label" for="paino">Paino (kg):</label>
+            <input type="number" oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, 6);" maxlength="6" step="0.01" id="paino" name="paino" placeholder="Kalan paino" class="input" required>                 
+            <br/>
+            <label class="label" for="paikka">Paikka:</label>
+            <input type="text" id="paikka" name="paikka" placeholder="Kalansaanti paikka" class="input" maxlength="24" required>
+            <br/>
+            <label class="label" for="aika">Aika:</label>
+            <input type="date" id="aika" name="aika" class="input" required>
+            <br/>
+            <label class="label" for="viehe">Viehe:</label>
+            <select id="viehe" name="viehe" required>
+                <option>Valitse viehe</option>
+                <?php
+                    $sql = "SELECT viehe FROM viehe";
+                    $tulos = $conn->query($sql);
+                    if ($tulos->num_rows > 0) {
+                        while($rivi = $tulos->fetch_assoc()) {
+                            echo "
+                            <option value='{$rivi['viehe']}'>
+                            {$rivi['viehe']}   
+                            </option>
+                            ";
+                        }
+                    }
+                ?>
+                <option value="muu">
+                    <span>muu</span>
+                </option>
+            </select>
+            <br/>
+            <label class="label" for="vapa">Vapa:</label>
+            <select id="vapa" name="vapa" required>
+                <option value="">Valitse vapa</option>
+                <?php
+                    $sql = "SELECT vapa FROM vapa";
+                    $tulos = $conn->query($sql);
+                    if ($tulos->num_rows > 0) {
+                        while($rivi = $tulos->fetch_assoc()) {
+                            echo "
+                            <option value='{$rivi['vapa']}'>
+                            {$rivi['vapa']}   
+                            </option>
+                            ";
+                        }
+                    }
+                ?>
+                <option value="muu">
+                    <span>muu</span>
+                </option>
+            </select>
+            <br/>
+            <button type="submit" class="button">Lähetä</button>
+            <!-- teksti onnistuko syöttö vai ei -->
+            <span style="font-size: 1.5rem;"></span>
+        </form>
+        <div class="laji_muu_div" id="laji_muu_div">
+            <form class="laji_muu_form" id="laji_muu_form" action="" method="post">
+                <h2 style="margin-bottom: 10px;" id="h2_muu"></h2>
+                <input type="text" id="muu" placeholder="Muu mikä" maxlength="24" style="font-size: 1.5rem;">
+                <button type="submit" class="button_muu">Lähetä</button>
+            </form>    
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

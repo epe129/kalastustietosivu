@@ -1,3 +1,5 @@
+# tee tästä admin
+
 import pymysql, dbinfo, datetime 
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -11,6 +13,7 @@ DBNIMI = dbinfo.data["DBNIMI"]
 PORT = dbinfo.data["PORT"]
 HOST = dbinfo.data["HOST"]
 
+password = ""
 # yhteys tietokantaan
 connection = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, database=DBNIMI)
 cursor = connection.cursor()
