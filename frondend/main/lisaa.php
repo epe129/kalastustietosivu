@@ -218,7 +218,46 @@ if (!isset($_SESSION['email'])) {
             <br/>
             <button type="submit" class="button">Lähetä</button>
             <!-- teksti onnistuko syöttö vai ei -->
-            <span style="font-size: 1.5rem;"></span>
+            <?php
+            if (isset($_SESSION['SuccesfullAdd'])) {
+                echo "
+                <br/>
+                <span style='font-size: 1.5rem;'>Tiedot lisättiin onnistuneesti</span>
+                <br/>
+                ";
+            }
+            if (isset($_SESSION['ErrorAdd'])) {
+                echo "
+                <br/>
+                <span style='font-size: 1.5rem;'>Tietojen lisääminen epäonnistui</span>
+                <br/>
+                ";
+            }
+            if (isset($_SESSION['SuccesfullAddMuu'])) {
+                $text = $_SESSION["TextMuu"];
+                echo "
+                <br/>
+                <span style='font-size: 1.5rem;'>Uusi $text lisättiin onnistuneesti</span>
+                <br/>
+                ";
+            }
+            if (isset($_SESSION['ErrorAdd'])) {
+                $text = $_SESSION["TextMuu"];
+                echo "
+                <br/>
+                <span style='font-size: 1.5rem;'>Uuden $text lisääminen epäonnistui</span>
+                <br/>
+                ";
+            }
+            if (isset($_SESSION['AlreadyExistMuu'])) {
+                $text = $_SESSION["TextMuu"];
+                echo "
+                <br/>
+                <span style='font-size: 1.5rem;'>$text on jo tietokannassa</span>
+                <br/>
+                ";
+            }
+            ?>
         </form>
         <div class="laji_muu_div" id="laji_muu_div">
             <form class="laji_muu_form" id="laji_muu_form" action="../data/handleMuuAdd.php" method="post">

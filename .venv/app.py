@@ -59,9 +59,11 @@ def index():
             cursor.execute(f'INSERT INTO vapa (vapa) VALUES ("{vapa}")')
             vapa_id = cursor.lastrowid            
             # otetaan lajin id
+            
             cursor.execute(f"SELECT * FROM laji WHERE laji ='{laji}'")
             select_laji = cursor.fetchall()
             laji_id = select_laji[0][0]
+
             cursor.execute(f'INSERT INTO tarppi (aika, kalastaja_id, viehe_id, vapa_id, paikka) VALUES ("{aika}", "{kalastaja_id}", "{viehe_id}", "{vapa_id}", "{paikka}")')
             tarppi_id = cursor.lastrowid
             cursor.execute(f'INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES ("{tarppi_id}", "{pituus}", "{paino}", "{laji_id}")')

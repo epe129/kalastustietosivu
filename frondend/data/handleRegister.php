@@ -1,7 +1,7 @@
 <!-- tee että tarkistaa onko sähköposti tietokannassa -->
 <?php
 session_start();
-$configs = include('db_connection.php');
+$db = include('db_connection.php');
 $name = $email = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     unset( $_SESSION['errorMessage'] );

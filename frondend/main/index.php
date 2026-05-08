@@ -1,3 +1,4 @@
+<!-- jatka kyselyjen korjaamista -->
 <?php
 session_start();
 // Saadaan yhteys tietokantaan 
@@ -21,16 +22,13 @@ if ($tulos->num_rows > 0) {
             }
     }
 }
-$sql_hae = "SELECT diaNopeus FROM integraatiot;";
-$tulos = $conn->query($sql_hae);
+$email = $_SESSION["email"];
+$kysely_email = "SELECT id FROM kalastaja WHERE email ='$email'";
+$tulos = $conn->query($kysely_email);  
 if ($tulos->num_rows > 0) {
     while($rivi = $tulos->fetch_assoc()) {
-        // asettaa nopeuden divin vaihdolle tietokannasta 
-        $_SESSION["nopeus"] =  $rivi["diaNopeus"];
+        $kalastaja_id = $rivi["id"];
     }
-} else {
-    // jos ei ole tietokannassa nopeutta laittaa tämän divin vaihdon nopeudeksi
-    $_SESSION["nopeus"] =  5000;
 }
 ?>
 <!DOCTYPE html>
@@ -43,9 +41,9 @@ if ($tulos->num_rows > 0) {
             /* html css */
             html {
                 background-image: url('../kuvat/tausta.jpg'); 
-                background-repeat: no-repeat; 
-                background-size: 100% 100%; 
-                height: 100%;
+                background-repeat: no-repeat;
+                background-attachment: fixed;  
+                background-size: cover;
             }
             /* otsikon css */
             .title {
@@ -111,13 +109,13 @@ if ($tulos->num_rows > 0) {
             ?>
         </li>
     </ul>
-    <h1 class="title">Kalastustietoja</h1> 
-    <div class="main">
-        <div class="show">
-            <h2 style="font-size: 2rem;">Kalat painon mukaan</h2>
-            <?php
+    <?php
+    echo "<h1 class='title'>Kalastustietoja</h1>";
+    echo "<div class='main'>";
+        echo "<div class='show'>";
+            echo "<h2>Kalat painon mukaan</h2>";
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, paino FROM kala, laji WHERE kala.laji_id=laji.id ORDER BY paino DESC";
+            $sql_hae = "SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY paino DESC";
             $rivien_maarat = 0;
             $tulos = $conn->query($sql_hae);
             // tarkistaa että tivejä on enemmän kuin nolla
@@ -127,16 +125,16 @@ if ($tulos->num_rows > 0) {
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                     {
-                        echo "<img src='./kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                        echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
                     } else {
-                        echo "🐟";
+                        "🐟";
                     }
                     if ($rivien_maarat == 1) {
                         echo "🥇".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
                     } else if ($rivien_maarat == 2) {
                         echo "🥈".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
                     } else if ($rivien_maarat == 3) {
-                        echo "🥉".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
+                        echo"🥉".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
                     } else {
                         echo $rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
                     }
@@ -144,11 +142,9 @@ if ($tulos->num_rows > 0) {
             } else {
                 echo "Mitään ei löytynyt";
             }            
-            ?>
-        </div>
-        <div class="show">
-            <h2>Kalat pituuden mukaan</h2>
-            <?php
+        echo "</div>";
+        echo "<div class='show'>";
+            echo "<h2>Kalat pituuden mukaan</h2>";
             $sql_hae = "SELECT laji, pituus FROM kala, laji WHERE kala.laji_id=laji.id ORDER BY pituus DESC";
             $rivien_maarat = 0;
             $tulos = $conn->query($sql_hae);
@@ -158,7 +154,7 @@ if ($tulos->num_rows > 0) {
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                     {
-                        echo "<img src='./kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                        echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
                     } else {
                         echo "🐟";
                     }
@@ -175,11 +171,9 @@ if ($tulos->num_rows > 0) {
             } else {
                 echo "Mitään ei löytynyt";
             }
-        ?>
-        </div>
-        <div class="show">
-            <h2>Kalalajien saanti määrät</h2>
-            <?php
+        echo "</div>";
+        echo "<div class='show'>";
+            echo "<h2>Kalalajien saanti määrät</h2>";
             $sql_hae = "SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji WHERE kala.laji_id=laji.id GROUP BY laji_id ORDER BY maara DESC";
             $tulos = $conn->query($sql_hae);
             if ($tulos->num_rows > 0) {
@@ -187,7 +181,7 @@ if ($tulos->num_rows > 0) {
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                     {
-                        echo "<img src='./kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                        echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
                     } else {
                         echo "🐟";
                     }
@@ -196,11 +190,9 @@ if ($tulos->num_rows > 0) {
             } else {
                 echo "Mitään ei löytynyt";
             }
-            ?>
-        </div>
-        <div class="show">
-            <h2>Kalalajien saanti määrät eri vieheillä</h2>
-            <?php
+        echo "</div>";
+        echo "<div class='show'>";
+            echo "<h2>Kalalajien saanti määrät eri vieheillä</h2>";
             $rivien_maarat = 0;
             // käy lajit arraysta
             foreach ($lajit as $x) {
@@ -211,7 +203,7 @@ if ($tulos->num_rows > 0) {
                         $lajiKuvaHaku = $rivi["laji"];
                         if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                         {
-                            echo "<img src='./kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                            echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
                         } else {
                             echo "🐟";
                         }
@@ -224,11 +216,9 @@ if ($tulos->num_rows > 0) {
             if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
             }
-            ?>
-        </div>
-        <div class="show">
-            <h2>Kalalajien saanti määrät eri vavoilla</h2>
-            <?php
+        echo "</div>";
+        echo "<div class='show'>";
+            echo "<h2>Kalalajien saanti määrät eri vavoilla</h2>";
             foreach ($lajit as $x) {
                 $sql_hae = "SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND tarppi.id=kala.tarppi_id AND kala.laji_id=laji.id AND laji='$x' GROUP BY vapa;";
                 $tulos = $conn->query($sql_hae);
@@ -237,7 +227,7 @@ if ($tulos->num_rows > 0) {
                         $lajiKuvaHaku = $rivi["laji"];
                         if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                         {
-                            echo "<img src='./kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                            echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
                         } else {
                             echo "🐟";
                         }
@@ -250,33 +240,43 @@ if ($tulos->num_rows > 0) {
             if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
             }
-            ?>
-        </div>
-    </div>
-    <script>
-        // javacsript on täällä sen takia jotta pystyy ottaa php tietokannasta div nopeuden
-        let dia_nopeus = "";
-        // divit vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
-        dia_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
-        console.log(dia_nopeus)
-        let div_numero = 0;
-        Nayta();
-        // tekee slide shown
-        function Nayta() {
-            let i;
-            let slides = document.getElementsByClassName("show");
-            for (i = 0; i < slides.length; i++) {
-                // asettaa että muut divit ei näy
-                slides[i].style.display = "none";
-            }
-            div_numero++;
-            // jos on kaikki käyty aloittaa alusta
-            if (div_numero > slides.length) {div_numero = 1}
-            // asettaa aina että yksi div näkyy
-            slides[div_numero-1].style.display = "block"; 
-            // kutsuu aina functiota määritetyn ajan välein
-            setTimeout(Nayta, parseInt(dia_nopeus));
-        }
-    </script>
+        echo "</div>";
+    echo "</div>";
+    ?>
 </body>
 </html>
+<!-- 
+ // // javacsript on täällä sen takia jotta pystyy ottaa php tietokannasta div nopeuden
+        // let dia_nopeus = "";
+        // // divit vaihtuu aina tietokannasta saadun nopeuden mukaan joka on millisekuntteina 
+        // dia_nopeus = "<?php echo $_SESSION['nopeus']; ?>";
+        // console.log(dia_nopeus)
+        // let div_numero = 0;
+        // Nayta();
+        // // tekee slide shown
+        // function Nayta() {
+        //     let i;
+        //     let slides = document.getElementsByClassName("show");
+        //     for (i = 0; i < slides.length; i++) {
+        //         // asettaa että muut divit ei näy
+        //         slides[i].style.display = "none";
+        //     }
+        //     div_numero++;
+        //     // jos on kaikki käyty aloittaa alusta
+        //     if (div_numero > slides.length) {div_numero = 1}
+        //     // asettaa aina että yksi div näkyy
+        //     slides[div_numero-1].style.display = "block"; 
+        //     // kutsuu aina functiota määritetyn ajan välein
+        //     setTimeout(Nayta, parseInt(dia_nopeus));
+        // }
+// $sql_hae = "SELECT diaNopeus FROM integraatiot;";
+// $tulos = $conn->query($sql_hae);
+// if ($tulos->num_rows > 0) {
+//     while($rivi = $tulos->fetch_assoc()) {
+//         // asettaa nopeuden divin vaihdolle tietokannasta 
+//         $_SESSION["nopeus"] =  $rivi["diaNopeus"];
+//     }
+// } else {
+//     // jos ei ole tietokannassa nopeutta laittaa tämän divin vaihdon nopeudeksi
+//     $_SESSION["nopeus"] =  5000;
+// } -->
