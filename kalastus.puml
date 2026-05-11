@@ -4,6 +4,8 @@ left to right direction
 entity KALASTAJA {
   +id : int <<PK>>
   nimi : string
+  email : string
+  password : string
 }
  
 entity TARPPI {

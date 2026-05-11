@@ -1,0 +1,4 @@
+admin
+tarkista vielä lommeiken turvallisuus
+tee log out button/ käyttäjä näkee oma nimen navbarissa
+

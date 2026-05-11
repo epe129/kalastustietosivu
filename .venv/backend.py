@@ -13,7 +13,6 @@ DBNIMI = dbinfo.data["DBNIMI"]
 PORT = dbinfo.data["PORT"]
 HOST = dbinfo.data["HOST"]
 
-# ei saa oikeasti tehäd näin jos olisi tuotannossa
 
 # yhteys tietokantaan
 connection = pymysql.connect(host=HOST, port=PORT, user=USER, password=PASSWORD, database=DBNIMI)
@@ -21,10 +20,43 @@ cursor = connection.cursor()
 
 # luodaan ikkuna
 root = tk.Tk()
+root.configure(bg='black')
 root.resizable(width=False, height=False)
-root.geometry("1000x600")
+root.geometry("600x600")
 root.title("Admin")
 
+def admin_window():
+    admin_window = tk.Tk() 
+    admin_window.title("Admin")
+    admin_window.geometry("1000x600")  
+    admin_window.resizable(width=False, height=False)
+    window_width = admin_window.winfo_width()
+
+    def poista():
+        kayttaja_poista = kayttajat_input.get()
+        print(kayttaja_poista)
+        cursor.execute(f"DELETE FROM kalastaja WHERE email='{kayttaja_poista}'")
+        # tallettaa tapahtuneen tietokantaan
+        connection.commit()
+        cursor.execute(f"SELECT email FROM kalastaja")
+        kayttajat = cursor.fetchall()
+        kayttajat_input['values'] = [x for x in kayttajat]
+        kayttajat_input.set("Poista käyttäjä")
+
+    cursor.execute(f"SELECT email FROM kalastaja")
+    kayttajat = cursor.fetchall()
+    
+    text_kayttaja = tk.Label(admin_window, text="Poista käyttäjä:", font=('calibre',15))
+    text_kayttaja.place(x=window_width, y=50)
+    
+    kayttajat_input = ttk.Combobox(admin_window, values=[x for x in kayttajat], font=('calibre',15), textvariable="", state="readonly")
+    kayttajat_input.set("Poista käyttäjä")
+    kayttajat_input.place(x=window_width, y=80)
+
+    style = ttk.Style()
+    style.configure('TButton', font = ('calibri', 15, 'bold'), borderwidth = '4')
+    button = ttk.Button(text="Lähetä", command=poista, style='TButton', cursor="hand2")
+    button.place(x=window_width, y=110)
 
 def get_input():
     try:
@@ -32,8 +64,10 @@ def get_input():
         username = username_input.get()
         password = password_input.get()
         # tarkistaa onko salasana ja käyttäjänimi oikein
+        # ei saa oikeasti tehäd näin jos olisi tuotannossa
         if username == dbinfo.data["admin_username"] and bcrypt.checkpw(password.encode("utf-8"), dbinfo.data["admin_password"]):
-            pass
+            root.destroy()
+            admin_window()
         else:
             text.place(x=window_width + 330, y=170)
             my_string_var.set("Salasana tai käyttäjänimi on väärin")
@@ -45,35 +79,35 @@ def get_input():
 # saa näytön leveyden
 window_width = root.winfo_width()
 # lasketaan x(leveys suunta) coordinaatiot keskelle sivua
-x = (window_width + 400)
-z = (window_width + 400)
-button_paikka = (window_width + 510)
-name_paikka = (window_width + 350)
-password_paikka = (window_width + 322)
+x = (window_width)
+z = (window_width)
+button_paikka = (window_width + 310)
+name_paikka = (window_width + 148)
+password_paikka = (window_width + 120)
 
 # luodaan inpu teille tyyppi
 username_var=tk.StringVar()
 password_var=tk.StringVar()
 my_string_var = StringVar()
 
-l = tk.Label(root, text = "Log in", font=('calibre',20,'bold'))
-l.place(x=x + 50, y=75)
+l = tk.Label(root, text = "Log in", font=('calibre',20,'bold'), bg="black", fg="white")
+l.place(x=x + 250, y=75)
 
 # name input
-username = tk.Label(root, text="Name:", font=('calibre',12))
+username = tk.Label(root, text="Name:", font=('calibre',12), bg="black", fg="white")
 username_input = tk.Entry(root, textvariable=username_var, font=('calibre',12,'normal'), width=25)
 username.place(x=name_paikka, y=115)
-username_input.place(x=x, y=115)
+username_input.place(x=x + 200, y=115)
 
 # password input
-password = tk.Label(root, text="Password:", font=('calibre',12))
+password = tk.Label(root, text="Password:", font=('calibre',12), bg="black", fg="white")
 password_input = tk.Entry(root, textvariable=password_var, font=('calibre',12,'normal'), show="*", width=25)
 password.place(x=password_paikka, y=145)
-password_input.place(x=x, y=145)
+password_input.place(x=x + 200, y=145)
 
 # luodaan teksti kenttä jossa teksti voi muuttua
 my_string_var.set("")
-text = tk.Label(root, textvariable=my_string_var, font=('calibre',15))
+text = tk.Label(root, textvariable=my_string_var, font=('calibre',15), bg="black", fg="white")
 text.place(x=window_width + 430, y=170)
 
 # luodaan tyylit buttoniin ja luodaan buttoni
