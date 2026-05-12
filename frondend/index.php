@@ -6,8 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <style>
+        html {
+            background-image: url('./kuvat/tausta.jpg'); 
+            background-repeat: no-repeat;
+            background-attachment: fixed;  
+            background-size: cover;
+        }
         body {
-            background-color: #f4f4f4;
+            /* background-color: #f4f4f4; */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -83,9 +89,15 @@
             cursor: pointer;
         }
 
-        h2 {
-            text-align: center;
+        h1 {
+            background-color: white;
+            padding: 5px;
+            border-radius: 8px;
         }
+
+        /* h2 {
+            text-align: center;
+        } */
     </style>
 </head>
 <body>

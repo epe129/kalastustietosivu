@@ -121,22 +121,43 @@ if (!isset($_SESSION['email'])) {
             border-radius: 5px;
             width: 100%;
         }
-        ul li a {
+            
+        .a {
             display: block;
             color: white;
             padding: 14px 16px;
             text-decoration: none;
         }
-        ul li a:hover {
-            background-color: #111111;
+            
+        .a:hover {
+            background-color: #232323;
         }
+
+        .logout {
+            padding: 14px 16px; 
+            background-color: white;
+            color: black;
+            text-decoration: none;
+        }
+            
+        .logout:hover {
+            background-color: #dbdbdb;
+        } 
     </style>
 </head>
 <body>
     <!-- navbar -->
     <ul>
-        <li><a href="index.php">Kalastustiedot</a></li>
-        <li><a href="lisaa.php">Lisää kalastustietoja</a></li>
+        <li class="li"><a class="a" href="index.php">Kalastustiedot</a></li>
+        <li class="li"><a class="a" href="lisaa.php">Lisää kalastustietoja</a></li>
+        <li class="li" style="margin-left: auto;">
+            <div style="display: flex; flex-direction:row;">
+                <?php
+                echo "<a class='a'>Terve, " . $_SESSION["nimi"]."</a>";
+                ?>
+                <a class="logout" href="../data/handleLogout.php">Logout</a>
+            </div>
+        </li>
     </ul>
     <div class="main-div">
         <h1 class="otsikko">Lisää kalastustiedot</h1>
