@@ -1,4 +1,5 @@
 lisää vielä että sallii vaa tietyt merkit formeissa
+korjaa handlelogin nimen saanti
 korjaa nää:
 if (isset($_SESSION['errorMessage'])) {
                 echo "
@@ -30,7 +31,7 @@ if (isset($_SESSION['errorMessage'])) {
                 <span>Salasanassa pitää olla vähintää 8 merkkiä</span>
                 <br/>";
             }
-            
+
 tarkista vielä lommeiken turvallisuus
 admin optimointia
 
