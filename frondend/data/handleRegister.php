@@ -6,15 +6,12 @@ $db = include('db_connection.php');
 $name = $email = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ei aseta muuttujaa vasta kun jos tulee vastaan if lauseessa
-    unset( $_SESSION['errorMessage'] );
-    unset( $_SESSION['AlreadyExist'] );
-    unset( $_SESSION['InvalidEmail'] );
-    unset( $_SESSION['InvalidName'] );
-    unset( $_SESSION['InvalidPassword'] );
+    unset($_SESSION['errorMessageRegister']);
+    unset($_SESSION['errorTextRegister']);
     // saa arvot
-    $name = htmlspecialchars($_POST["name"]);
-    $email = htmlspecialchars($_POST["email"]);
-    $password = htmlspecialchars($_POST["password"]);
+    $name = stripslashes(trim(htmlspecialchars($_POST["name"])));
+    $email = stripslashes(trim(htmlspecialchars($_POST["email"])));
+    $password = stripslashes(trim(htmlspecialchars($_POST["password"])));
     
     // hashaa salasanan
     $hash_password = password_hash($password, PASSWORD_DEFAULT);
@@ -26,28 +23,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($kysely_email->num_rows > 0) {
         // jos sähköposti on jo olemassa
-        $_SESSION['AlreadyExist'] = true;
+        $_SESSION['errorMessageRegister'] = true;
+        $_SESSION['errorTextRegister'] = "Sähköposti on jo käytössä";
         header("Location: ../index.php"); 
         exit;
     }
 
     // tarkistaa että nimi sisältää vaan kirjaimia ja numeroita
     if (!preg_match("/^[a-zA-Z0-9äöåÄÖÅ]+$/u",$name)) {
-        $_SESSION["InvalidName"] = true;
+        $_SESSION["errorMessageRegister"] = true;
+        $_SESSION['errorTextRegister'] = "Nimi ei ole kelvollinen, vain numerot ja kirjaimet ovat salittuja";
         header("Location: ../index.php"); 
         exit;
     }
     
     // tarkistaa ettei salasana ole liian lyhyt
     if (strlen($password) <=  7) {
-        $_SESSION["InvalidPassword"] = true;
+        $_SESSION["errorMessageRegister"] = true;
+        $_SESSION['errorTextRegister'] = "Salasanassa pitää olla vähintää 8 merkkiä";
         header("Location: ../index.php"); 
         exit;
     }
 
     // tarkistaa että email on valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION["InvalidEmail"] = true;
+        $_SESSION["errorMessageRegister"] = true;
+        $_SESSION['errorTextRegister'] = "Sähköposti ei ole kelvollinen";
         header("Location: ../index.php"); 
         exit;
     }
@@ -62,13 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sss", $name, $email, $hash_password);
 
             if ($stmt->execute() === TRUE) {
+                // luodaan uusi session id käyttäjälle
+                session_regenerate_id();
                 $_SESSION["email"] = "$email";
                 $_SESSION["nimi"] = "$name";
                 header("Location: ../main/index.php"); 
                 exit;
             } else {
                 // jos epäonnistuu saa viestin
-                $_SESSION['errorMessage'] = true;
+                $_SESSION['errorMessageRegister'] = true;
+                $_SESSION['errorTextRegister'] = "Jokin meni pieleen";
                 header("Location: ../index.php"); 
                 exit;
             }

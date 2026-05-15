@@ -116,34 +116,11 @@
             <br>
             <?php
             //  Jos arvojoen syöttö epäonnistuu saa viestin 
-            if (isset($_SESSION['errorMessage'])) {
+            if (isset($_SESSION['errorMessageRegister']) and isset($_SESSION['errorTextRegister'])) {
+                $text = $_SESSION['errorTextRegister'];
                 echo "
                 <br/>
-                <span>Jokin meni pieleen</span>
-                <br/>";
-            }
-            if (isset($_SESSION['AlreadyExist'])) {
-                echo "
-                <br/>
-                <span>Sähköposti on jo käytössä</span>
-                <br/>";
-            }
-            if (isset($_SESSION['InvalidEmail'])) {
-                echo "
-                <br/>
-                <span>Sähköposti ei ole kelvollinen</span>
-                <br/>";
-            }
-            if (isset($_SESSION['InvalidName'])) {
-                echo "
-                <br/>
-                <span>Nimi ei ole kelvollinen, vain numerot ja kirjaimet salittu</span>
-                <br/>";
-            }
-            if (isset($_SESSION['InvalidPassword'])) {
-                echo "
-                <br/>
-                <span>Salasanassa pitää olla vähintää 8 merkkiä</span>
+                <span>$text</span>
                 <br/>";
             }
             ?>

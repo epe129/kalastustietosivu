@@ -1,4 +1,5 @@
 lisää vielä että sallii vaa tietyt merkit formeissa
+PHP CSRF
 korjaa handlelogin nimen saanti
 korjaa nää:
 if (isset($_SESSION['errorMessage'])) {
@@ -33,5 +34,5 @@ if (isset($_SESSION['errorMessage'])) {
             }
 
 tarkista vielä lommeiken turvallisuus
-admin optimointia
+admin optimointia/korjauksia
 muista kommentoida

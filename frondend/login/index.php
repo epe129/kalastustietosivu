@@ -98,18 +98,13 @@
         <br>
         <?php
         //  Jos arvojoen syöttö epäonnistuu saa viestin 
-        if (isset($_SESSION['errorMessageUser'])) {
+        if (isset($_SESSION['errorMessageLogin']) and isset($_SESSION['errorTextLogin'])) {
+            $text = $_SESSION['errorTextLogin'];
             echo "
             <br/>
-            <span>Sähköposti tai salasanasi on väärin</span>
+            <span>$text</span>
             <br/>
             ";
-        }
-        if (isset($_SESSION['InvalidEmail'])) {
-            echo "
-            <br/>
-            <span>Sähköposti ei ole kelvollinen</span>
-            <br/>";
         }
         ?>
         <br>
