@@ -1,2 +1,3 @@
+admin tuo delete ignoraa a foreign key
 admin optimointia/korjauksia
 muista kommentoida
