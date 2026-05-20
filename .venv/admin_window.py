@@ -31,17 +31,17 @@ def admin_window(root):
         kayttaja_poista = kayttajat_input.get().split()
         if kayttaja_poista == "" or "Poista" in kayttaja_poista:
             kayttaja_poista = hae_kayttaja.get().split()
+            # laitetaan labelit, inputit tms takasin paikalleen
             kayttajat_input.place(x=210, y=160)  
             button_kayttaja.place(x=210, y=190)
-            kayttajat_list_box.place(x=-10, y=-190)
-            kayttajat_input.set("Poista käyttäjä")
-            hae_kayttaja.delete(0, END)
-            # laitetaan vapa tekstit takasin paikalleen
             text_vapa.place(x=210, y=250)
             hae_vapa.place(x=210, y=280) 
             vapa_input.place(x=210, y=310)
             button_vapa.place(x=210, y=340)
-            vapa_list_box.place(x=-210, y=-190)
+            vapa_list_box.place_forget()
+            kayttajat_list_box.place_forget()
+            kayttajat_input.set("Poista käyttäjä")
+            hae_kayttaja.delete(0, END)
         # poistetaan käyttäjä ja siihen kuuluvat tiedot
         cursor.execute(f"SELECT id FROM kalastaja WHERE email='{kayttaja_poista[0]}'")
         kayttajat_id = cursor.fetchall()
@@ -67,17 +67,17 @@ def admin_window(root):
         saa_laji_input = laji_input.get().split()
         if saa_laji_input == "" or "Poista" in saa_laji_input:
             saa_laji_input = hae_laji.get().split()
+            # laitetaan labelit, inputit tms takasin paikalleen
             laji_input.place(x=590, y=160)
             button_laji.place(x=590, y=190)
-            laji_list_box.place(x=-10, y=-190)
-            laji_input.set("Poista laji")
-            hae_laji.delete(0, END)
-            # laitetaan viehet tekstit takasin paikalleen
             text_viehe.place(x=590, y=250)
             hae_viehe.place(x=590, y=280) 
             viehe_input.place(x=590, y=310)
             button_viehe.place(x=590, y=340)
-            viehe_list_box.place(x=-210, y=-190)
+            viehe_list_box.place_forget()
+            laji_list_box.place_forget()
+            laji_input.set("Poista laji")
+            hae_laji.delete(0, END)
         # ignooraa forekey ja poistaa tiedot
         cursor.execute(f"SET FOREIGN_KEY_CHECKS = 0")        
         cursor.execute(f"SELECT id FROM laji WHERE laji='{saa_laji_input[0]}'")
@@ -102,7 +102,7 @@ def admin_window(root):
                 saa_vapa_input = hae_vapa.get().split()
                 vapa_input.place(x=210, y=310)
                 button_vapa.place(x=210, y=340)
-                vapa_list_box.place(x=-10, y=-190)
+                vapa_list_box.place_forget()
                 vapa_input.set("Poista viehe")
                 hae_vapa.delete(0, END)
         # ignooraa  forekey ja poistaa tiedot
@@ -129,7 +129,7 @@ def admin_window(root):
             saa_viehe_input = hae_viehe.get().split()
             viehe_input.place(x=590, y=310)
             button_viehe.place(x=590, y=340)
-            viehe_list_box.place(x=-10, y=-190)
+            viehe_list_box.place_forget()
             viehe_input.set("Poista viehe")
             hae_viehe.delete(0, END)
         # ignooraa forekey ja poistaa tiedot
@@ -224,32 +224,31 @@ def admin_window(root):
             hae_vapa.insert(0, vapa_list_box.get())
 
     # ottaa input arvon ja päivittää listaa haun mukaan
+    # place_forget() poistaa kentä nykyiseltä paikalta 
     def tarkistaa_input_kayttaja(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         hae_kayttaja_input = hae_kayttaja.get()
         kayttajat_list_box.place(x=210, y=165)
-        kayttajat_input.place(x=-210, y=-165)
         button_kayttaja.place(x=423, y=130)
-        # laitetaan vapa teksti pois tieltä
-        text_vapa.place(x=-210, y=-190)
-        hae_vapa.place(x=-210, y=-190) 
-        vapa_input.place(x=-210, y=-190)
-        button_vapa.place(x=-210, y=-190)
-        vapa_list_box.place(x=-210, y=-190)
+        kayttajat_input.place_forget()
+        text_vapa.place_forget()
+        hae_vapa.place_forget() 
+        vapa_input.place_forget()
+        button_vapa.place_forget()
+        vapa_list_box.place_forget()
         # jos haku kenttä on tyhjä laittaa buttonit ja muut inputit/tekstit takaisin paikoilleen 
         if hae_kayttaja_input == '':
             data_kayttaja = kayttajat_list
             kayttajat_input.place(x=210, y=160)  
             button_kayttaja.place(x=210, y=190)
-            kayttajat_list_box.place(x=-210, y=-190)
-            kayttajat_input.set("Poista käyttäjä")
-            hae_kayttaja.delete(0, END)
-            # laitetaan vapa tekstit takasin paikalleen
             text_vapa.place(x=210, y=250)
             hae_vapa.place(x=210, y=280) 
             vapa_input.place(x=210, y=310)
             button_vapa.place(x=210, y=340)
-            vapa_list_box.place(x=-210, y=-190)
+            vapa_list_box.place_forget()
+            kayttajat_list_box.place_forget()
+            kayttajat_input.set("Poista käyttäjä")
+            hae_kayttaja.delete(0, END)
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
             data_kayttaja = []
@@ -263,28 +262,26 @@ def admin_window(root):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         laji_kayttaja_input = hae_laji.get()
         laji_list_box.place(x=590, y=165)
-        laji_input.place(x=-210, y=-165)
         button_laji.place(x=803, y=130)
-        # laitetaan viehe teksti pois tieltä
-        text_viehe.place(x=-210, y=-190)
-        hae_viehe.place(x=-210, y=-190) 
-        viehe_input.place(x=-210, y=-190)
-        button_viehe.place(x=-210, y=-190)
-        viehe_list_box.place(x=-210, y=-190)
+        laji_input.place_forget()
+        text_viehe.place_forget()
+        hae_viehe.place_forget() 
+        viehe_input.place_forget()
+        button_viehe.place_forget()
+        viehe_list_box.place_forget()
         # jos haku kenttä on tyhjä laittaa buttonit ja muut inputit/tekstit takaisin paikoilleen 
         if laji_kayttaja_input == '':
             data_laji = lajit_list
             laji_input.place(x=590, y=160)
             button_laji.place(x=590, y=190)
-            laji_list_box.place(x=-210, y=-190)
-            laji_input.set("Poista laji")
-            hae_laji.delete(0, END)
-            # laitetaan viehet tekstit takasin paikalleen
             text_viehe.place(x=590, y=250)
             hae_viehe.place(x=590, y=280) 
             viehe_input.place(x=590, y=310)
             button_viehe.place(x=590, y=340)
-            viehe_list_box.place(x=-210, y=-190)
+            viehe_list_box.place_forget()
+            laji_list_box.place_forget()
+            laji_input.set("Poista laji")
+            hae_laji.delete(0, END)
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
             data_laji = []
@@ -298,14 +295,14 @@ def admin_window(root):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         viehe_kayttaja_input = hae_viehe.get()
         viehe_list_box.place(x=590, y=310)
-        viehe_input.place(x=-210, y=-165)
         button_viehe.place(x=803, y=280)
+        viehe_input.place_forget()
         # jos haku kenttä on tyhjä laittaa buttonit ja muut inputit/tekstit takaisin paikoilleen 
         if viehe_kayttaja_input == '':
             data_viehe = viehet_list
             viehe_input.place(x=590, y=310)
             button_viehe.place(x=590, y=340)
-            viehe_list_box.place(x=-210, y=-190)
+            viehe_list_box.place_forget()
             viehe_input.set("Poista viehe")
             hae_viehe.delete(0, END)
         else:
@@ -321,14 +318,14 @@ def admin_window(root):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         vapa_input_hae = hae_vapa.get()
         vapa_list_box.place(x=210, y=310)
-        vapa_input.place(x=-210, y=-165)
         button_vapa.place(x=423, y=280)
+        vapa_input.place_forget()
         # jos haku kenttä on tyhjä laittaa buttonit ja muut inputit/tekstit takaisin paikoilleen 
         if vapa_input_hae == '':
             data_vapa = vavat_list
             vapa_input.place(x=210, y=310)
             button_vapa.place(x=210, y=340)
-            vapa_list_box.place(x=-210, y=-190)
+            vapa_list_box.place_forget()
             vapa_input.set("Poista viehe")
             hae_vapa.delete(0, END)
         else:
