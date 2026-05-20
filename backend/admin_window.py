@@ -23,14 +23,14 @@ def admin_window(root):
     viehet_list = []
 
     # luodaan ikkuna
-    admin_window = ctk.CTkToplevel(root)
-    admin_window.geometry("1000x600")
-    admin_window.resizable(width=False, height=False)
-    admin_window.title("Admin")
+    window = ctk.CTkToplevel(root)
+    window.geometry("1000x600")
+    window.resizable(width=False, height=False)
+    window.title("Admin")
 
     #  luodaan frame, jotta kaikki admin_window buttonit,
     #  label tms täbin sisällä pysyvät aina samassa paikassa
-    container = ctk.CTkFrame(admin_window, width=1000, height=600)
+    container = ctk.CTkFrame(window, width=1000, height=600)
     container.place(x=0, y=0)
 
     # näisssä funktioissa käsitellään eri arvojen poistot
@@ -427,4 +427,4 @@ def admin_window(root):
     # jos painaa x:sää sulkee ikkunan
     def close():
         root.destroy()
-    admin_window.protocol("WM_DELETE_WINDOW", close)
+    window.protocol("WM_DELETE_WINDOW", close)
