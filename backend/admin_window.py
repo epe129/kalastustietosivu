@@ -24,10 +24,9 @@ def admin_window(root):
 
     # luodaan ikkuna
     admin_window = ctk.CTkToplevel(root)
-    admin_window.geometry("1000x600")  
+    admin_window.geometry("1000x600")
     admin_window.resizable(width=False, height=False)
     admin_window.title("Admin")
-
 
     #  luodaan frame, jotta kaikki admin_window buttonit,
     #  label tms täbin sisällä pysyvät aina samassa paikassa
@@ -236,7 +235,6 @@ def admin_window(root):
             # kun kirjoittaa inputtiin hakee tietoa ja
             # rajaa sillä jos sana/kirjain on jossain arvossa
             data_kayttaja = filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
-
         # päivittää listaa joka näkyy kun hakee haun perusteella
         paivittaa_list(data_kayttaja, kayttajat_list_box)
      
@@ -268,7 +266,6 @@ def admin_window(root):
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
             data_laji = filter_haku(laji_kayttaja_input.lower(), lajit_list)
-
         # päivittää listaa joka näkyy kun hakee haun perusteella
         paivittaa_list(data_laji, laji_list_box)
     
@@ -289,7 +286,6 @@ def admin_window(root):
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa           
             data_viehe = filter_haku(viehe_kayttaja_input.lower(), viehet_list)
-
         # päivittää listaa joka näkyy kun hakee haun perusteella
         paivittaa_list(data_viehe, viehe_list_box)
 
@@ -310,7 +306,6 @@ def admin_window(root):
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
             data_vapa = filter_haku(vapa_input_hae.lower(), vavat_list)
-
         # päivittää listaa joka näkyy kun hakee haun perusteella
         paivittaa_list(data_vapa, vapa_list_box)
     
