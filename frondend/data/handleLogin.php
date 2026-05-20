@@ -1,9 +1,9 @@
 <?php
 session_start();
 // yhteyden tietokantaan
-include('db_connection.php');
-
+include_once('db_connection.php');
 $name = $email = $db_password = "";
+$id = 0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
@@ -19,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     unset( $_SESSION['errorTextLogin'] );
     
     // saa arvot
-    $email = stripslashes(trim(htmlspecialchars($_POST["email"])));
-    $password = stripslashes(trim(htmlspecialchars($_POST["password"])));
+    $email = trim($_POST["email"]);
+    $password = $_POST["password"];
 
     // tarkistaa että email on valid
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
 
     // hakee sähköpostilla salasanan ja nimen tietokannasta
-    $stmt = $conn->prepare("SELECT nimi, pword FROM kalastaja WHERE email=?");
+    $stmt = $conn->prepare("SELECT id, nimi, pword FROM kalastaja WHERE email=?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
@@ -45,13 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // tarkistaa onko sähköposti tietokannssa 
     if ($stmt->num_rows > 0) {
         // saa nimen ja salasanan tietokannsata
-        $stmt->bind_result($_SESSION["nimi"], $db_password);
+        $stmt->bind_result($id, $name, $db_password);
         $stmt->fetch();
         // tarkistaa onko salasana joka on tietokannassa ja jonka saa sama
         if(password_verify($password, $db_password)) {
             // luodaan uusi session id käyttäjälle
             session_regenerate_id();
             $_SESSION["email"] = "$email";
+            $_SESSION["nimi"] = $name;
+            $_SESSION["kalastaja_id"] = $id;
             header("Location: ../main/index.php"); 
             exit;
             }

@@ -1,6 +1,6 @@
 <!-- luodaan yhteys tietokantaan -->
 <?php
-$configs = include('config.php');
+$configs = include_once('config.php');
 $serverinnimi = $configs["serverinnimi"];
 $kayttajannimi = $configs["kayttajannimi"];
 $salasana = $configs["salasana"];

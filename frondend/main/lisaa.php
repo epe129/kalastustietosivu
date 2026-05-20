@@ -1,9 +1,9 @@
 <?php
 session_start();
 // Saadaan yhteys tietokantaan 
-include('../data/db_connection.php');
+include_once('../data/db_connection.php');
 // tarkistetaan että käyttäjä on kirjautunut
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
     header("Location: ../index.php");
     exit();
 }

@@ -2,32 +2,26 @@
 <?php
 session_start();
 // Saadaan yhteys tietokantaan 
-include('../data/db_connection.php');
+include_once('../data/db_connection.php');
 // tarkistetaan että käyttäjä on kirjautunut
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
     header("Location: ../index.php");
     exit();
 }
 $lajit = array("ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana", "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu");
-$sql_hae = "SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC";
-$tulos = $conn->query($sql_hae);
+$tulos = $conn->query("SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC");
 if ($tulos->num_rows > 0) {
     // lisää lajin arrayhyn jos lajia ei ole array:ssa
     while($rivi = $tulos->fetch_assoc()) {
         if (in_array($rivi["laji"], $lajit))
             {
-                null;
+                continue;
             } else {
                 array_push($lajit, $rivi["laji"]);
             }
     }
 }
-$kysely_id = $conn->prepare("SELECT id FROM kalastaja WHERE email = ?");
-$kysely_id->bind_param("s", $_SESSION["email"]);
-$kysely_id->execute();
-$kysely_id->bind_result($kalastaja_id);
-$kysely_id->fetch();
-$kysely_id->close();
+$kalastaja_id = $_SESSION["kalastaja_id"];
 ?>
 <!DOCTYPE html>
 <html>

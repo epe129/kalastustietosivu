@@ -1,7 +1,7 @@
 <?php
 session_start();
 // yhteyden tietokantaan
-include('db_connection.php');
+include_once('db_connection.php');
 
 $saatu_arvo = $laji = $pituus = $paino = $paikka = $aika = $viehe = $vapa = "";
 $kalastaja_id = $viehe_id = $vapa_id = $tarppi_id = $laji_id = 0;

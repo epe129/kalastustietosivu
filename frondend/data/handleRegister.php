@@ -2,7 +2,7 @@
 <?php
 session_start();
 // yhteyden tietokantaan
-include('db_connection.php');
+include_once('db_connection.php');
 $name = $email = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -20,22 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // saa arvot
     $name = stripslashes(trim(htmlspecialchars($_POST["name"])));
-    $email = stripslashes(trim(htmlspecialchars($_POST["email"])));
-    $password = stripslashes(trim(htmlspecialchars($_POST["password"])));
+    $email = trim($_POST["email"]);
+    $password = $_POST["password"];
     
     // hashaa salasanan
     $hash_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // tarkistetaan onko sähköposti tietokannassa   
-    $kysely_email = $conn->prepare("SELECT email FROM kalastaja WHERE email = ?");
-    $kysely_email->bind_param("s", $email);
-    $kysely_email->execute();
-    $kysely_email->store_result();
-    
-    // jos sähköposti on jo olemassa
-    if($kysely_email->num_rows > 0) {
-        $_SESSION['errorMessageRegister'] = true;
-        $_SESSION['errorTextRegister'] = "Sähköposti on jo käytössä";
+    // tarkistaa että email on valid
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION["errorMessageRegister"] = true;
+        $_SESSION['errorTextRegister'] = "Sähköposti ei ole kelvollinen";
         header("Location: ../index.php"); 
         exit;
     }
@@ -55,21 +49,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../index.php"); 
         exit;
     }
-
-    // tarkistaa että email on valid
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION["errorMessageRegister"] = true;
-        $_SESSION['errorTextRegister'] = "Sähköposti ei ole kelvollinen";
-        header("Location: ../index.php"); 
-        exit;
-    }
     
     // jos jokin arvo on tyhjä
     if (empty($name) or empty($email) or empty($password)) {
         header("Location: ../index.php"); 
         exit;
     } 
-        
+
+    // tarkistetaan onko sähköposti tietokannassa   
+    $kysely_email = $conn->prepare("SELECT email FROM kalastaja WHERE email = ?");
+    $kysely_email->bind_param("s", $email);
+    $kysely_email->execute();
+    $kysely_email->store_result();
+
+    // jos sähköposti on jo olemassa
+    if($kysely_email->num_rows > 0) {
+        $_SESSION['errorMessageRegister'] = true;
+        $_SESSION['errorTextRegister'] = "Sähköposti on jo käytössä";
+        header("Location: ../index.php"); 
+        exit;
+    }
+
     // lisää arvot tietokantaan ja tarkistaa että se onnistuu
     $stmt = $conn->prepare("INSERT INTO kalastaja (nimi, email, pword) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $name, $email, $hash_password);
@@ -78,9 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // jos rekisteröinti onnistuu
         //  luodaan uusi session id käyttäjälle
         session_regenerate_id();
-        $_SESSION["email"] = "$email";
-        $_SESSION["nimi"] = "$name";
-        header("Location: ../main/index.php"); 
+        header("Location: ../login/index.php"); 
         exit;
         } else {
             // jos epäonnistuu saa viestin

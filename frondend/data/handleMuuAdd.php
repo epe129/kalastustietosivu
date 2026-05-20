@@ -1,7 +1,7 @@
 <?php
 session_start();
 // yhteyden tietokantaan
-include('db_connection.php');
+include_once('db_connection.php');
 
 $laji = $viehe = $vapa = "";
 $array_arvot = array("laji", "viehe", "vapa");
