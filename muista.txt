@@ -7,6 +7,9 @@ https://www.w3schools.com/sql/sql_datatypes.asp
 https://mermaid.live/edit#pako:eNqNUk1v4jAQ_SvWnAlKgJDgW9RW2i49oG21h1WkarYxYUpiR8m4Kgv5780HlC9pW188fn7z_GbGW3gxiQIJjuPEmokzJYWYY4YV24pJsREVvVmRIONfrFSsX4xeUipjLZqV4cZYlkJl61h3Gqq8JUxLzHvCPHqIHp-in5HY9kC7SLOgRCzmR6jiknQqNOXUg7WIdR89Rb8Wi_sv8ht_iilXAmmN58x1Vw2-4jMl5zdvpFbqGsXinLr3VjTSB-263441fmGvhRjLoqAz5WVmkEVBbG11hSJpc2Uiw1f6tNAHv-_vftx9r71dwZfp0eKbw2kbc1H-QeQ45t3Occx2PzQpKsRTlxe3GRHzZnNi5H-Ers8tYbc71YcBpCUlILm0agC5KnNsj9AVFQOvVK5ikE2YqCXajGOIdd2kFaj_GJMfMktj0xXIJWZVc7JF-6f2n_mTonSiyhtjNYP0OwWQW3gHOfLCoee705E39YOJG7ijAWxAzvzhbBwE0yDwGzgMw3oA_7o33WHouWN_7PmzmTuZhK5XfwBgxgpb    
 https://plantuml.com/ie-diagram
 
+
+        # cursor.execute("CREATE TABLE IF NOT EXISTS integraatiot (diaNopeus INT)")
+
 # jos tarttee cryptaa salasana
 
 import bcrypt

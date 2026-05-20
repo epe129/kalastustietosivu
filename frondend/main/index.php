@@ -1,4 +1,3 @@
-<!-- jatka kyselyjen korjaamista -->
 <?php
 session_start();
 // Saadaan yhteys tietokantaan 
@@ -124,9 +123,8 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         echo "<div class='show'>";
             echo "<h2>Kalat painon mukaan</h2>";
             // haetaan dataa tietokannasta
-            $sql_hae = "SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY paino DESC";
             $rivien_maarat = 0;
-            $tulos = $conn->query($sql_hae);
+            $tulos = $conn->query("SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY paino DESC");
             // tarkistaa että tivejä on enemmän kuin nolla
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
@@ -155,9 +153,8 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         <br/>";
         echo "<div class='show'>";
             echo "<h2>Kalat pituuden mukaan</h2>";
-            $sql_hae = "SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC";
             $rivien_maarat = 0;
-            $tulos = $conn->query($sql_hae);
+            $tulos = $conn->query("SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC");
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
                     $rivien_maarat += 1;
@@ -185,8 +182,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         <br/>";
         echo "<div class='show'>";
             echo "<h2>Kalalajien saanti määrät</h2>";
-            $sql_hae = "SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id GROUP BY laji_id ORDER BY maara DESC";
-            $tulos = $conn->query($sql_hae);
+            $tulos = $conn->query("SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id GROUP BY laji_id ORDER BY maara DESC");
             if ($tulos->num_rows > 0) {
                 while($rivi = $tulos->fetch_assoc()) {
                     $lajiKuvaHaku = $rivi["laji"];
@@ -233,8 +229,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         echo "<div class='show'>";
             echo "<h2>Kalalajien saanti määrät eri vavoilla</h2>";
             foreach ($lajit as $x) {
-                $sql_hae = "SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id AND laji='$x' GROUP BY vapa ORDER BY maara DESC;";
-                $tulos = $conn->query($sql_hae);
+                $tulos = $conn->query("SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id AND laji='$x' GROUP BY vapa ORDER BY maara DESC;");
                 if ($tulos->num_rows > 0) {
                     while($rivi = $tulos->fetch_assoc()) {
                         $lajiKuvaHaku = $rivi["laji"];

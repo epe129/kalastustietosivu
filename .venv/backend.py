@@ -1,3 +1,7 @@
+"""
+Admin joka on tehty thinker:illä,
+jossa on kirjautumis ikkuna ja jossa admin voi poistaa käyttäjiä, lajeja, vapoja ja vieheitä. 
+"""
 import bcrypt, admin_window, dbinfo
 import customtkinter as ctk
 from tkinter import *
@@ -11,14 +15,16 @@ root = ctk.CTk()
 root.geometry("1000x600")
 root.resizable(width=False, height=False)
 root.title("Admin")
-
+"""
+HUOM! 
+näin dbinfo.data["admin_username"] ei saa tehdä tuotannossa
+"""
 def get_input():
     try:
         # saadaan inputit
         username = username_input.get()
         password = password_input.get()     
         # tarkistaa onko salasana ja käyttäjänimi oikein
-        # ei saa oikeasti tehäd näin jos olisi tuotannossa
         if username == dbinfo.data["admin_username"] and bcrypt.checkpw(password.encode("utf-8"), dbinfo.data["admin_password"]):
             # sulkee log ikkunan
             root.withdraw()

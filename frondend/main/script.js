@@ -22,11 +22,11 @@ function Tee(){
     let input_name = document.querySelector("#muu");
     let h2_muu = document.getElementById("h2_muu");
 
-    // tarkistaa on muu
+    // tarkistaa onko muu
     if (arvo_laji == "muu") {
         document.getElementById("laji_muu_div").style.display = "flex";
         document.getElementById("laji_muu_form").style.display = "flex";
-        // asettaa name attribuutin
+        // asettaa name attribuutin ja tekstin
         input_name.setAttribute("name", "laji");
         h2_muu.innerHTML = "Anna uusi kalalaji:"
         // jos muu valittu laittaa että arvo tarvitaan
@@ -34,7 +34,7 @@ function Tee(){
     } if (arvo_viehe == "muu") {
         document.getElementById("laji_muu_div").style.display = "flex";
         document.getElementById("laji_muu_form").style.display = "flex";
-        // asettaa name attribuutin
+        // asettaa name attribuutin ja tekstin
         input_name.setAttribute("name", "viehe");
         h2_muu.innerHTML = "Anna uusi viehe:"
         // jos muu valittu laittaa että arvo tarvitaan
@@ -42,7 +42,7 @@ function Tee(){
     } if (arvo_vapa == "muu") {
         document.getElementById("laji_muu_div").style.display = "flex";
         document.getElementById("laji_muu_form").style.display = "flex";
-        // asettaa name attribuutin
+        // asettaa name attribuutin ja tekstin
         input_name.setAttribute("name", "vapa");
         h2_muu.innerHTML = "Anna uusi vapa:"
         // jos muu valittu laittaa että arvo tarvitaan

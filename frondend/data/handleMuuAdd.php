@@ -20,8 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   unset( $_SESSION['Text'] );
   
   foreach ($array_arvot as $x) {
+
     // hakee aina name inputin avulla ja kattoo onko tyhjä name on aina esim name="laji"
     $get_arvo = stripslashes(trim(htmlspecialchars($_POST["$x"]))); 
+
     // tarkistaa onko input tyhjä
     if (strlen($get_arvo) != 0) {
 

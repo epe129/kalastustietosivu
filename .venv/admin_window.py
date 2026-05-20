@@ -8,21 +8,24 @@ connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"],
 cursor = connection.cursor()
 
 def admin_window(root):
+
     # luodaan listat
     kayttajat_list = []
     lajit_list = []
     vavat_list = []
     viehet_list = []
+
     # luodaan ikkuna
     admin_window = ctk.CTkToplevel(root)
     admin_window.geometry("1000x600")  
     admin_window.resizable(width=False, height=False)
     admin_window.title("Admin")
+
     # luodaan frame, jotta kaikki admin_window buttonit, label tms täbin sisällä pysyvät aina samassa paikassa
     container = ctk.CTkFrame(admin_window, width=1000, height=600)
     container.place(x=0, y=0)
-    
-    # tapahtuu käyttäjän poisto
+
+    # näisssä funktioissa käsitellään eri arvojen poistot
     def kayttaja_poista():
         # tarkistaa kummasta ottaa arvon input vai valikosta 
         kayttaja_poista = kayttajat_input.get().split()
@@ -59,7 +62,6 @@ def admin_window(root):
         for x in kayttajat:
             kayttajat_list.append(x[0])
 
-    # tapahtuu lajin poisto
     def laji_poista():
         # tarkistaa kummasta ottaa arvon input vai valikosta 
         saa_laji_input = laji_input.get().split()
@@ -93,7 +95,6 @@ def admin_window(root):
         for x in lajit:
             lajit_list.append(x[0])
 
-    # tapahtuu vavan poisto
     def vapa_poista():
         # tarkistaa kummasta ottaa arvon input vai valikosta 
         saa_vapa_input = vapa_input.get().split()
@@ -121,7 +122,6 @@ def admin_window(root):
         for x in vavat:
             vavat_list.append(x[0])
 
-    # tapahtuu viehen poisto
     def viehe_poista():
         # tarkistaa kummasta ottaa arvon input vai valikosta 
         saa_viehe_input = viehe_input.get().split()
@@ -198,7 +198,7 @@ def admin_window(root):
         if vapa_list_box.size() == 0:
             for item in vapa_list:
                 vapa_list_box.insert(END, item)
-    
+
     # laittaa clikatun valuen inputtiin
     def tayttaa_input_kayttaja(e):
         # poistaa kaiken inputista
@@ -222,15 +222,14 @@ def admin_window(root):
         hae_vapa.delete(0, END)
         if vapa_list_box.size() > 0:
             hae_vapa.insert(0, vapa_list_box.get())
-    
-    # entery boxin eli input ja päivittää listaa haun mukaan
+
+    # ottaa input arvon ja päivittää listaa haun mukaan
     def tarkistaa_input_kayttaja(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         hae_kayttaja_input = hae_kayttaja.get()
         kayttajat_list_box.place(x=210, y=165)
         kayttajat_input.place(x=-210, y=-165)
         button_kayttaja.place(x=423, y=130)
-
         # laitetaan vapa teksti pois tieltä
         text_vapa.place(x=-210, y=-190)
         hae_vapa.place(x=-210, y=-190) 
@@ -340,8 +339,8 @@ def admin_window(root):
                     data_vapa.append(item)
         # päivittää listaa joka näkyy kun hakee haun perusteella
         paivittaa_list_vapa(data_vapa)
-
-    # luodaan inpu teille tyyppi
+    
+    # luodaan inpu teille tyyppit
     hae_string_var = StringVar()
     laji_hae_string_var = StringVar()
     vapa_hae_string_var = StringVar()
