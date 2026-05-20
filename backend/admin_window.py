@@ -1,14 +1,21 @@
+"""
+admin window moduuli joka on tehty thinker- ja customtkinter:illä,
+on ikkuna jossa admin voi poistaa käyttajiä, vieheitä, vapoja ja lajeja.
+"""
 import pymysql, dbinfo
 import customtkinter as ctk
-from tkinter import *
+from tkinter import StringVar, END
 from CTkListbox import CTkListbox
 
 # yhteys tietokantaan, ottaa yhteyden tiedot python tidostosta
-connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"], user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"], database=dbinfo.data["DBNIMI"])
+connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"],
+    user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"], database=dbinfo.data["DBNIMI"])
 cursor = connection.cursor()
 
 def admin_window(root):
-
+    """
+    description
+    """
     # luodaan listat
     kayttajat_list = []
     lajit_list = []
@@ -21,7 +28,9 @@ def admin_window(root):
     admin_window.resizable(width=False, height=False)
     admin_window.title("Admin")
 
-    # luodaan frame, jotta kaikki admin_window buttonit, label tms täbin sisällä pysyvät aina samassa paikassa
+
+    #  luodaan frame, jotta kaikki admin_window buttonit,
+    #  label tms täbin sisällä pysyvät aina samassa paikassa
     container = ctk.CTkFrame(admin_window, width=1000, height=600)
     container.place(x=0, y=0)
 
@@ -54,7 +63,7 @@ def admin_window(root):
         # tallettaa tapahtuneen tietokantaan
         connection.commit()
         # päivittää listat ja luettelot
-        cursor.execute(f"SELECT email FROM kalastaja")
+        cursor.execute("SELECT email FROM kalastaja")
         kayttajat = cursor.fetchall()
         kayttajat_input.configure(values=[x[0] for x in kayttajat])
         kayttajat_input.set("Poista käyttäjä")
@@ -79,7 +88,7 @@ def admin_window(root):
             laji_input.set("Poista laji")
             hae_laji.delete(0, END)
         # ignooraa forekey ja poistaa tiedot
-        cursor.execute(f"SET FOREIGN_KEY_CHECKS = 0")        
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 0")        
         cursor.execute(f"SELECT id FROM laji WHERE laji='{saa_laji_input[0]}'")
         laji_id = cursor.fetchall()
         cursor.execute(f"UPDATE kala set laji_id = NULL WHERE laji_id ='{laji_id[0][0]}'")        
@@ -87,7 +96,7 @@ def admin_window(root):
         # tallettaa tapahtuneen tietokantaan
         connection.commit()
         # päivittää listat ja luettelot
-        cursor.execute(f"SELECT laji FROM laji")
+        cursor.execute("SELECT laji FROM laji")
         lajit = cursor.fetchall()
         laji_input.configure(values=[x[0] for x in lajit])
         laji_input.set("Poista käyttäjä")
@@ -106,7 +115,7 @@ def admin_window(root):
                 vapa_input.set("Poista viehe")
                 hae_vapa.delete(0, END)
         # ignooraa  forekey ja poistaa tiedot
-        cursor.execute(f"SET FOREIGN_KEY_CHECKS = 0")        
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 0")        
         cursor.execute(f"SELECT id FROM vapa WHERE vapa ='{saa_vapa_input[0]}'")
         vapa_id = cursor.fetchall()
         cursor.execute(f"UPDATE tarppi set vapa_id = NULL WHERE vapa_id ='{vapa_id[0][0]}'") 
@@ -114,7 +123,7 @@ def admin_window(root):
         # tallettaa tapahtuneen tietokantaan
         connection.commit()
         # päivittää listat ja luettelot
-        cursor.execute(f"SELECT vapa FROM vapa")
+        cursor.execute("SELECT vapa FROM vapa")
         vavat = cursor.fetchall()
         vapa_input.configure(values=[x[0] for x in vavat])
         vapa_input.set("Poista vapa")
@@ -133,7 +142,7 @@ def admin_window(root):
             viehe_input.set("Poista viehe")
             hae_viehe.delete(0, END)
         # ignooraa forekey ja poistaa tiedot
-        cursor.execute(f"SET FOREIGN_KEY_CHECKS = 0")        
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 0")        
         cursor.execute(f"SELECT id FROM viehe WHERE viehe ='{saa_viehe_input[0]}'")
         viehe_id = cursor.fetchall()
         cursor.execute(f"UPDATE tarppi set viehe_id = NULL WHERE viehe_id ='{viehe_id[0][0]}'") 
@@ -141,7 +150,7 @@ def admin_window(root):
         # tallettaa tapahtuneen tietokantaan
         connection.commit()
         # päivittää listat ja luettelot
-        cursor.execute(f"SELECT viehe FROM viehe")
+        cursor.execute("SELECT viehe FROM viehe")
         viehet = cursor.fetchall()
         viehe_input.configure(values=[x[0] for x in viehet])
         viehe_input.set("Poista viehe")
@@ -150,81 +159,55 @@ def admin_window(root):
             viehet_list.append(x[0])
                
     # lisää listoihin arvot tietokannasta jotka näkyy jos käyttäjä käyttää syöttö kenttää
-    cursor.execute(f"SELECT email FROM kalastaja")
+    cursor.execute("SELECT email FROM kalastaja")
     kayttajat = cursor.fetchall()
     for x in kayttajat:
         kayttajat_list.append(x[0])
 
-    cursor.execute(f"SELECT laji FROM laji")
+    cursor.execute("SELECT laji FROM laji")
     lajit = cursor.fetchall()
     for l in lajit:
         lajit_list.append(l[0])
 
-    cursor.execute(f"SELECT vapa FROM vapa")
+    cursor.execute("SELECT vapa FROM vapa")
     vavat = cursor.fetchall()
     for va in vavat:
         vavat_list.append(va[0])
 
-    cursor.execute(f"SELECT viehe FROM viehe")
+    cursor.execute("SELECT viehe FROM viehe")
     viehet = cursor.fetchall()
     for vi in viehet:
         viehet_list.append(vi[0])
 
     # päivitää listoja jotka näkyy kun hakee inputissa
-    def paivittaa_list_kayttaja(kayttajat_list):
+    def paivittaa_list(kayttajat_list, box):
         # poistaa kaiken inputista, näin jotta käy yksitellen jokaisen läpi niin ei tuu erroria
-        for _ in range(kayttajat_list_box.size()):
-            kayttajat_list_box.delete(0)
+        for _ in range(box.size()):
+            box.delete(0)
         # tarkistaa että list box koko on 0
-        if kayttajat_list_box.size() == 0:
+        if box.size() == 0:
             # lisää arvot uudestaan listaa jotta päivittyy
             for item in kayttajat_list:
-                kayttajat_list_box.insert(END, item)
-    def paivittaa_list_laji(lajit_list):
-        for _ in range(laji_list_box.size()):
-            laji_list_box.delete(0)        
-        if laji_list_box.size() == 0:
-            for item in lajit_list:
-                laji_list_box.insert(END, item)
-    def paivittaa_list_viehe(viehet_list):
-        for _ in range(viehe_list_box.size()):
-            viehe_list_box.delete(0)
-        if viehe_list_box.size() == 0:
-            for item in viehet_list:
-                viehe_list_box.insert(END, item)
-    def paivittaa_list_vapa(vapa_list):
-        for _ in range(vapa_list_box.size()):
-            vapa_list_box.delete(0)
-        if vapa_list_box.size() == 0:
-            for item in vapa_list:
-                vapa_list_box.insert(END, item)
+                box.insert(END, item)
 
     # laittaa clikatun valuen inputtiin
-    def tayttaa_input_kayttaja(e):
+    def tayttaa_input(e, hae, box):
         # poistaa kaiken inputista
-        hae_kayttaja.delete(0, END)
+        hae.delete(0, END)
         # tarkistaa että list box koko on suurempi kuin nolla
-        if kayttajat_list_box.size() > 0:
+        if box.size() > 0:
             # lisää klikatun arvon inputtiin
-            hae_kayttaja.insert(0, kayttajat_list_box.get())
-            
-    def tayttaa_input_laji(e):
-        hae_laji.delete(0, END)
-        if laji_list_box.size() > 0:
-            hae_laji.insert(0, laji_list_box.get())
+            hae.insert(0, box.get())
 
-    def tayttaa_input_viehe(e):
-        hae_viehe.delete(0, END)
-        if viehe_list_box.size() > 0:
-            hae_viehe.insert(0, viehe_list_box.get())
-
-    def tayttaa_input_vapa(e):
-        hae_vapa.delete(0, END)
-        if vapa_list_box.size() > 0:
-            hae_vapa.insert(0, vapa_list_box.get())
-
+    def filter_haku(haku, tuotteet):
+        data = []
+        for item in tuotteet:
+            if haku in str(item).lower():
+                data.append(item)
+        return data
+    
     # ottaa input arvon ja päivittää listaa haun mukaan
-    # place_forget() poistaa kentä nykyiseltä paikalta 
+    # place_forget() poistaa kentä nykyiseltä paikalta
     def tarkistaa_input_kayttaja(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         hae_kayttaja_input = hae_kayttaja.get()
@@ -248,16 +231,16 @@ def admin_window(root):
             vapa_list_box.place_forget()
             kayttajat_list_box.place_forget()
             kayttajat_input.set("Poista käyttäjä")
-            hae_kayttaja.delete(0, END)
+            # hae_kayttaja.delete(0, END)
         else:
-            # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
-            data_kayttaja = []
-            for item in kayttajat_list:
-                if hae_kayttaja_input.lower() in str(item).lower():
-                    data_kayttaja.append(item)
+            # kun kirjoittaa inputtiin hakee tietoa ja
+            # rajaa sillä jos sana/kirjain on jossain arvossa
+            data_kayttaja = filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
+
         # päivittää listaa joka näkyy kun hakee haun perusteella
-        paivittaa_list_kayttaja(data_kayttaja)
-        
+        paivittaa_list(data_kayttaja, kayttajat_list_box)
+     
+    
     def tarkistaa_input_laji(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
         laji_kayttaja_input = hae_laji.get()
@@ -284,12 +267,10 @@ def admin_window(root):
             hae_laji.delete(0, END)
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
-            data_laji = []
-            for item in lajit_list:
-                if laji_kayttaja_input.lower() in str(item).lower():
-                    data_laji.append(item)     
+            data_laji = filter_haku(laji_kayttaja_input.lower(), lajit_list)
+
         # päivittää listaa joka näkyy kun hakee haun perusteella
-        paivittaa_list_laji(data_laji)
+        paivittaa_list(data_laji, laji_list_box)
     
     def tarkistaa_input_viehe(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
@@ -306,13 +287,11 @@ def admin_window(root):
             viehe_input.set("Poista viehe")
             hae_viehe.delete(0, END)
         else:
-            # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
-            data_viehe = []
-            for item in viehet_list:
-                if viehe_kayttaja_input.lower() in str(item).lower():
-                    data_viehe.append(item)
+            # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa           
+            data_viehe = filter_haku(viehe_kayttaja_input.lower(), viehet_list)
+
         # päivittää listaa joka näkyy kun hakee haun perusteella
-        paivittaa_list_viehe(data_viehe)
+        paivittaa_list(data_viehe, viehe_list_box)
 
     def tarkistaa_input_vapa(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
@@ -330,12 +309,10 @@ def admin_window(root):
             hae_vapa.delete(0, END)
         else:
             # kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjaimet on jossain arvossa
-            data_vapa = []
-            for item in vavat_list:
-                if vapa_input_hae.lower() in str(item).lower():
-                    data_vapa.append(item)
+            data_vapa = filter_haku(vapa_input_hae.lower(), vavat_list)
+
         # päivittää listaa joka näkyy kun hakee haun perusteella
-        paivittaa_list_vapa(data_vapa)
+        paivittaa_list(data_vapa, vapa_list_box)
     
     # luodaan inpu teille tyyppit
     hae_string_var = StringVar()
@@ -364,11 +341,11 @@ def admin_window(root):
     # button
     button_kayttaja = ctk.CTkButton(master=container ,text="Poista käyttäjä", command=kayttaja_poista)
     button_kayttaja.place(x=210, y=190)
-    
+
     # kuuntelee jos kayttajat_list_box arvo klikattu
-    kayttajat_list_box.bind("<Button-1>", tayttaa_input_kayttaja)
+    kayttajat_list_box.bind("<Button-1>", lambda e: tayttaa_input(e, hae_kayttaja, kayttajat_list_box))
     # päivittää kayttajat_list_box
-    paivittaa_list_kayttaja(kayttajat_list)    
+    paivittaa_list(kayttajat_list, kayttajat_list_box)    
     # kuuntelee jos inputtiin kirjoitetaan
     hae_kayttaja.bind('<KeyRelease>', tarkistaa_input_kayttaja)
 
@@ -392,9 +369,9 @@ def admin_window(root):
     button_laji.place(x=590, y=190)
 
     # kuuntelee jos laji_list_box arvo klikattu
-    laji_list_box.bind("<Button-1>", tayttaa_input_laji)
+    laji_list_box.bind("<Button-1>", lambda e: tayttaa_input(e, hae_laji, laji_list_box))
     # päivittää laji_list_box
-    paivittaa_list_laji(lajit_list)    
+    paivittaa_list(lajit_list, laji_list_box)    
     # kuuntelee jos inputtiin kirjoitetaan
     hae_laji.bind('<KeyRelease>', tarkistaa_input_laji)
 
@@ -419,9 +396,9 @@ def admin_window(root):
     button_vapa.place(x=210, y=340)
 
     # kuuntelee jos vapa_list_box arvo klikattu
-    vapa_list_box.bind("<Button-1>", tayttaa_input_vapa)
+    vapa_list_box.bind("<Button-1>", lambda e: tayttaa_input(e, hae_vapa, vapa_list_box))
     # päivittää vapa_list_box
-    paivittaa_list_vapa(vavat_list)    
+    paivittaa_list(vavat_list, vapa_list_box)    
     # kuuntelee jos inputtiin kirjoitetaan
     hae_vapa.bind('<KeyRelease>', tarkistaa_input_vapa)
 
@@ -446,9 +423,9 @@ def admin_window(root):
     button_viehe.place(x=590, y=340)
     
     # kuuntelee jos viehe_list_box arvo klikattu
-    viehe_list_box.bind("<Button-1>", tayttaa_input_viehe)
+    viehe_list_box.bind("<Button-1>", lambda e: tayttaa_input(e, hae_viehe, viehe_list_box))
     # päivittää viehe_list_box
-    paivittaa_list_viehe(viehet_list)    
+    paivittaa_list(viehet_list, viehe_list_box)    
     # kuuntelee jos inputtiin kirjoitetaan
     hae_viehe.bind('<KeyRelease>', tarkistaa_input_viehe)
 

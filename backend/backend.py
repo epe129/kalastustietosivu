@@ -1,14 +1,14 @@
 """
-Admin joka on tehty thinker:illä,
-jossa on kirjautumis ikkuna ja jossa admin voi poistaa käyttäjiä, lajeja, vapoja ja vieheitä. 
+Admin joka on tehty thinker- ja customtkinter:illä,
+jossa on kirjautumisikkuna ja admin window jossa admin voi poistaa käyttäjiä, lajeja, 
+vapoja ja vieheitä. 
 """
 import bcrypt, admin_window, dbinfo
 import customtkinter as ctk
-from tkinter import *
-from CTkListbox import CTkListbox
+from tkinter import StringVar
 
-# laitta ohjelmalle systeemin 
-ctk.set_appearance_mode("System") 
+# laitta ohjelmalle systeemin
+ctk.set_appearance_mode("System")
 
 # luodaan ikkuna
 root = ctk.CTk()
@@ -23,7 +23,7 @@ def get_input():
     """
     try:
         # tarkistaa onko salasana ja käyttäjänimi oikein
-        if (username_input.get() == dbinfo.data["admin_username"] and 
+        if (username_input.get() == dbinfo.data["admin_username"] and
             bcrypt.checkpw(password_input.get().encode("utf-8"), dbinfo.data["admin_password"])):
             # sulkee log ikkunan
             root.withdraw()
@@ -47,13 +47,13 @@ my_string_var = StringVar()
 ctk.CTkLabel(root, text = "Log in", font=('calibre',35,'bold')).place(x=465, y=75)
 
 # name input
-username = ctk.CTkLabel(root, text="Name:", font=('calibre',20)).place(x=385, y=150)
+ctk.CTkLabel(root, text="Name:", font=('calibre',20)).place(x=385, y=150)
 username_input = ctk.CTkEntry(root, textvariable=username_var,
                                font=('calibre',20,'normal'), width=200)
 username_input.place(x=450, y=150)
 
 # password input
-password = ctk.CTkLabel(root, text="Password:", font=('calibre',20)).place(x=350, y=200)
+ctk.CTkLabel(root, text="Password:", font=('calibre',20)).place(x=350, y=200)
 password_input = ctk.CTkEntry(root, textvariable=password_var,
                                font=('calibre',20,'normal'), show="*", width=200)
 password_input.place(x=450, y=200)
@@ -64,7 +64,7 @@ text = ctk.CTkLabel(root, textvariable=my_string_var, font=('calibre',20))
 text.place(x=465, y=235)
 
 # luodaan tyylit buttoniin ja luodaan buttoni
-button = ctk.CTkButton(master=root, text="Login", command=get_input).place(x=510, y=270)
+ctk.CTkButton(master=root, text="Login", command=get_input).place(x=510, y=270)
 
 def close():
     """

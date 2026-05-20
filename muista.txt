@@ -7,6 +7,54 @@ https://www.w3schools.com/sql/sql_datatypes.asp
 https://mermaid.live/edit#pako:eNqNUk1v4jAQ_SvWnAlKgJDgW9RW2i49oG21h1WkarYxYUpiR8m4Kgv5780HlC9pW188fn7z_GbGW3gxiQIJjuPEmokzJYWYY4YV24pJsREVvVmRIONfrFSsX4xeUipjLZqV4cZYlkJl61h3Gqq8JUxLzHvCPHqIHp-in5HY9kC7SLOgRCzmR6jiknQqNOXUg7WIdR89Rb8Wi_sv8ht_iilXAmmN58x1Vw2-4jMl5zdvpFbqGsXinLr3VjTSB-263441fmGvhRjLoqAz5WVmkEVBbG11hSJpc2Uiw1f6tNAHv-_vftx9r71dwZfp0eKbw2kbc1H-QeQ45t3Occx2PzQpKsRTlxe3GRHzZnNi5H-Ers8tYbc71YcBpCUlILm0agC5KnNsj9AVFQOvVK5ikE2YqCXajGOIdd2kFaj_GJMfMktj0xXIJWZVc7JF-6f2n_mTonSiyhtjNYP0OwWQW3gHOfLCoee705E39YOJG7ijAWxAzvzhbBwE0yDwGzgMw3oA_7o33WHouWN_7PmzmTuZhK5XfwBgxgpb    
 https://plantuml.com/ie-diagram
 
+    def tayttaa_input_kayttaja(e):
+        hae_kayttaja.delete(0, END)
+        if kayttajat_list_box.size() > 0:
+            hae_kayttaja.insert(0, kayttajat_list_box.get())
+           
+def tayttaa_input_viehe(e):
+        hae_viehe.delete(0, END)
+        if viehe_list_box.size() > 0:
+            hae_viehe.insert(0, viehe_list_box.get())
+
+    def tayttaa_input_vapa(e):
+        hae_vapa.delete(0, END)
+        if vapa_list_box.size() > 0:
+            hae_vapa.insert(0, vapa_list_box.get())
+  data_viehe = []
+            for item in viehet_list:
+                if viehe_kayttaja_input.lower() in str(item).lower():
+                    data_viehe.append(item)
+                    
+
+  # päivitää listoja jotka näkyy kun hakee inputissa
+    def paivittaa_list_kayttaja(kayttajat_list):
+        # poistaa kaiken inputista, näin jotta käy yksitellen jokaisen läpi niin ei tuu erroria
+        for _ in range(kayttajat_list_box.size()):
+            kayttajat_list_box.delete(0)
+        # tarkistaa että list box koko on 0
+        if kayttajat_list_box.size() == 0:
+            # lisää arvot uudestaan listaa jotta päivittyy
+            for item in kayttajat_list:
+                kayttajat_list_box.insert(END, item)
+    def paivittaa_list_laji(lajit_list):
+        for _ in range(laji_list_box.size()):
+            laji_list_box.delete(0)        
+        if laji_list_box.size() == 0:
+            for item in lajit_list:
+                laji_list_box.insert(END, item)
+    def paivittaa_list_viehe(viehet_list):
+        for _ in range(viehe_list_box.size()):
+            viehe_list_box.delete(0)
+        if viehe_list_box.size() == 0:
+            for item in viehet_list:
+                viehe_list_box.insert(END, item)
+    def paivittaa_list_vapa(vapa_list):
+        for _ in range(vapa_list_box.size()):
+            vapa_list_box.delete(0)
+        if vapa_list_box.size() == 0:
+            for item in vapa_list:
+                vapa_list_box.insert(END, item)
 
         # cursor.execute("CREATE TABLE IF NOT EXISTS integraatiot (diaNopeus INT)")
 
