@@ -170,68 +170,59 @@ def admin_window(root):
     for vi in viehet:
         viehet_list.append(vi[0])
 
-    # päivitää listaa joka näkyy kun hakee inputissa
+    # päivitää listoja jotka näkyy kun hakee inputissa
     def paivittaa_list_kayttaja(kayttajat_list):
         # poistaa kaiken inputista, näin jotta käy yksitellen jokaisen läpi niin ei tuu erroria
         for _ in range(kayttajat_list_box.size()):
             kayttajat_list_box.delete(0)
-        # lisää arvot uudestaan listaa jotta päivittyy
-        for item in kayttajat_list:
-            kayttajat_list_box.insert(END, item)
-    # päivitää listaa joka näkyy kun hakee inputissa
+        # tarkistaa että list box koko on 0
+        if kayttajat_list_box.size() == 0:
+            # lisää arvot uudestaan listaa jotta päivittyy
+            for item in kayttajat_list:
+                kayttajat_list_box.insert(END, item)
     def paivittaa_list_laji(lajit_list):
-        # poistaa kaiken inputista        
         for _ in range(laji_list_box.size()):
             laji_list_box.delete(0)        
-        # lisää arvot uudestaan listaa jotta päivittyy
-        for item in lajit_list:
-            laji_list_box.insert(END, item)
-    # päivitää listaa joka näkyy kun hakee inputissa
+        if laji_list_box.size() == 0:
+            for item in lajit_list:
+                laji_list_box.insert(END, item)
     def paivittaa_list_viehe(viehet_list):
-        # poistaa kaiken inputista
         for _ in range(viehe_list_box.size()):
             viehe_list_box.delete(0)
-        # lisää arvot uudestaan listaa jotta päivittyy
-        for item in viehet_list:
-            viehe_list_box.insert(END, item)
-    # päivitää listaa joka näkyy kun hakee inputissa
+        if viehe_list_box.size() == 0:
+            for item in viehet_list:
+                viehe_list_box.insert(END, item)
     def paivittaa_list_vapa(vapa_list):
-        # poistaa kaiken inputista
         for _ in range(vapa_list_box.size()):
             vapa_list_box.delete(0)
-        # lisää arvot uudestaan listaa jotta päivittyy
-        for item in vapa_list:
-            vapa_list_box.insert(END, item)
-
-    # ------------------------------------------------------------------ #
-
+        if vapa_list_box.size() == 0:
+            for item in vapa_list:
+                vapa_list_box.insert(END, item)
+    
     # laittaa clikatun valuen inputtiin
     def tayttaa_input_kayttaja(e):
         # poistaa kaiken inputista
         hae_kayttaja.delete(0, END)
-        # lisää klikatun arvon inputtiin
-        hae_kayttaja.insert(0, kayttajat_list_box.get())
-    
+        # tarkistaa että list box koko on suurempi kuin nolla
+        if kayttajat_list_box.size() > 0:
+            # lisää klikatun arvon inputtiin
+            hae_kayttaja.insert(0, kayttajat_list_box.get())
+            
     def tayttaa_input_laji(e):
-        # poistaa kaiken inputista
         hae_laji.delete(0, END)
-        # lisää klikatun arvon inputtiin
-        hae_laji.insert(0, laji_list_box.get())
+        if laji_list_box.size() > 0:
+            hae_laji.insert(0, laji_list_box.get())
 
     def tayttaa_input_viehe(e):
-        # poistaa kaiken inputista
         hae_viehe.delete(0, END)
-        # lisää klikatun arvon inputtiin
-        hae_viehe.insert(0, viehe_list_box.get())
+        if viehe_list_box.size() > 0:
+            hae_viehe.insert(0, viehe_list_box.get())
 
     def tayttaa_input_vapa(e):
-        # poistaa kaiken inputista
         hae_vapa.delete(0, END)
-        # lisää klikatun arvon inputtiin
-        hae_vapa.insert(0, vapa_list_box.get())
-
-    # ------------------------------------------------------------------ #
-
+        if vapa_list_box.size() > 0:
+            hae_vapa.insert(0, vapa_list_box.get())
+    
     # entery boxin eli input ja päivittää listaa haun mukaan
     def tarkistaa_input_kayttaja(event):
         # muokka kenttien ja nappin paikkoja sekä saa inputin
@@ -350,23 +341,17 @@ def admin_window(root):
         # päivittää listaa joka näkyy kun hakee haun perusteella
         paivittaa_list_vapa(data_vapa)
 
-    # ------------------------------------------------------------------ #
     # luodaan inpu teille tyyppi
     hae_string_var = StringVar()
     laji_hae_string_var = StringVar()
     vapa_hae_string_var = StringVar()
     viehe_hae_string_var = StringVar()
 
-    # ------------------------------------------------------------------ #
-
     # koko ikkunan otsikko
-    text_admin = ctk.CTkLabel(container, text="Admin", font=('calibre',40)).place(x=450, y=25)
+    ctk.CTkLabel(container, text="Admin", font=('calibre',40)).place(x=450, y=25)
 
-    # ------------------------------------------------------------------ #
-
-    # alkaa käyttäjä 
     # otsikko
-    text_kayttaja = ctk.CTkLabel(container, text="Poista käyttäjä:", font=('calibre',20)).place(x=210, y=100)
+    ctk.CTkLabel(container, text="Poista käyttäjä:", font=('calibre',20)).place(x=210, y=100)
 
     # luodaan luettelo jossa näkyy arvot jos käyttää haku kenttää
     kayttajat_list_box = CTkListbox(container, width=200)
@@ -384,19 +369,15 @@ def admin_window(root):
     button_kayttaja = ctk.CTkButton(master=container ,text="Poista käyttäjä", command=kayttaja_poista)
     button_kayttaja.place(x=210, y=190)
     
-
     # kuuntelee jos kayttajat_list_box arvo klikattu
     kayttajat_list_box.bind("<Button-1>", tayttaa_input_kayttaja)
     # päivittää kayttajat_list_box
     paivittaa_list_kayttaja(kayttajat_list)    
     # kuuntelee jos inputtiin kirjoitetaan
     hae_kayttaja.bind('<KeyRelease>', tarkistaa_input_kayttaja)
-    
-    # ------------------------------------------------------------------ #
 
-    # alkaa laji
     # otsikko
-    text_laji = ctk.CTkLabel(container, text="Poista laji:", font=('calibre',20)).place(x=590, y=100)
+    ctk.CTkLabel(container, text="Poista laji:", font=('calibre',20)).place(x=590, y=100)
     
     # luodaan luettelo jossa näkyy arvot jos käyttää haku kenttää
     laji_list_box = CTkListbox(container, width=200)
@@ -421,9 +402,6 @@ def admin_window(root):
     # kuuntelee jos inputtiin kirjoitetaan
     hae_laji.bind('<KeyRelease>', tarkistaa_input_laji)
 
-    # ------------------------------------------------------------------ #
-
-    # alkaa vapa 
     # otsikko
     text_vapa = ctk.CTkLabel(container, text="Poista vapa:", font=('calibre',20))
     text_vapa.place(x=210, y=250)
@@ -451,9 +429,6 @@ def admin_window(root):
     # kuuntelee jos inputtiin kirjoitetaan
     hae_vapa.bind('<KeyRelease>', tarkistaa_input_vapa)
 
-    # ------------------------------------------------------------------ #
-
-    # alkaa viehe
     # otsikko
     text_viehe = ctk.CTkLabel(container, text="Poista viehe:", font=('calibre',20))
     text_viehe.place(x=590, y=250)
@@ -480,8 +455,6 @@ def admin_window(root):
     paivittaa_list_viehe(viehet_list)    
     # kuuntelee jos inputtiin kirjoitetaan
     hae_viehe.bind('<KeyRelease>', tarkistaa_input_viehe)
-
-    # ------------------------------------------------------------------ #
 
     # jos painaa x:sää sulkee ikkunan
     def close():

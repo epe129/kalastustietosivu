@@ -1,11 +1,7 @@
-import bcrypt, admin_window, pymysql, dbinfo
+import bcrypt, admin_window, dbinfo
 import customtkinter as ctk
 from tkinter import *
 from CTkListbox import CTkListbox
-
-# yhteys tietokantaan, ottaa yhteyden tiedot python tidostosta
-connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"], user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"], database=dbinfo.data["DBNIMI"])
-cursor = connection.cursor()
 
 # laitta ohjelmalle systeemin 
 ctk.set_appearance_mode("System") 
