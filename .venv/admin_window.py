@@ -148,7 +148,7 @@ def admin_window(root):
         viehet_list.clear()
         for x in viehet:
             viehet_list.append(x[0])
-
+               
     # lisää listoihin arvot tietokannasta jotka näkyy jos käyttäjä käyttää syöttö kenttää
     cursor.execute(f"SELECT email FROM kalastaja")
     kayttajat = cursor.fetchall()
@@ -460,3 +460,4 @@ def admin_window(root):
     def close():
         root.destroy()
     admin_window.protocol("WM_DELETE_WINDOW", close)
+    
