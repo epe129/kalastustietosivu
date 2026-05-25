@@ -20,7 +20,7 @@ def tarkistaa_input_kayttaja(hae_kayttaja, kayttajat_list_box, button_kayttaja, 
     else:
         data_kayttaja = admin_window.filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
     
-    # päivittää listaa joka näkyy kun hakee haun perusteella
+    # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_kayttaja, kayttajat_list_box)
          
 def tarkistaa_input_laji(hae_laji, laji_list_box, button_laji, laji_input, text_viehe, hae_viehe, viehe_input, button_viehe, viehe_list_box, lajit_list):    
@@ -39,7 +39,7 @@ def tarkistaa_input_laji(hae_laji, laji_list_box, button_laji, laji_input, text_
     else:
         data_laji = admin_window.filter_haku(laji_kayttaja_input.lower(), lajit_list)
     
-    # päivittää listaa joka näkyy kun hakee haun perusteella
+    # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_laji, laji_list_box)
     
 def tarkistaa_input_viehe(hae_viehe, viehe_list_box, button_viehe, viehe_input, viehet_list):
@@ -58,7 +58,7 @@ def tarkistaa_input_viehe(hae_viehe, viehe_list_box, button_viehe, viehe_input, 
     else:
         data_viehe = admin_window.filter_haku(viehe_kayttaja_input.lower(), viehet_list)
     
-    # päivittää listaa joka näkyy kun hakee haun perusteella
+    # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_viehe, viehe_list_box)
 
 def tarkistaa_input_vapa(hae_vapa, vapa_list_box, button_vapa, vapa_input, vavat_list):    
@@ -77,5 +77,5 @@ def tarkistaa_input_vapa(hae_vapa, vapa_list_box, button_vapa, vapa_input, vavat
     else:
         data_vapa = admin_window.filter_haku(vapa_input_hae.lower(), vavat_list)
     
-    # päivittää listaa joka näkyy kun hakee haun perusteella
+    # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_vapa, vapa_list_box)

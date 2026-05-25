@@ -8,7 +8,8 @@ from tkinter import StringVar, END
 from CTkListbox import CTkListbox
 
 # yhteys tietokantaan, ottaa yhteyden tiedot python tidostosta
-connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"], user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"], database=dbinfo.data["DBNIMI"])
+connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"], 
+user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"], database=dbinfo.data["DBNIMI"])
 cursor = connection.cursor()
 
 def paikat(paikat_list):

@@ -188,6 +188,7 @@ if (empty($_SESSION['csrf_token_li_muu'])) {
                 <option value="muu">
                     <span>muu</span>
                 </option>
+                <!-- jotta muu on viimeinen arvo -->
             </select>
             <br/>
             <label class="label" for="pituus">Pituus (cm):</label>
@@ -219,7 +220,6 @@ if (empty($_SESSION['csrf_token_li_muu'])) {
                         }
                     }
                 ?>
-                <!-- jotta muu on viimeinen value -->
                 <option value="muu">
                     <span>muu</span>
                 </option>
