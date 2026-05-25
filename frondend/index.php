@@ -22,7 +22,8 @@ if (empty($_SESSION['csrf_token_r'])) {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            flex-direction: column;            
+            font-size: 1.3rem;
         }
 
         /* formin css */
@@ -81,12 +82,22 @@ if (empty($_SESSION['csrf_token_r'])) {
             color: black;
             cursor: pointer;
         }
+
+        .otsikko_div {
+            text-align: center;
+            background-color: white; 
+            width: fit-content; 
+            height: fit-content; 
+            margin: 0 auto; 
+            padding: 0px 5px 0px 5px; 
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <br/>
-    <div style="margin: 0 auto; background-color: white; width: fit-content; height: fit-content; text-align: center; padding: 0px 10px 0px 10px; border-radius: 5px">
-        <h1 style="text-align: center;">Tervetuloa kalastus sivulle, <br/> registeröidy aloittaaksesi omien kala tietojen tallennus</h1>
+    <div class="otsikko_div">
+        <h1>Tervetuloa kalastus sivulle, <br/> rekisteröidy aloittaaksesi omien kala tietojen tallennus</h1>
     </div>
     <br/>
     <form action="./data/handleRegister.php" method="POST">
