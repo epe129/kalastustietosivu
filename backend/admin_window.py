@@ -27,27 +27,6 @@ def paikat_unohtaa(paikat_list):
     for c in paikat_list:
         c.place_forget()
 
-def paivittaa(fetch, i, l):
-    """
-    Päivittää listat ja luettelot, saa arvot parametreista.
-    """
-    i.configure(values=[x[0] for x in fetch])
-    i.set("Poista käyttäjä")
-    l.clear()
-    for x in fetch:
-        l.append(x[0])
-
-def paivittaa_list_haku(kayttajat_list, box):
-    """
-    Päivitää listoja jotka näkyy kun hakee inputissa
-    """
-    # poistaa kaiken inputista, näin jotta käy yksitellen jokaisen läpi niin ei tuu erroria
-    for _ in range(box.size()):
-        box.delete(0)
-    # lisää arvot uudestaan listaa jotta päivittyy
-    for index, item in enumerate(kayttajat_list):
-        box.insert(index, item)
-
 def tayttaa_input(hae, box):
     """
     laittaa clikatun valuen inputtiin
@@ -57,23 +36,26 @@ def tayttaa_input(hae, box):
     # lisää klikatun arvon inputtiin
     hae.insert(0, box.get())
 
-def filter_haku(haku, tuotteet):
-    """
-    kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjain on jossain arvossa.
-    saa parametreista arvot.
-    """
-    data = []
-    for item in tuotteet:
-        if haku in str(item).lower():
-            data.append(item)
-    return data
-
 def lisaa_arvot(fetch, l):
     """
     lisää arvot listoihin
     """
     for x in fetch:
         l.append(x[0])
+
+def paivittaa_list_haku(kayttajat_list, box):
+    """
+    Päivitää listoja jotka näkyy kun hakee inputissa
+    """
+    try:
+        # poistaa kaiken inputista, näin jotta käy yksitellen jokaisen läpi niin ei tuu erroria
+        for _ in range(box.size()):
+            box.delete(0)
+        # lisää arvot uudestaan listaa jotta päivittyy
+        for index, item in enumerate(kayttajat_list):
+            box.insert(index, item)
+    except KeyError as e:
+        print("Yrität käyttää listan kohdetta, jota ei ole olemassa!")
 
 def admin_window(root):
     """

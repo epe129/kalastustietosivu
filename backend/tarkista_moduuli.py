@@ -4,6 +4,18 @@ Moduuli tiedosto functioille jotka ottaa input arvon ja päivittää listaa haun
 import admin_window
 from tkinter import END
 
+def filter_haku(haku, tuotteet):
+    """
+    kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjain on jossain arvossa.
+    saa parametreista arvot.
+    """
+    data = []
+    for item in tuotteet:
+        if haku in str(item).lower():
+            data.append(item)
+    return data
+
+
 def tarkistaa_input_kayttaja(hae_kayttaja, kayttajat_list_box, button_kayttaja, kayttajat_input, text_vapa, hae_vapa, vapa_input, button_vapa, vapa_list_box, kayttajat_list):
     # muokkaa kenttien ja nappin paikkoja sekä saa inputin
     hae_kayttaja_input = hae_kayttaja.get()
@@ -18,7 +30,7 @@ def tarkistaa_input_kayttaja(hae_kayttaja, kayttajat_list_box, button_kayttaja, 
         kayttajat_input.set("Poista käyttäjä")
         hae_kayttaja.delete(0, END)
     else:
-        data_kayttaja = admin_window.filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
+        data_kayttaja = filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
     
     # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_kayttaja, kayttajat_list_box)
@@ -37,7 +49,7 @@ def tarkistaa_input_laji(hae_laji, laji_list_box, button_laji, laji_input, text_
         laji_input.set("Poista laji")
         hae_laji.delete(0, END)
     else:
-        data_laji = admin_window.filter_haku(laji_kayttaja_input.lower(), lajit_list)
+        data_laji = filter_haku(laji_kayttaja_input.lower(), lajit_list)
     
     # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_laji, laji_list_box)
@@ -56,7 +68,7 @@ def tarkistaa_input_viehe(hae_viehe, viehe_list_box, button_viehe, viehe_input, 
         viehe_input.set("Poista viehe")
         hae_viehe.delete(0, END)
     else:
-        data_viehe = admin_window.filter_haku(viehe_kayttaja_input.lower(), viehet_list)
+        data_viehe = filter_haku(viehe_kayttaja_input.lower(), viehet_list)
     
     # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_viehe, viehe_list_box)
@@ -75,7 +87,7 @@ def tarkistaa_input_vapa(hae_vapa, vapa_list_box, button_vapa, vapa_input, vavat
         vapa_input.set("Poista viehe")
         hae_vapa.delete(0, END)
     else:
-        data_vapa = admin_window.filter_haku(vapa_input_hae.lower(), vavat_list)
+        data_vapa = filter_haku(vapa_input_hae.lower(), vavat_list)
     
     # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_vapa, vapa_list_box)
