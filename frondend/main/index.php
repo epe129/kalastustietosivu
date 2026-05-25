@@ -7,7 +7,7 @@ if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
     header("Location: ../index.php");
     exit();
 }
-$lajit = array();
+$lajit = array("ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana", "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu");
 $tulos = $conn->query("SELECT laji FROM laji");
 if ($tulos->num_rows > 0) {
     // lisää lajit arrayhyn
@@ -132,7 +132,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                     {
                         echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
                     } else {
-                        "🐟";
+                        echo "🐟";
                     }
                     if ($rivien_maarat == 1) {
                         echo "🥇".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
