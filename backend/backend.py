@@ -18,7 +18,7 @@ root.title("Admin")
 
 def get_input():
     """
-    HUOM! näin dbinfo.data["admin_username"] ei saa tehdä tuotannossa
+    HUOM! näin dbinfo.data["admin_username"] ei saa tehdä tuotannossa.
     Saa salasanan ja käyttäjänimen ja jos oikein avaa admin ikkkunan.  
     """
     try:
@@ -64,10 +64,8 @@ text.place(x=465, y=235)
 # luodaan tyylit buttoniin ja luodaan buttoni
 ctk.CTkButton(master=root, text="Login", command=get_input).place(x=510, y=270)
 
+# jos painaa x:sää sulkee ikkunan
 def close():
-    """
-    jos painaa x:sää sulkee ikkunan
-    """
     root.destroy()
 root.protocol("WM_DELETE_WINDOW", close)
 

@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die('CSRF token validation failed');
     }
     
+    // poistetaan tokeni
     unset($_SESSION['csrf_token_l']);
 
     // ei aseta muuttujaa vasta kun jos tulee vastaan if lauseessa
@@ -75,4 +76,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
     header("Location: ../login/index.php"); 
     exit;
-?>

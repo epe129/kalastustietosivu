@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!isset($_POST['csrf_token_li_muu']) || !isset($_SESSION['csrf_token_li_muu']) || !hash_equals($_SESSION['csrf_token_li_muu'], $_POST['csrf_token_li_muu'])) {
     die('CSRF token validation failed');
   }
-
+  
+  // poistetaan tokeni
   unset($_SESSION['csrf_token_li_muu']);
 
   // ei aseta muuttujaa vasta kun jos tulee vastaan if lauseessa
@@ -73,4 +74,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } 
   header("Location: ../main/lisaa.php"); 
   exit;
-?>

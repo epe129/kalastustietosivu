@@ -11,4 +11,3 @@ $conn = new mysqli($serverinnimi, $kayttajannimi, $salasana, $dbnimi);
 if ($conn->connect_error) {
     echo "Yhteyden muodostaminen epäonnistui";
 }
-?>

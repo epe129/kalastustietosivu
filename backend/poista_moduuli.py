@@ -1,12 +1,11 @@
 """
-Moduuli tiedosto arvojen poisto fucntioille. 
+Moduuli tiedosto arvojen poisto functioille. 
 """
 import admin_window
 from tkinter import END
 
 # Tehdään arvojen poistot
 def kayttaja_poista(kayttajat_input, hae_kayttaja, button_kayttaja, text_vapa, hae_vapa, vapa_input, button_vapa, vapa_list_box, kayttajat_list_box, kayttajat_list, cursor, connection):
-
     # tarkistaa kummasta ottaa arvon input vai valikosta 
     kayttaja_poista_input = kayttajat_input.get().split()
     if kayttaja_poista_input == "" or "Poista" in kayttaja_poista_input:
@@ -37,7 +36,6 @@ def kayttaja_poista(kayttajat_input, hae_kayttaja, button_kayttaja, text_vapa, h
     admin_window.paivittaa(kayttajat, kayttajat_input, kayttajat_list)
 
 def laji_poista(laji_input, hae_laji, button_laji, text_viehe, hae_viehe, viehe_input, button_viehe, viehe_list_box, laji_list_box, lajit_list, cursor, connection):
-    
     # tarkistaa kummasta ottaa arvon input vai valikosta 
     saa_laji_input = laji_input.get().split()
     if saa_laji_input == "" or "Poista" in saa_laji_input:

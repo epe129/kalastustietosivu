@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     die('CSRF token validation failed');
   }
   
+  // poistetaan tokeni
   unset($_SESSION['csrf_token_li']);
 
   // ei aseta muuttujaa vasta kun jos tulee vastaan if lauseessa
@@ -74,12 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../main/lisaa.php"); 
     exit;
   }
-
+  
   // saa tarppi id:n
   $tarppi_id = $lisaa_tarppi->insert_id; 
   // lisää kala tiedot
   $lisaa_kala = $conn->prepare("INSERT INTO kala (tarppi_id, pituus, paino, laji_id) VALUES (?, ?, ?, ?)");
-  $lisaa_kala->bind_param("iiii", $tarppi_id, $pituus, $paino, $laji_id);
+  $lisaa_kala->bind_param("iddi", $tarppi_id, $pituus, $paino, $laji_id);
   
   // tarkistaa että molemmat syötöt onnistui
   if ($lisaa_kala->execute() === TRUE and $tarppi_tiedot_lisaamien === TRUE) {
@@ -96,4 +97,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } 
   header("Location: ../main/lisaa.php"); 
   exit;
-?>

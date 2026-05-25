@@ -24,6 +24,9 @@ erDiagram
     KALASTAJA {
         int id PK
         string nimi
+        string email
+        string password
+
     } 
 
     VIEHE {

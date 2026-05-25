@@ -27,7 +27,7 @@ if (empty($_SESSION['csrf_token_r'])) {
             min-height: 70vh;
         }
         /* otsikon css */
-        .welcome_text {
+        .otsikko {
             background-color: white;
             padding: 5px;
             border-radius: 8px;
@@ -91,7 +91,7 @@ if (empty($_SESSION['csrf_token_r'])) {
     </style>
 </head>
 <body>
-    <h1 class="welcome_text">Tervetuloa kalastus sivulle registeröidy aloittaaksesi omien kala tietojen tallennus</h1>
+    <h1 class="otsikko">Tervetuloa kalastus sivulle registeröidy aloittaaksesi omien kala tietojen tallennus</h1>
     <form action="./data/handleRegister.php" method="POST">
         <h1>Register</h1>
         <br>

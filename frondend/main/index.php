@@ -7,10 +7,10 @@ if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
     header("Location: ../index.php");
     exit();
 }
-$lajit = array("ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana", "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu");
-$tulos = $conn->query("SELECT laji, COUNT(laji) as maara FROM laji GROUP BY laji ORDER BY maara DESC");
+$lajit = array();
+$tulos = $conn->query("SELECT laji FROM laji");
 if ($tulos->num_rows > 0) {
-    // lisää lajin arrayhyn jos lajia ei ole array:ssa
+    // lisää lajit arrayhyn
     while($rivi = $tulos->fetch_assoc()) {
         if (in_array($rivi["laji"], $lajit))
             {

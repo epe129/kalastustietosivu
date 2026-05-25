@@ -11,7 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST['csrf_token_r']) || !isset($_SESSION['csrf_token_r']) || !hash_equals($_SESSION['csrf_token_r'], $_POST['csrf_token_r'])) {
         die('CSRF token validation failed');
     }
-
+  
+    // poistetaan tokeni
     unset($_SESSION['csrf_token_r']);
 
     // ei aseta muuttujaa vasta kun jos tulee vastaan if lauseessa
@@ -90,4 +91,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
     header("Location: ../index.php"); 
     exit;
-?>
