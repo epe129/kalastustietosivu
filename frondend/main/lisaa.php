@@ -161,7 +161,7 @@ if (empty($_SESSION['csrf_token_li_muu'])) {
                 <?php
                 echo "<a class='a'>Terve, " . $_SESSION["nimi"]."</a>";
                 ?>
-                <a class="logout" href="../data/handleLogout.php">Logout</a>
+                <a class="logout" href="../data/handleLogout.php">Kirjaudu ulos</a>
             </div>
         </li>
     </ul>

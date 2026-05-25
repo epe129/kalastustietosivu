@@ -9,7 +9,7 @@ if (empty($_SESSION['csrf_token_r'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Rekisteröidy</title>
     <style>
         html {
             background-image: url('./kuvat/tausta.jpg'); 
@@ -17,21 +17,14 @@ if (empty($_SESSION['csrf_token_r'])) {
             background-attachment: fixed;  
             background-size: cover;
         }
+        
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 20px;
-            font-size: 1.3rem;
-            min-height: 70vh;
         }
-        /* otsikon css */
-        .otsikko {
-            background-color: white;
-            padding: 5px;
-            border-radius: 8px;
-        }
+
         /* formin css */
         form {
             background-color: white;
@@ -91,17 +84,21 @@ if (empty($_SESSION['csrf_token_r'])) {
     </style>
 </head>
 <body>
-    <h1 class="otsikko">Tervetuloa kalastus sivulle registeröidy aloittaaksesi omien kala tietojen tallennus</h1>
+    <br/>
+    <div style="margin: 0 auto; background-color: white; width: fit-content; height: fit-content; text-align: center; padding: 0px 10px 0px 10px; border-radius: 5px">
+        <h1 style="text-align: center;">Tervetuloa kalastus sivulle, <br/> registeröidy aloittaaksesi omien kala tietojen tallennus</h1>
+    </div>
+    <br/>
     <form action="./data/handleRegister.php" method="POST">
-        <h1>Register</h1>
+        <h1>Rekisteröidy</h1>
         <br>
-        <label>name</label>
+        <label>Nimi</label>
         <input type="text" name="name" required>
         <br>
-        <label>email</label>
+        <label>Sähköposti</label>
         <input type="email" name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
         <br>
-        <label>password</label>
+        <label>Salasana</label>
         <input type="password" name="password" required>
         <br>
         <button type="submit">Läheta</button>
@@ -117,7 +114,7 @@ if (empty($_SESSION['csrf_token_r'])) {
         }
         ?>
         <br>
-        <a href="./login/index.php">Log in</a>
+        <a href="./login/index.php">Kirjaudu Sisään</a>
         <input type="hidden" name="csrf_token_r" value="<?php echo htmlspecialchars($_SESSION['csrf_token_r']) ?>">
     </form>
 </body>

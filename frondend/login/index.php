@@ -9,7 +9,7 @@ if (empty($_SESSION['csrf_token_l'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
+    <title>Kirjaudu Sisään</title>
     <style>
         html {
             background-image: url('../kuvat/tausta.jpg'); 
@@ -86,12 +86,12 @@ if (empty($_SESSION['csrf_token_l'])) {
 </head>
 <body>
     <form action="../data/handleLogin.php" method="POST">
-        <h1>Log in</h1>
+        <h1>Kirjaudu Sisään</h1>
         <br>
-        <label>email</label>
+        <label>Sähköposti</label>
         <input type="email" name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
         <br>
-        <label>password</label>
+        <label>Salasana</label>
         <input type="password" name="password" required>
         <br>
         <button type="submit">Lähetä</button>
@@ -108,7 +108,7 @@ if (empty($_SESSION['csrf_token_l'])) {
         }
         ?>
         <br>
-        <a href="../index.php">Register</a>
+        <a href="../index.php">Rekisteröidy</a>
         <input type="hidden" name="csrf_token_l" value="<?php echo htmlspecialchars($_SESSION['csrf_token_l']) ?>">
     </form>
 </body>
