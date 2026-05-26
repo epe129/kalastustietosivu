@@ -1,4 +1,6 @@
-<?php session_start();
+<?php 
+session_start();
+unset($_SESSION['errorTextRegister']);
 // CSRF suojaus ettei voi kuka vaan tehdä pyyntojö 
 if (empty($_SESSION['csrf_token_l'])) {
     $_SESSION['csrf_token_l'] = bin2hex(random_bytes(32));
