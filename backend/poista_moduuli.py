@@ -18,7 +18,7 @@ def paivittaa(fetch, i, l):
 # Tehdään arvojen poistot
 def kayttaja_poista(kayttajat_input, hae_kayttaja, button_kayttaja, text_vapa, hae_vapa, vapa_input, button_vapa, vapa_list_box, kayttajat_list_box, kayttajat_list, cursor, connection):
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poistaa arvo', 'Haluatko varmasti poistaa tämän käyttäjän')
+    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän käyttäjän')
     if jatka == 'yes' :
         pass
     else:
@@ -59,7 +59,7 @@ def kayttaja_poista(kayttajat_input, hae_kayttaja, button_kayttaja, text_vapa, h
 
 def laji_poista(laji_input, hae_laji, button_laji, text_viehe, hae_viehe, viehe_input, button_viehe, viehe_list_box, laji_list_box, lajit_list, cursor, connection):
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poistaa arvo', 'Haluatko varmasti poistaa tämän lajin')
+    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän lajin')
     if jatka == 'yes' :
         pass
     else:
@@ -97,7 +97,7 @@ def laji_poista(laji_input, hae_laji, button_laji, text_viehe, hae_viehe, viehe_
 
 def vapa_poista(vapa_input, hae_vapa, button_vapa, vapa_list_box, vavat_list, cursor, connection):
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poistaa arvo', 'Haluatko varmasti poistaa tämän vavan')
+    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän vavan')
     if jatka == 'yes' :
         pass
     else:
@@ -134,7 +134,7 @@ def vapa_poista(vapa_input, hae_vapa, button_vapa, vapa_list_box, vavat_list, cu
 
 def viehe_poista(viehe_input, hae_viehe, button_viehe, viehe_list_box, viehet_list, cursor, connection):
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poistaa arvo', 'Haluatko varmasti poistaa tämän viehen')
+    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän viehen')
     if jatka == 'yes' :
         pass
     else:
