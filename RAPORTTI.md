@@ -1,18 +1,18 @@
-# Kalasaaliiden Tallennussovellus – raportti
+# Kalasaaliiden Tallennusnettisivu – raportti
 
 ## Johdanto
 
-Tämän projektin tavoitteena oli toteuttaa kalasaaliiden tallennukseen tarkoitettu sovellus, jossa käyttäjät voivat lisätä ja tarkastella kalastustietoja. Projektin avulla harjoittelin ohjelmointia, tietokantoja ja web-kehitystä.
+Tämän projektin tavoitteena oli toteuttaa kalasaaliiden tallennukseen tarkoitettu nettisivu, jossa käyttäjät voivat lisätä ja tarkastella kalastustietoja. Projektin avulla harjoittelin ohjelmointia, tietokantoja ja web-kehitystä.
 ---
 
 # Projektin tavoite
 
-Projektin tavoitteena oli tehdä toimiva sovellus kalasaaliiden tallentamiseen ja hallintaan. Sovelluksen avulla käyttäjät voivat:
+Projektin tavoitteena oli tehdä toimiva nettisivu kalasaaliiden tallentamiseen ja hallintaan. Nettisivun avulla käyttäjät voivat:
 
 * rekisteröityä
 * kirjautua sisään
 * lisätä kalasaaliita
-* tarkastella omia tallennettuja tietoja
+* tarkastella omia tallennettuja kalatietoja
 
 Projektin tarkoituksena oli samalla harjoitella frontendin, backendin ja tietokantojen käyttöä yhdessä.
 
@@ -92,7 +92,6 @@ Projektissa huomioitiin perustason tietoturva:
 # Mikä onnistui
 
 Frontend onnistui hyvin. Käyttöliittymästä tuli toimiva ja käyttäjä pystyy lisäämään sekä tarkastelemaan kalasaaliita helposti.
-
 Tietokannan rakenne onnistui myös hyvin ja eri taulujen väliset suhteet toimivat suunnitellusti.
 
 ---
@@ -118,4 +117,4 @@ Opin myös käyttämään prepared statementteja sekä salasanojen turvallista h
 
 # Yhteenveto
 
-Projektissa toteutettiin toimiva kalasaaliiden tallennussovellus käyttäen PHP:tä, Pythonia ja MySQL-tietokantaa. Projekti kehitti osaamistani erityisesti web-kehityksessä, tietokannoissa ja ohjelmistojen rakenteen suunnittelussa.
+Projektissa toteutettiin toimiva kalasaaliiden tallennusnettisivu käyttäen PHP:tä, Pythonia ja MySQL-tietokantaa. Projekti kehitti osaamistani erityisesti web-kehityksessä, tietokannoissa ja ohjelmistojen rakenteen suunnittelussa.

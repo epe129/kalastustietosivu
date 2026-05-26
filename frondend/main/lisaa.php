@@ -56,10 +56,11 @@ if(!isset($_COOKIE["login_token"])) {
             <select id="KalaLaji" name="laji" required>
                 <option value="">Valitse kalalaji</option>
                 <?php
-                    $sql = "SELECT laji FROM laji";
-                    $tulos = $conn->query($sql);
-                    if ($tulos->num_rows > 0) {
-                        while($rivi = $tulos->fetch_assoc()) {
+                    $kysely_lajit_select = $conn->prepare("SELECT laji FROM laji");
+                    $kysely_lajit_select->execute();
+                    $data_lajit = $kysely_lajit_select->get_result();
+                    if ($data_lajit) {
+                        while($rivi = $data_lajit->fetch_assoc()) {
                             echo "
                             <option value='{$rivi['laji']}'>
                             {$rivi['laji']}   
@@ -91,10 +92,11 @@ if(!isset($_COOKIE["login_token"])) {
                 <option>Valitse viehe</option>
                 <!-- saa viehe vaihto ehdot tietokannasta -->
                 <?php
-                    $sql = "SELECT viehe FROM viehe";
-                    $tulos = $conn->query($sql);
-                    if ($tulos->num_rows > 0) {
-                        while($rivi = $tulos->fetch_assoc()) {
+                    $kysely_viehe_select = $conn->prepare("SELECT viehe FROM viehe");
+                    $kysely_viehe_select->execute();
+                    $data_viehe = $kysely_viehe_select->get_result();
+                    if ($data_viehe) {
+                        while($rivi = $data_viehe->fetch_assoc()) {
                             echo "
                             <option value='{$rivi['viehe']}'>
                             {$rivi['viehe']}   
@@ -113,10 +115,11 @@ if(!isset($_COOKIE["login_token"])) {
                 <option value="">Valitse vapa</option>
                 <!-- saa vapa vaihto ehdot tietokannasta -->
                 <?php
-                    $sql = "SELECT vapa FROM vapa";
-                    $tulos = $conn->query($sql);
-                    if ($tulos->num_rows > 0) {
-                        while($rivi = $tulos->fetch_assoc()) {
+                    $kysely_vapa_select = $conn->prepare("SELECT vapa FROM vapa");
+                    $kysely_vapa_select->execute();
+                    $data_vapa = $kysely_vapa_select->get_result();
+                    if ($data_vapa) {
+                        while($rivi = $data_vapa->fetch_assoc()) {
                             echo "
                             <option value='{$rivi['vapa']}'>
                             {$rivi['vapa']}   

@@ -20,10 +20,12 @@ if(!isset($_COOKIE["login_token"])) {
     exit;
 }
 $lajit = array("ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana", "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu");
-$tulos = $conn->query("SELECT laji FROM laji");
-if ($tulos->num_rows > 0) {
+$kysely_lajit = $conn->prepare("SELECT laji FROM laji");
+$kysely_lajit->execute();
+$data_lajit = $kysely_lajit->get_result();
+if ($data_lajit) {
     // lisää lajit arrayhyn
-    while($rivi = $tulos->fetch_assoc()) {
+    while($rivi = $data_lajit->fetch_assoc()) {
         if (in_array($rivi["laji"], $lajit))
             {
                 continue;
@@ -64,10 +66,13 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
             echo "<h2>Kalat painon mukaan</h2>";
             // haetaan dataa tietokannasta
             $rivien_maarat = 0;
-            $tulos = $conn->query("SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY paino DESC");
-            // tarkistaa että tivejä on enemmän kuin nolla
-            if ($tulos->num_rows > 0) {
-                while($rivi = $tulos->fetch_assoc()) {
+            $kysely_paino = $conn->prepare("SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY paino DESC");
+            $kysely_paino->bind_param("i", $kalastaja_id);
+            $kysely_paino->execute();
+            $data_paino = $kysely_paino->get_result();
+            // tarkistaa että dataa on
+            if ($data_paino) {
+                while ($rivi = $data_paino->fetch_assoc()) {
                     $rivien_maarat += 1;
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
@@ -86,17 +91,24 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                         echo $rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
                     }
                 }
-            } else {
+            }    
+            // jos tulos on nolla
+            if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
-            }            
+            }    
+            $kysely_paino->close();
         echo "</div>
         <br/>";
         echo "<div class='nayttaa'>";
             echo "<h2>Kalat pituuden mukaan</h2>";
             $rivien_maarat = 0;
-            $tulos = $conn->query("SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC");
-            if ($tulos->num_rows > 0) {
-                while($rivi = $tulos->fetch_assoc()) {
+            $kysely_pituus = $conn->prepare("SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC");
+            $kysely_pituus->bind_param("i", $kalastaja_id);
+            $kysely_pituus->execute();
+            $data_pituus = $kysely_pituus->get_result();
+            // tarkistaa että dataa on
+            if ($data_pituus) {
+                while($rivi = $data_pituus->fetch_assoc()) {
                     $rivien_maarat += 1;
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
@@ -115,16 +127,23 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                         echo $rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
                     }
                 } 
-            } else {
+            } 
+            // jos tulos on nolla
+            if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
-            }
+            }           
+            $kysely_pituus->close();            
         echo "</div>
         <br/>";
         echo "<div class='nayttaa'>";
             echo "<h2>Kalalajien saanti määrät</h2>";
-            $tulos = $conn->query("SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id GROUP BY laji_id ORDER BY maara DESC");
-            if ($tulos->num_rows > 0) {
-                while($rivi = $tulos->fetch_assoc()) {
+            $kysely_saanti = $conn->prepare("SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id GROUP BY laji_id ORDER BY maara DESC");
+            $kysely_saanti->bind_param("i", $kalastaja_id);
+            $kysely_saanti->execute();
+            $data_saanti = $kysely_saanti->get_result();
+            // tarkistaa että dataa on
+            if ($data_saanti) {
+                while($rivi = $data_saanti->fetch_assoc()) {
                     $lajiKuvaHaku = $rivi["laji"];
                     if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                     {
@@ -134,9 +153,12 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                     }
                     echo $rivi["laji"]. " ".$rivi["maara"]." kpl"."<br/>";
                 }
-            } else {
+            }
+            // jos tulos on nolla
+            if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
             }
+            $kysely_saanti->close();
         echo "</div>
         <br/>";
         echo "<div class='nayttaa'>";
@@ -144,10 +166,13 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
             $rivien_maarat = 0;
             // käy lajit arraysta
             foreach ($lajit as $x) {
-                $tulos = $conn->query("SELECT COUNT(laji) AS maara, laji, viehe FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id AND laji='$x' GROUP BY viehe ORDER BY maara DESC;");
-                // tarkistaa että tivejä on enemmän kuin nolla
-                if ($tulos->num_rows > 0) {
-                    while($rivi = $tulos->fetch_assoc()) {
+                $kysely_viehe = $conn->prepare("SELECT COUNT(laji) AS maara, laji, viehe FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id AND laji=? GROUP BY viehe ORDER BY maara DESC");
+                $kysely_viehe->bind_param("is", $kalastaja_id, $x);
+                $kysely_viehe->execute();
+                $data_viehe = $kysely_viehe->get_result();
+                // tarkistaa että dataa on
+                if ($data_viehe) {
+                    while($rivi = $data_viehe->fetch_assoc()) {
                         $lajiKuvaHaku = $rivi["laji"];
                         if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                         {
@@ -159,6 +184,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                         $rivien_maarat += 1;
                     }
                 } 
+                $kysely_viehe->close();
             }
             // jos tulos on nolla
             if ($rivien_maarat == 0) {
@@ -168,10 +194,15 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         <br/>";
         echo "<div class='nayttaa'>";
             echo "<h2>Kalalajien saanti määrät eri vavoilla</h2>";
+            // käy lajit arraysta
             foreach ($lajit as $x) {
-                $tulos = $conn->query("SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id='$kalastaja_id' AND tarppi.id=kala.tarppi_id AND laji='$x' GROUP BY vapa ORDER BY maara DESC;");
-                if ($tulos->num_rows > 0) {
-                    while($rivi = $tulos->fetch_assoc()) {
+                $kysely_vapa = $conn->prepare("SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id AND laji=? GROUP BY vapa ORDER BY maara DESC");
+                $kysely_vapa->bind_param("is", $kalastaja_id, $x);
+                $kysely_vapa->execute();
+                $data_vapa = $kysely_vapa->get_result();
+                // tarkistaa että dataa on
+                if ($data_vapa) {
+                    while($rivi = $data_vapa->fetch_assoc()) {
                         $lajiKuvaHaku = $rivi["laji"];
                         if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
                         {
@@ -183,6 +214,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                         $rivien_maarat += 1;
                     }
                 } 
+                $kysely_vapa->close();
             }
             // jos tulos on nolla
             if ($rivien_maarat == 0) {
