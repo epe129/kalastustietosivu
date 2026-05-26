@@ -97,7 +97,7 @@ Tietokannan rakenne onnistui myös hyvin ja eri taulujen väliset suhteet toimiv
 
 ---
 
-# Mitä tekisin paremmin
+# Mitä tekisin paremmin/kehitys ideoita tulevaisuudelle
 
 Jos tekisin projektin uudelleen, toteuttaisin backendin Flaskilla Tkinterin sijaan. Flask olisi sopinut paremmin web-pohjaiseen sovellukseen ja olisi helpottanut backendin laajentamista tulevaisuudessa.
 
