@@ -9,7 +9,13 @@ $tarppi_tiedot_lisaamien = false;
 $saadut = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
+
+  // tarkistetaan että käyttäjä on kirjautunut
+  if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
+    header("Location: ../login/index.php");
+    exit();
+  }
+
   // tarkistaa onko tokeni asetettu ja onko tokenit samatat session ja input saanissa
   if (!isset($_POST['csrf_token_li']) || !isset($_SESSION['csrf_token_li']) || !hash_equals($_SESSION['csrf_token_li'], $_POST['csrf_token_li'])) {
     die('CSRF token validation failed');

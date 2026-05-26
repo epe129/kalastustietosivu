@@ -8,6 +8,12 @@ $array_arvot = array("laji", "viehe", "vapa");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
+  // tarkistetaan että käyttäjä on kirjautunut
+  if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
+    header("Location: ../login/index.php");
+    exit();
+  }
+
   // tarkistaa onko tokeni asetettu ja onko tokenit samatat session ja input saanissa
   if (!isset($_POST['csrf_token_li_muu']) || !isset($_SESSION['csrf_token_li_muu']) || !hash_equals($_SESSION['csrf_token_li_muu'], $_POST['csrf_token_li_muu'])) {
     die('CSRF token validation failed');
