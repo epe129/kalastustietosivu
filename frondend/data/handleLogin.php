@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     } 
 
-    // hakee sähköpostilla salasanan ja nimen tietokannasta
+    // hakee sähköpostilla salasanan, id ja nimen tietokannasta
     $stmt = $conn->prepare("SELECT id, nimi, pword FROM kalastaja WHERE email=?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
