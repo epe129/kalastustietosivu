@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         else {
             // jos sähköpostia ei ole tietokannassa
             $_SESSION['errorMessageLogin'] = true;
-            $_SESSION['errorTextLogin'] = "Sähköposti ei ole kelvollinen";
+            $_SESSION['errorTextLogin'] = "Sähköposti tai salasanasi on väärin";
             header("Location: ../login/index.php"); 
             exit;
         }

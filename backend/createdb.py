@@ -24,7 +24,7 @@ def db():
         cursor.execute("CREATE TABLE IF NOT EXISTS KALA ( id INT AUTO_INCREMENT NOT NULL  UNIQUE, tarppi_id INT NOT NULL, pituus FLOAT, paino FLOAT, laji_id INT NOT NULL, FOREIGN KEY (tarppi_id) REFERENCES TARPPI(id), FOREIGN KEY (laji_id) REFERENCES LAJI(id), PRIMARY KEY (id, tarppi_id));")
         lajit = ["ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana", "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu"]
         viehet = ["lusikka", "lippa", "jigi", "perho", "vaappu", "spinnerbait", "popperi", "jerkki", "häntyri", "bladebait", "chatterbait", "spintail"]
-        vavat = ["avokelavapa", "jigivapa", "haukivapa", "onki", "hyrräkelavapa", "umpikelavapa", "merivapa", "jäämerivapa"]
+        vavat = ["avokelavapa", "jigivapa", "haukivapa", "onki", "hyrräkelavapa", "umpikelavapa", "merivapa", "jäämerivapa", "perhovapa"]
         for laji in lajit:
             cursor.execute(f'INSERT INTO laji (laji) VALUES ("{laji}")')
         for viehe in viehet:
