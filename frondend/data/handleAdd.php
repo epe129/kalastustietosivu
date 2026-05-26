@@ -8,13 +8,13 @@ $kalastaja_id = $viehe_id = $vapa_id = $tarppi_id = $laji_id = 0;
 $tarppi_tiedot_lisaamien = false;
 $saadut = array();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// tarkistetaan että käyttäjä on kirjautunut
+if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
+  header("Location: ../login/index.php");
+  exit();
+}
 
-  // tarkistetaan että käyttäjä on kirjautunut
-  if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
-    header("Location: ../login/index.php");
-    exit();
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // tarkistaa onko tokeni asetettu ja onko tokenit samatat session ja input saanissa
   if (!isset($_POST['csrf_token_li']) || !isset($_SESSION['csrf_token_li']) || !hash_equals($_SESSION['csrf_token_li'], $_POST['csrf_token_li'])) {
