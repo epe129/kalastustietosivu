@@ -52,6 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(password_verify($password, $db_password)) {
             // luodaan uusi session id käyttäjälle
             session_regenerate_id();
+            // asettaa cookien kirjaa käyttäjän ulos tunnin päästä kirjautumisesta
+            setcookie("login_token", session_id(), time() + 3600, "/"); 
+            // asettaa session muuttujat
             $_SESSION["email"] = "$email";
             $_SESSION["nimi"] = $name;
             $_SESSION["kalastaja_id"] = $id;

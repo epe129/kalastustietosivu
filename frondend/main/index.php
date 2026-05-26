@@ -8,6 +8,17 @@ if (!isset($_SESSION['email']) and !isset($_SESSION["kalastaja_id"])) {
     header("Location: ../index.php");
     exit();
 }
+// kun cookie häviää kirjaa käyttäjän ulos
+if(!isset($_COOKIE["login_token"])) {
+    // Poista kaikki istunnon muuttujat.
+    $_SESSION = array();
+    session_unset();
+    // tuhoaa istunnon.
+    session_destroy();
+    // Ohjaa käyttäjän takaisin kirjautumissivulle.
+    header("Location: ../login/index.php");
+    exit;
+}
 $lajit = array("ahven", "harjus", "hauki", "jokirapu", "kiiski", "kirjolohi", "kolmipiikki", "kuha", "kuore", "lahna", "lohi", "made", "muikku", "pasuri", "rautu", "ruutana", "salakka", "särki", "säyne", "siika", "silakka", "sorva", "suutari", "taimen", "täplärapu");
 $tulos = $conn->query("SELECT laji FROM laji");
 if ($tulos->num_rows > 0) {
@@ -21,7 +32,7 @@ if ($tulos->num_rows > 0) {
             }
     }
 }
-$kalastaja_id = $_SESSION["kalastaja_id"];
+$kalastaja_id = $_SESSION["kalastaja_id"]; 
 ?>
 <!DOCTYPE html>
 <html>

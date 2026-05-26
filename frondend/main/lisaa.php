@@ -14,6 +14,17 @@ if (empty($_SESSION['csrf_token_li'])) {
 if (empty($_SESSION['csrf_token_li_muu'])) {
     $_SESSION['csrf_token_li_muu'] = bin2hex(random_bytes(32));
 }
+// kun cookie häviää kirjaa käyttäjän ulos
+if(!isset($_COOKIE["login_token"])) {
+    // Poista kaikki istunnon muuttujat.
+    $_SESSION = array();
+    session_unset();
+    // tuhoaa istunnon.
+    session_destroy();
+    // Ohjaa käyttäjän takaisin kirjautumissivulle.
+    header("Location: ../login/index.php");
+    exit;
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
