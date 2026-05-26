@@ -66,7 +66,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
             echo "<h2>Kalat painon mukaan</h2>";
             // haetaan dataa tietokannasta
             $rivien_maarat = 0;
-            $kysely_paino = $conn->prepare("SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY paino DESC");
+            $kysely_paino = $conn->prepare("SELECT laji, paino FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY paino DESC;");
             $kysely_paino->bind_param("i", $kalastaja_id);
             $kysely_paino->execute();
             $data_paino = $kysely_paino->get_result();
@@ -102,7 +102,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         echo "<div class='nayttaa'>";
             echo "<h2>Kalat pituuden mukaan</h2>";
             $rivien_maarat = 0;
-            $kysely_pituus = $conn->prepare("SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC");
+            $kysely_pituus = $conn->prepare("SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC;");
             $kysely_pituus->bind_param("i", $kalastaja_id);
             $kysely_pituus->execute();
             $data_pituus = $kysely_pituus->get_result();
@@ -137,7 +137,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         <br/>";
         echo "<div class='nayttaa'>";
             echo "<h2>Kalalajien saanti määrät</h2>";
-            $kysely_saanti = $conn->prepare("SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id GROUP BY laji_id ORDER BY maara DESC");
+            $kysely_saanti = $conn->prepare("SELECT laji, laji_id, COUNT(laji_id) as maara FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id GROUP BY laji_id ORDER BY maara DESC;");
             $kysely_saanti->bind_param("i", $kalastaja_id);
             $kysely_saanti->execute();
             $data_saanti = $kysely_saanti->get_result();
@@ -164,29 +164,35 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         echo "<div class='nayttaa'>";
             echo "<h2>Kalalajien saanti määrät eri vieheillä</h2>";
             $rivien_maarat = 0;
+            $viehe = array();
             // käy lajit arraysta
             foreach ($lajit as $x) {
-                $kysely_viehe = $conn->prepare("SELECT COUNT(laji) AS maara, laji, viehe FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id AND laji=? GROUP BY viehe ORDER BY maara DESC");
+                $kysely_viehe = $conn->prepare("SELECT laji, viehe, viehe_id, laji_id, COUNT(laji_id) as maara FROM viehe, tarppi, kala, laji WHERE viehe.id=tarppi.viehe_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id AND laji=? GROUP BY viehe_id ORDER BY maara DESC;");
                 $kysely_viehe->bind_param("is", $kalastaja_id, $x);
                 $kysely_viehe->execute();
                 $data_viehe = $kysely_viehe->get_result();
                 // tarkistaa että dataa on
                 if ($data_viehe) {
                     while($rivi = $data_viehe->fetch_assoc()) {
-                        $lajiKuvaHaku = $rivi["laji"];
-                        if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
-                        {
-                            echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
-                        } else {
-                            echo "🐟";
-                        }
-                        echo $rivi["laji"]. " ".$rivi["viehe"]. " ".$rivi["maara"]." kpl"."<br/>";
+                        array_push($viehe, array("laji"=>$rivi["laji"], "viehe"=>$rivi["viehe"], "maara"=>$rivi["maara"]));
                         $rivien_maarat += 1;
                     }
                 } 
                 $kysely_viehe->close();
             }
-            // jos tulos on nolla
+            $maara = array_column($viehe, 'maara');
+            array_multisort($maara, SORT_DESC, $viehe);
+            foreach ($viehe as $rivi) {
+                $lajiKuvaHaku = $rivi["laji"];
+                if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
+                {
+                    echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                } else {
+                    echo "🐟";
+                }
+                echo $rivi["laji"]. " ".$rivi["viehe"]. " ".$rivi["maara"]." kpl"."<br/>";
+            }
+            // // jos tulos on nolla
             if ($rivien_maarat == 0) {
                 echo "Mitään ei löytynyt";
             }
@@ -194,27 +200,34 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         <br/>";
         echo "<div class='nayttaa'>";
             echo "<h2>Kalalajien saanti määrät eri vavoilla</h2>";
+            $rivien_maarat = 0;
+            $vapa = array();
             // käy lajit arraysta
             foreach ($lajit as $x) {
-                $kysely_vapa = $conn->prepare("SELECT COUNT(laji) AS maara, laji, vapa FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id AND laji=? GROUP BY vapa ORDER BY maara DESC");
+                $kysely_vapa = $conn->prepare("SELECT laji, vapa, vapa_id, laji_id, COUNT(laji_id) as maara FROM vapa, tarppi, kala, laji WHERE vapa.id=tarppi.vapa_id AND kala.laji_id=laji.id AND tarppi.kalastaja_id=? AND tarppi.id=kala.tarppi_id AND laji=? GROUP BY vapa_id ORDER BY maara DESC;");
                 $kysely_vapa->bind_param("is", $kalastaja_id, $x);
                 $kysely_vapa->execute();
                 $data_vapa = $kysely_vapa->get_result();
                 // tarkistaa että dataa on
                 if ($data_vapa) {
                     while($rivi = $data_vapa->fetch_assoc()) {
-                        $lajiKuvaHaku = $rivi["laji"];
-                        if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
-                        {
-                            echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
-                        } else {
-                            echo "🐟";
-                        }
-                        echo $rivi["laji"]. " ".$rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
+                        array_push($vapa, array("laji"=>$rivi["laji"], "vapa"=>$rivi["vapa"], "maara"=>$rivi["maara"]));
                         $rivien_maarat += 1;
                     }
                 } 
                 $kysely_vapa->close();
+            }
+            $maara = array_column($vapa, 'maara');
+            array_multisort($maara, SORT_DESC, $vapa);
+            foreach ($vapa as $rivi) {
+                $lajiKuvaHaku = $rivi["laji"];
+                if (in_array($rivi["laji"], array_slice($lajit, 0,25)))
+                {
+                    echo "<img src='../kuvat/$lajiKuvaHaku.jpg' width='50' height='25'> ";   
+                } else {
+                    echo "🐟";
+                }
+                echo $rivi["laji"]. " ".$rivi["vapa"]. " ".$rivi["maara"]." kpl"."<br/>";
             }
             // jos tulos on nolla
             if ($rivien_maarat == 0) {
