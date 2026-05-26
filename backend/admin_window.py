@@ -1,6 +1,6 @@
 """
-admin window moduuli joka on tehty thinker- ja customtkinter:illä,
-on ikkuna jossa admin voi poistaa käyttajiä, vieheitä, vapoja ja lajeja.
+admin window moduuli on tehty thinker- ja customtkinter:illä,
+jossa admin voi poistaa käyttajiä, vieheitä, vapoja ja lajeja.
 """
 import pymysql, dbinfo, poista_moduuli, tarkista_moduuli
 import customtkinter as ctk
@@ -61,7 +61,7 @@ def admin_window(root):
     """
     luodaan admin ikkuna ja siihen buttonit, labelit, luettelot ja tekstit.
     lambda: sallii lähettää parametreja kun esim buttoni kutsuu functiota.
-    Käytetään frame, jotta kaikki admin_window buttonit, label tms täbin sisällä pysyvät aina samassa paikassa.
+    Käytetään frame, jotta kaikki admin_window buttonit, label tms ikkunan sisällä pysyvät aina samassa paikassa.
     """
     # luodaan listat
     kayttajat_list = []

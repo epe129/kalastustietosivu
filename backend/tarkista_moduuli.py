@@ -1,5 +1,5 @@
 """
-Moduuli tiedosto functioille jotka ottaa input arvon ja päivittää listaa haun mukaan.
+Moduuli tiedosto functioille jotka ottaa input arvon ja päivittää CTkListbox haun mukaan.
 """
 import admin_window
 from tkinter import END

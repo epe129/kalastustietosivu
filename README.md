@@ -16,6 +16,32 @@ Tämä on nettisivu, jossa on tkinter backend, josta voit poistaa käyttäjiä, 
 ```
 pip install -r requirements.txt
 ```
+# Databasen luonti
+## Backend:
+Luo dbinfo.py, ja laita sinne databasen yhdistämiseen tarvittavat tiedot:
+```
+data = {
+  "USER":'esimnerkki',
+  "PASSWORD":'esimnerkki',
+  "DBNIMI": 'esimnerkki',
+  "PORT": 1234,
+  "HOST": '123.1.2.3',
+} 
+```
+aja databasen luonti:
+```
+python createdb.py
+```
+## Frondend:
+Luo config.py, ja laita sinne databasen yhdistämiseen tarvittavat tiedot:
+```
+return array(
+    "serverinnimi" => "esimnerkki",
+    "kayttajannimi" => "esimnerkki",
+    "salasana" => "esimnerkki",
+    "dbnimi" => "esimnerkki",
+);
+```
 
 # Ohjelman suorittaminen
 tkinter ohjelma:

@@ -97,7 +97,7 @@ if (empty($_SESSION['csrf_token_l'])) {
         <button type="submit">Lähetä</button>
         <br>
         <?php
-        //  saa viestin onnistuiko arvojen lisääminen 
+        //  saa viestin jos kirjautuminen epäonnistui
         if (isset($_SESSION['errorMessageLogin']) and isset($_SESSION['errorTextLogin'])) {
             $text = ucfirst($_SESSION['errorTextLogin']);
             echo "

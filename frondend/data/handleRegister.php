@@ -1,4 +1,3 @@
-<!-- tee että tarkistaa onko sähköposti tietokannassa -->
 <?php
 session_start();
 // yhteyden tietokantaan
@@ -76,8 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $name, $email, $hash_password);
 
     if ($stmt->execute() === TRUE) {
-        // jos rekisteröinti onnistuu
-        //  luodaan uusi session id käyttäjälle
+        // jos rekisteröinti onnistuu.
+        // luodaan uusi session id käyttäjälle
         session_regenerate_id();
         header("Location: ../login/index.php"); 
         exit;

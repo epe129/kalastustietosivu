@@ -129,6 +129,7 @@ def vapa_poista(vapa_input, hae_vapa, button_vapa, vapa_list_box, vavat_list, cu
     # päivittää listat ja luettelot
     cursor.execute("SELECT vapa FROM vapa")
     vavat = cursor.fetchall()
+
     paivittaa(vavat, vapa_input, vavat_list)
 
 def viehe_poista(viehe_input, hae_viehe, button_viehe, viehe_list_box, viehet_list, cursor, connection):
@@ -165,4 +166,5 @@ def viehe_poista(viehe_input, hae_viehe, button_viehe, viehe_list_box, viehet_li
     # päivittää listat ja luettelot
     cursor.execute("SELECT viehe FROM viehe")
     viehet = cursor.fetchall()
+    
     paivittaa(viehet, viehe_input, viehet_list)
