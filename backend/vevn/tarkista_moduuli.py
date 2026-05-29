@@ -94,7 +94,7 @@ def tarkistaa_input_laji(hae_laji,
         data_laji = filter_haku(laji_kayttaja_input.lower(), lajit_list)   
     # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data_laji, laji_list_box)
-  
+ 
 def tarkistaa_input_viehe(hae_viehe,
                           viehe_list_box,
                           button_viehe,

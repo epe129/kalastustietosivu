@@ -82,11 +82,12 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                         echo "🐟";
                     }
                     if ($rivien_maarat == 1) {
-                        echo " ".$rivi["aika"]."🥇"." ".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
+                        // date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y") luodaan datetime ottamalla aika ja siitä luodaan datitime joka formatoidaan suomi muotoon
+                        echo " ".date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y"). " ".$rivi["paino"]." kg"."<br/>";
                     } else if ($rivien_maarat == 2) {
-                        echo "🥈".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
+                        echo " ".date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y"). " ".$rivi["paino"]." kg"."<br/>";
                     } else if ($rivien_maarat == 3) {
-                        echo"🥉".$rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
+                        echo " ".date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y"). " ".$rivi["paino"]." kg"."<br/>";
                     } else {
                         echo $rivi["laji"]. " ".$rivi["paino"]." kg"."<br/>";
                     }
@@ -102,7 +103,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         echo "<div class='nayttaa'>";
             echo "<h2>Kalat pituuden mukaan</h2>";
             $rivien_maarat = 0;
-            $kysely_pituus = $conn->prepare("SELECT laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC;");
+            $kysely_pituus = $conn->prepare("SELECT aika, laji, pituus FROM kala, laji, tarppi WHERE kala.laji_id=laji.id AND tarppi.kalastaja_id= ? AND tarppi.id=kala.tarppi_id ORDER BY pituus DESC;");
             $kysely_pituus->bind_param("i", $kalastaja_id);
             $kysely_pituus->execute();
             $data_pituus = $kysely_pituus->get_result();
@@ -118,11 +119,11 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
                         echo "🐟";
                     }
                     if ($rivien_maarat == 1) {
-                        echo "🥇".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
+                        echo " ".date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y")."🥇".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
                     } else if ($rivien_maarat == 2) {
-                        echo "🥈".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
+                        echo " ".date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y")."🥈".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
                     } else if ($rivien_maarat == 3) {
-                        echo "🥉".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
+                        echo " ".date_format(date_create(explode(" ", $rivi["aika"])[0]), "d.m.Y")."🥉".$rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
                     } else {
                         echo $rivi["laji"]. " ".$rivi["pituus"]." cm"."<br/>";
                     }

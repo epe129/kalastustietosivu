@@ -9,10 +9,10 @@ def databasen_luonti():
     """
     Luodaan itse tietokanta jos ei ole olemassa.
     """
-    connection = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"],
+    connection_luonti = pymysql.connect(host=dbinfo.data["HOST"], port=dbinfo.data["PORT"],
     user=dbinfo.data["USER"], password=dbinfo.data["PASSWORD"])
-    cursor = connection.cursor()
-    cursor.execute("CREATE DATABASE IF NOT EXISTS kalastustietosivu2")
+    cursor_luonti = connection_luonti.cursor()
+    cursor_luonti.execute("CREATE DATABASE IF NOT EXISTS kalastustietosivu2")
 
 # luodaan yhteys
 try:

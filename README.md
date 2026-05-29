@@ -2,7 +2,7 @@
 
 Versio: 0.2
 
-Tämä on nettisivu, jossa on tkinter backend, josta voit poistaa käyttäjiä, lajeja, vieheitä ja vapoja. php frondend jossa käyttäjä voi kirjautua/rekisteröityä jonka jälkeen hän voi lisätä tietoja tietokantaan ja nähdä eri tietoja kalasaaleista esim. eri kalalajien saanti määrät.
+Tämä on nettisivu, jossa on tkinter backend, johon admin voi kirjautua ja poistaa käyttäjiä, lajeja, vieheitä ja vapoja. php frondend jossa käyttäjä voi kirjautua/rekisteröityä jonka jälkeen hän voi lisätä tietoja tietokantaan ja nähdä eri tietoja kalasaaleista esim. eri kalalajien saanti määrät.
 
 # Teknologiat: 
 - Frondend: PHP
@@ -37,7 +37,7 @@ Aja databasen luonti:
 python createdb.py
 ```
 ## Frondend:
-Luo config.php data kansioon ja laita sinne databasen yhdistämiseen tarvittavat tiedot:
+Luo config.php data nimiseen kansioon ja laita sinne databasen yhdistämiseen tarvittavat tiedot:
 ```
 return array(
     "serverinnimi" => "esimnerkki",
@@ -48,7 +48,7 @@ return array(
 ```
 
 # Ohjelman suorittaminen
-tkinter ohjelma:
+Tkinter ohjelma:
 ```
 python backend.py
 ```
