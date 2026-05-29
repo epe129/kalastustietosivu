@@ -16,45 +16,74 @@ def filter_haku(haku,
             data.append(item)
     return data
 
-def tarkistaa_input_kayttaja(
-                            hae_kayttaja,
-                            kayttajat_list_box,
-                            button_kayttaja,
-                            kayttajat_input,
-                            text_vapa, hae_vapa,
-                            vapa_input,
-                            button_vapa,
-                            vapa_list_box,
-                            kayttajat_list
-                            ):
+def tarkistaa_input(
+                    hae,
+                    list_,
+                    input_,
+                    list_box,
+                    paikat_1,
+                    paikat_2,
+                    paikat_3,
+                    paikat_4
+                    ):
     """
     Tehdään käyttäjien haku kun käyttää inputtia, ja päivittää CTkListbox haun mukaan.
     """
     # muokkaa kenttien ja nappin paikkoja sekä saa inputin
-    hae_kayttaja_input = hae_kayttaja.get()
-    admin_window.paikat([(kayttajat_list_box, {"x": 210, "y": 165}), 
-                        (button_kayttaja, {"x": 423, "y": 130})
-                        ])
-    admin_window.paikat_unohtaa([kayttajat_input,text_vapa,hae_vapa, 
-                                vapa_input,button_vapa,vapa_list_box
-                                ])
+    hae_input = hae.get()
+    admin_window.paikat(paikat_1)
+    admin_window.paikat_unohtaa(paikat_2)
     # jos haku kenttä on tyhjä laittaa buttonit ja muut inputit/tekstit takaisin paikoilleen 
-    if hae_kayttaja_input == '':
-        data_kayttaja = kayttajat_list
-        admin_window.paikat([(kayttajat_input, {"x": 210, "y": 160}),
-                            (button_kayttaja, {"x": 210, "y": 190}),
-                            (text_vapa, {"x": 210, "y": 250}),
-                            (hae_vapa, {"x": 210, "y": 280}),
-                            (vapa_input, {"x": 210, "y": 310}),
-                            (button_vapa, {"x": 210, "y": 340})
-                            ])
-        admin_window.paikat_unohtaa([vapa_list_box,kayttajat_list_box])
-        kayttajat_input.set("Poista käyttäjä")
-        hae_kayttaja.delete(0, END)
+    if hae_input == '':
+        data = list_
+        admin_window.paikat(paikat_3)
+        admin_window.paikat_unohtaa(paikat_4)
+        input_.set("Poista käyttäjä")
+        hae.delete(0, END)
     else:
-        data_kayttaja = filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
+        data = filter_haku(hae_input.lower(), list_)
     # päivittää listaa joka näkyy kun hakee inputilla
-    admin_window.paivittaa_list_haku(data_kayttaja, kayttajat_list_box)
+    admin_window.paivittaa_list_haku(data, list_box)
+        
+# def tarkistaa_input_kayttaja(
+#                             hae_kayttaja,
+#                             kayttajat_list_box,
+#                             button_kayttaja,
+#                             kayttajat_input,
+#                             text_vapa, hae_vapa,
+#                             vapa_input,
+#                             button_vapa,
+#                             vapa_list_box,
+#                             kayttajat_list
+#                             ):
+#     """
+#     Tehdään käyttäjien haku kun käyttää inputtia, ja päivittää CTkListbox haun mukaan.
+#     """
+#     # muokkaa kenttien ja nappin paikkoja sekä saa inputin
+#     hae_kayttaja_input = hae_kayttaja.get()
+#     admin_window.paikat([(kayttajat_list_box, {"x": 210, "y": 165}), 
+#                         (button_kayttaja, {"x": 423, "y": 130})
+#                         ])
+#     admin_window.paikat_unohtaa([kayttajat_input,text_vapa,hae_vapa, 
+#                                 vapa_input,button_vapa,vapa_list_box
+#                                 ])
+#     # jos haku kenttä on tyhjä laittaa buttonit ja muut inputit/tekstit takaisin paikoilleen 
+#     if hae_kayttaja_input == '':
+#         data_kayttaja = kayttajat_list
+#         admin_window.paikat([(kayttajat_input, {"x": 210, "y": 160}),
+#                             (button_kayttaja, {"x": 210, "y": 190}),
+#                             (text_vapa, {"x": 210, "y": 250}),
+#                             (hae_vapa, {"x": 210, "y": 280}),
+#                             (vapa_input, {"x": 210, "y": 310}),
+#                             (button_vapa, {"x": 210, "y": 340})
+#                             ])
+#         admin_window.paikat_unohtaa([vapa_list_box,kayttajat_list_box])
+#         kayttajat_input.set("Poista käyttäjä")
+#         hae_kayttaja.delete(0, END)
+#     else:
+#         data_kayttaja = filter_haku(hae_kayttaja_input.lower(), kayttajat_list)
+#     # päivittää listaa joka näkyy kun hakee inputilla
+#     admin_window.paivittaa_list_haku(data_kayttaja, kayttajat_list_box)
         
 def tarkistaa_input_laji(
                         hae_laji,
