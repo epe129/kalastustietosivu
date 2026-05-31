@@ -198,17 +198,28 @@ def admin_window(root):
     # päivittää laji_list_box
     paivittaa_list_haku(lajit_list, laji_list_box)  
     # kuuntelee jos inputtiin kirjoitetaan
-    hae_laji.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input_laji(
+    # hae_laji.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input_laji(
+    #     hae_laji,
+    #     laji_list_box,
+    #     button_laji,
+    #     laji_input,
+    #     text_viehe,
+    #     hae_viehe,
+    #     viehe_input,
+    #     button_viehe,
+    #     viehe_list_box,
+    #     lajit_list
+    # ))
+
+    hae_laji.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input(
         hae_laji,
-        laji_list_box,
-        button_laji,
+        lajit_list,
         laji_input,
-        text_viehe,
-        hae_viehe,
-        viehe_input,
-        button_viehe,
-        viehe_list_box,
-        lajit_list
+        laji_list_box,
+        [(laji_list_box, {"x": 590, "y": 165}), (button_laji, {"x": 803, "y": 130})],
+        [laji_input, text_viehe, hae_viehe, viehe_input, button_viehe, viehe_list_box],
+        [(laji_input, {"x": 590, "y": 160}), (button_laji, {"x": 590, "y": 190}), (text_viehe, {"x": 590, "y": 250}),(hae_viehe, {"x": 590, "y": 280}),(viehe_input, {"x": 590, "y": 310}),(button_viehe, {"x": 590, "y": 340})],
+        [viehe_list_box, laji_list_box]
     ))
 
     # otsikko
@@ -241,12 +252,23 @@ def admin_window(root):
     # päivittää vapa_list_box
     paivittaa_list_haku(vavat_list, vapa_list_box)    
     # kuuntelee jos inputtiin kirjoitetaan
-    hae_vapa.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input_vapa(
+    # hae_vapa.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input_vapa(
+    #     hae_vapa,
+    #     vapa_list_box,
+    #     button_vapa,
+    #     vapa_input,
+    #     vavat_list
+    # ))
+
+    hae_vapa.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input(
         hae_vapa,
-        vapa_list_box,
-        button_vapa,
+        vavat_list,
         vapa_input,
-        vavat_list
+        vapa_list_box,        
+        [(vapa_list_box, {"x": 210, "y": 310}), (button_vapa, {"x": 423, "y": 280})],
+        [(vapa_input)],
+        [(vapa_input, {"x": 210, "y": 310}), (button_vapa, {"x": 210, "y": 340})],
+        [(vapa_list_box)]
     ))
 
     # otsikko
@@ -279,13 +301,36 @@ def admin_window(root):
     # päivittää viehe_list_box
     paivittaa_list_haku(viehet_list, viehe_list_box)
     # kuuntelee jos inputtiin kirjoitetaan
-    hae_viehe.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input_viehe(
+    # hae_viehe.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input_viehe(
+    #     hae_viehe,
+    #     viehe_list_box,
+    #     button_viehe,
+    #     viehe_input,
+    #     viehet_list
+    # ))
+
+    hae_viehe.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input(
         hae_viehe,
-        viehe_list_box,
-        button_viehe,
+        viehet_list,
         viehe_input,
-        viehet_list
+        viehe_list_box,
+        [(viehe_list_box, {"x": 590, "y": 310}), (button_viehe, {"x": 803, "y": 280})],
+        [(viehe_input)],
+        [(viehe_input, {"x": 590, "y": 310}), (button_viehe, {"x": 590, "y": 340})],
+        [(viehe_list_box)]
     ))
+
+    # hae_kayttaja.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input(
+    #     hae_kayttaja,
+    #     kayttajat_list,
+    #     kayttajat_input,
+    #     kayttajat_list_box,
+    #     [(kayttajat_list_box, {"x": 210, "y": 165}), (button_kayttaja, {"x": 423, "y": 130})],
+    #     [kayttajat_input, text_vapa, hae_vapa, vapa_input, button_vapa, vapa_list_box],
+    #     [(kayttajat_input, {"x": 210, "y": 160}), (button_kayttaja, {"x": 210, "y": 190}), (text_vapa, {"x": 210, "y": 250}),(hae_vapa, {"x": 210, "y": 280}),(vapa_input, {"x": 210, "y": 310}),(button_vapa, {"x": 210, "y": 340})],
+    #     [vapa_list_box, kayttajat_list_box]
+    # ))
+
 
     # paikat_1_k = [(kayttajat_list_box, {"x": 210, "y": 165}), (button_kayttaja, {"x": 423, "y": 130})]
     # paikat_2_k = 
