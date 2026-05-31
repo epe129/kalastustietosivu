@@ -320,18 +320,6 @@ def admin_window(root):
         [(viehe_list_box)]
     ))
 
-    # hae_kayttaja.bind('<KeyRelease>', lambda e: tarkista_moduuli.tarkistaa_input(
-    #     hae_kayttaja,
-    #     kayttajat_list,
-    #     kayttajat_input,
-    #     kayttajat_list_box,
-    #     [(kayttajat_list_box, {"x": 210, "y": 165}), (button_kayttaja, {"x": 423, "y": 130})],
-    #     [kayttajat_input, text_vapa, hae_vapa, vapa_input, button_vapa, vapa_list_box],
-    #     [(kayttajat_input, {"x": 210, "y": 160}), (button_kayttaja, {"x": 210, "y": 190}), (text_vapa, {"x": 210, "y": 250}),(hae_vapa, {"x": 210, "y": 280}),(vapa_input, {"x": 210, "y": 310}),(button_vapa, {"x": 210, "y": 340})],
-    #     [vapa_list_box, kayttajat_list_box]
-    # ))
-
-
     # paikat_1_k = [(kayttajat_list_box, {"x": 210, "y": 165}), (button_kayttaja, {"x": 423, "y": 130})]
     # paikat_2_k = 
     # paikat_3_k = 
