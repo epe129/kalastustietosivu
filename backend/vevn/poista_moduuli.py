@@ -15,6 +15,19 @@ def paivittaa(fetch, i, l):
     for x in fetch:
         l.append(x[0])
 
+def poistaa(paikat_1, paikat_2, _input, hae, input_text, ask):
+    """
+    Varmistaa haluaako käyttäjä poistaa arvon, palauttaa true tai false
+    """
+    jatka = mb.askquestion('Poista arvo', f'Haluatko varmasti poistaa tämän {ask}')
+    if jatka == 'yes' :
+        return True
+    admin_window.paikat(paikat_1)
+    admin_window.paikat_unohtaa(paikat_2)
+    _input.set(input_text)
+    hae.delete(0, END)
+    return False
+
 # Tehdään arvojen poistot
 def kayttaja_poista(
                     kayttajat_input,
@@ -33,21 +46,19 @@ def kayttaja_poista(
     slipt(): muuttaa merkkijonon listaksi.
     """
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän käyttäjän')
-    if jatka == 'yes' :
+    poistaa_arvo = poistaa(
+        [(kayttajat_input, {"x": 210, "y": 160}), (button_kayttaja, {"x": 210, "y": 190}), (text_vapa, {"x": 210, "y": 250}), (hae_vapa, {"x": 210, "y": 280}), (vapa_input, {"x": 210, "y": 310}), (button_vapa, {"x": 210, "y": 340})],
+        [vapa_list_box, kayttajat_list_box],
+        kayttajat_input,
+        hae_kayttaja,
+        "Poista käyttäjä",
+        "käyttäjän"
+        )
+    if poistaa_arvo is True:
         pass
     else:
-        admin_window.paikat([(kayttajat_input, {"x": 210, "y": 160}),
-                            (button_kayttaja, {"x": 210, "y": 190}),
-                            (text_vapa, {"x": 210, "y": 250}),
-                            (hae_vapa, {"x": 210, "y": 280}),
-                            (vapa_input, {"x": 210, "y": 310}),
-                            (button_vapa, {"x": 210, "y": 340})
-                            ])
-        admin_window.paikat_unohtaa([vapa_list_box, kayttajat_list_box])
-        kayttajat_input.set("Poista käyttäjä")
-        hae_kayttaja.delete(0, END)
         return
+
     # tarkistaa kummasta ottaa arvon input vai valikosta
     kayttaja_poista_input = kayttajat_input.get().split()
     if kayttaja_poista_input == "" or "Poista" in kayttaja_poista_input:
@@ -96,20 +107,17 @@ def laji_poista(
     Tehdään lajin poisto.
     """
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän lajin')
-    if jatka == 'yes' :
+    poistaa_arvo = poistaa(
+        [(laji_input, {"x": 590, "y": 160}),(button_laji, {"x": 590, "y": 190}),(text_viehe, {"x": 590, "y": 250}),(hae_viehe, {"x": 590, "y": 280}),(viehe_input, {"x": 590, "y": 310}),(button_viehe, {"x": 590, "y": 340})],
+        [viehe_list_box, laji_list_box],
+        laji_input,
+        hae_laji,
+        "Poista laji",
+        "lajin"
+        )
+    if poistaa_arvo is True:
         pass
     else:
-        admin_window.paikat([(laji_input, {"x": 590, "y": 160}),
-                            (button_laji, {"x": 590, "y": 190}),
-                            (text_viehe, {"x": 590, "y": 250}),
-                            (hae_viehe, {"x": 590, "y": 280}),
-                            (viehe_input, {"x": 590, "y": 310}),
-                            (button_viehe, {"x": 590, "y": 340})
-                            ])               
-        admin_window.paikat_unohtaa([viehe_list_box, laji_list_box])
-        laji_input.set("Poista laji")
-        hae_laji.delete(0, END)
         return
 
     # tarkistaa kummasta ottaa arvon input vai valikosta
@@ -153,17 +161,19 @@ def vapa_poista(
     Tehdään vavan poisto.
     """
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän vavan')
-    if jatka == 'yes' :
+    poistaa_arvo = poistaa(
+        [(vapa_input, {"x": 210, "y": 310}),(button_vapa, {"x": 210, "y": 340})],
+        [vapa_list_box],
+        vapa_input,
+        hae_vapa,
+        "Poista vapa",
+        "vavan"
+        )
+    if poistaa_arvo is True:
         pass
     else:
-        admin_window.paikat([(vapa_input, {"x": 210, "y": 310}),
-                            (button_vapa, {"x": 210, "y": 340})
-                            ])      
-        admin_window.paikat_unohtaa([vapa_list_box])
-        vapa_input.set("Poista viehe")
-        hae_vapa.delete(0, END)
         return
+
     # tarkistaa kummasta ottaa arvon input vai valikosta
     saa_vapa_input = vapa_input.get().split()
     if saa_vapa_input == "" or "Poista" in saa_vapa_input:
@@ -200,17 +210,19 @@ def viehe_poista(
     Tehdään viehen poisto.
     """
     # varmistaa haluaako varmasti poistaa arvon
-    jatka = mb.askquestion('Poista arvo', 'Haluatko varmasti poistaa tämän viehen')
-    if jatka == 'yes' :
+    poistaa_arvo = poistaa(
+        [(viehe_input, {"x": 590, "y": 310}), (button_viehe, {"x": 590, "y": 340})],
+        [viehe_list_box],
+        viehe_input,
+        hae_viehe,
+        "Poista viehe",
+        "viehen"
+       )
+    if poistaa_arvo is True:
         pass
     else:
-        admin_window.paikat([(viehe_input, {"x": 590, "y": 310}), 
-                            (button_viehe, {"x": 590, "y": 340})
-                            ])
-        admin_window.paikat_unohtaa([viehe_list_box])
-        viehe_input.set("Poista viehe")
-        hae_viehe.delete(0, END)
         return
+
     # tarkistaa kummasta ottaa arvon input vai valikosta
     saa_viehe_input = viehe_input.get().split()
     if saa_viehe_input == "" or "Poista" in saa_viehe_input:
