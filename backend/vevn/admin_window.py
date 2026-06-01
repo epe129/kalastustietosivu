@@ -278,7 +278,7 @@ def admin_window(root):
         [(viehe_input, {"x": 590, "y": 310}), (button_viehe, {"x": 590, "y": 340})],
         [(viehe_list_box)]
     ))
-    
+   
     def close():
         """
         Jos painaa x:sää sulkee ikkunan.
