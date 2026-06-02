@@ -4,18 +4,6 @@ Moduuli tiedosto functiolle joka ottaa input arvon ja päivittää CTkListbox ha
 from tkinter import END
 import admin_window
 
-def filter_haku(haku,
-                tuotteet):
-    """
-    kun kirjoittaa inputtiin hakee tietoa ja rajaa sillä jos sana/kirjain on jossain arvossa.
-    saa parametreista arvot.
-    """
-    data = []
-    for item in tuotteet:
-        if haku in str(item).lower():
-            data.append(item)
-    return data
-
 def tarkistaa_input(
                     hae,
                     list_,
@@ -41,6 +29,9 @@ def tarkistaa_input(
         input_.set("Poista käyttäjä")
         hae.delete(0, END)
     else:
-        data = filter_haku(hae_input.lower(), list_)
+        data = []
+        for item in list_:
+            if hae_input.lower() in str(item).lower():
+                data.append(item)
     # päivittää listaa joka näkyy kun hakee inputilla
     admin_window.paivittaa_list_haku(data, list_box)
