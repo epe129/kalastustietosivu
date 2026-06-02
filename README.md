@@ -34,7 +34,7 @@ pip install -r requirements.txt
 # Tietokannan luonti
 
 ## Backend:
-Luo dbinfo.py ja laita sinne databasen yhdistämiseen tarvittavat tiedot:
+Luo dbinfo.py backend nimiseen kansioon ja laita sinne databasen yhdistämiseen tarvittavat tiedot:
 ```
 data = {
   "USER":'esimnerkki',
