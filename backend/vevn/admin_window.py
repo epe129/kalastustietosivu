@@ -34,6 +34,9 @@ def tayttaa_input(hae, box):
     """
     laittaa clikatun valuen inputtiin
     """
+    # tarkistaa ettei ei lisää tyhjää arvoa
+    if box.size() == 0:
+        return
     # poistaa kaiken inputista
     hae.delete(0, END)
     # lisää klikatun arvon inputtiin

@@ -74,6 +74,9 @@ def kayttaja_poista(
         admin_window.paikat_unohtaa([vapa_list_box, kayttajat_list_box])
         kayttajat_input.set("Poista käyttäjä")
         hae_kayttaja.delete(0, END)
+    # tarkistaa että input ei ole tyhjä
+    if len(kayttaja_poista_input) == 0:
+        return
     # poistetaan käyttäjä ja siihen kuuluvat tiedot
     cursor.execute(f"SELECT id FROM kalastaja WHERE email='{kayttaja_poista_input[0]}'")
     kayttajat_id = cursor.fetchall()
@@ -135,6 +138,9 @@ def laji_poista(
         admin_window.paikat_unohtaa([viehe_list_box, laji_list_box])
         laji_input.set("Poista laji")
         hae_laji.delete(0, END)
+    # tarkistaa että input ei ole tyhjä
+    if len(saa_laji_input) == 0:
+        return
     # ignooraa forekey ja poistaa tiedot
     cursor.execute("SET FOREIGN_KEY_CHECKS = 0")        
     cursor.execute(f"SELECT id FROM laji WHERE laji='{saa_laji_input[0]}'")
@@ -184,6 +190,9 @@ def vapa_poista(
         admin_window.paikat_unohtaa([vapa_list_box])
         vapa_input.set("Poista viehe")
         hae_vapa.delete(0, END)
+    # tarkistaa että input ei ole tyhjä
+    if len(saa_vapa_input) == 0:
+        return
     # ignooraa  forekey ja poistaa tiedot
     cursor.execute("SET FOREIGN_KEY_CHECKS = 0")        
     cursor.execute(f"SELECT id FROM vapa WHERE vapa ='{saa_vapa_input[0]}'")
@@ -233,6 +242,9 @@ def viehe_poista(
         admin_window.paikat_unohtaa([viehe_list_box])
         viehe_input.set("Poista viehe")
         hae_viehe.delete(0, END)
+    # tarkistaa että input ei ole tyhjä
+    if len(saa_viehe_input) == 0:
+        return
     # ignooraa forekey ja poistaa tiedot
     cursor.execute("SET FOREIGN_KEY_CHECKS = 0")        
     cursor.execute(f"SELECT id FROM viehe WHERE viehe ='{saa_viehe_input[0]}'")
