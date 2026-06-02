@@ -5,6 +5,7 @@ Versio: 0.2
 ## Johdanto
 
 Tämän projektin tavoitteena oli toteuttaa kalasaaliiden tallennukseen tarkoitettu nettisivu, jossa käyttäjät voivat lisätä ja tarkastella kalastustietoja. Projektin avulla harjoittelin ohjelmointia, tietokantoja ja web-kehitystä.
+
 ---
 
 # Projektin tavoite
