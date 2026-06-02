@@ -1,5 +1,6 @@
 """
-Moduuli tiedosto functiolle joka ottaa input arvon ja päivittää CTkListbox haun mukaan.
+Moduuli tiedosto functiolle joka ottaa input arvon ja
+päivittää CTkListbox(lista joka näkyy kun hakee inputilla) haun mukaan.
 """
 from tkinter import END
 import admin_window
@@ -15,7 +16,7 @@ def tarkistaa_input(
                     paikat_4
                     ):
     """
-    Tehdään käyttäjien haku kun käyttää inputtia, ja päivittää CTkListbox haun mukaan.
+    Saadaan parametreistä input arvo jonka mukaan päivitetään CTkListbox(lista joka näkyy kun hakee inputilla).
     """
     # muokkaa kenttien ja nappin paikkoja sekä saa inputin
     hae_input = hae.get()

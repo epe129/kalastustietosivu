@@ -1,6 +1,7 @@
 """
 admin window moduuli on tehty thinker- ja customtkinter:illä,
 jossa admin voi poistaa käyttajiä, vieheitä, vapoja ja lajeja.
+dbinfosta saa databasen yhdistämiseen tarvittavat tiedot.
 """
 from tkinter import StringVar, END
 from CTkListbox import CTkListbox
@@ -281,7 +282,7 @@ def admin_window(root):
    
     def close():
         """
-        Jos painaa x:sää sulkee ikkunan.
+        Jos painaa x:sää sulkee ohjelman.
         """
         root.destroy()
     window.protocol("WM_DELETE_WINDOW", close)

@@ -16,6 +16,13 @@ Projektin tavoitteena oli tehdä toimiva nettisivu kalasaaliiden tallentamiseen 
 * lisätä kalasaaliita
 * tarkastella omia tallennettuja kalatietoja
 
+Sekä toimiva backend johon admin voi kirjautua ja poistaa:
+
+* käyttäjiä
+* lajeja
+* vapoja
+* vieheitä
+
 ---
 
 # Käytetyt teknologiat
@@ -25,8 +32,8 @@ Projektissa käytettiin seuraavia teknologioita:
 * Frontend: PHP 
 * Database: MySQL 
 * Backend: Python 
-* Tkinter Python-pohjaisen käyttöliittymän tekemiseen
-* XAMPP paikallisen palvelinympäristön käyttämiseen
+* Tkinter: Python-pohjaisen käyttöliittymän tekemiseen
+* XAMPP: paikallisen palvelinympäristön käyttämiseen
 
 ---
 
@@ -60,7 +67,7 @@ Tietokannan relaatiot mahdollistavat tietojen yhdistämisen ja hakemisen tehokka
 
 ## Frontend
 
-Frontend toteutettiin PHP:lla. Frontendissä käyttäjä voi:
+Frontend toteutettiin PHP:llä. Frontendissä käyttäjä voi:
 
 * rekisteröityä
 * kirjautua
@@ -72,32 +79,31 @@ Frondnend rakenne:
 data kansio:
 
 * data/db_connetion.php: Luodaan yhteys tietokantaan
-* data/handleAdd.php: käsittelee uuden kalasaaliin lisäämisen
-* data/handleLogin.php: käsittelee sisään kirjautumisen.
-* data/handleLogout.php: käsittelee ulos kirjautumisen.
-* data/handleMuuAdd.php: käsittelee uuden vapa, laji ja viehe arvon lisäämisen.
-* data/handleRegister.php: käsittelee rekisteröitymisen.
+* data/handleAdd.php: Käsittelee uuden kalasaaliin lisäämisen
+* data/handleLogin.php: Käsittelee sisään kirjautumisen.
+* data/handleLogout.php: Käsittelee ulos kirjautumisen.
+* data/handleMuuAdd.php: Käsittelee uuden vapa, laji ja viehe arvon lisäämisen.
+* data/handleRegister.php: Käsittelee rekisteröitymisen.
 
 login kansio:
 
-* login/login.php: kirjautumis-sivu.
+* login/login.php: Kirjautumis-sivu.
 
 main kansio:
 
-* main/index.php: näytetään kalasaaliiden eri tiedot.
-* main/lisaa.php: uusien kalalajien lisäämis sivu.
+* main/index.php: Näytetään kalasaaliiden eri tiedot.
+* main/lisaa.php: Uusien kalalajien lisäämissivu.
 
 Frondend:
 
-* /index.php: rekisteröitymis-sivu.
+* /index.php: Rekisteröitymis-sivu.
 
 ## Backend
 
 Backend toteutettiin Pythonilla ja Tkinterillä. Backendin tarkoituksena on ylläpitää tietokannan sisältöä.
 
-Backendissä voidaan:
+Backendissä admin voi kirjautua sisään jonka jälkeen hän voi:
 
-* admin voi kirjautua sisään
 * poistaa käyttäjiä
 * poistaa vieheitä
 * poistaa vapoja
@@ -105,10 +111,10 @@ Backendissä voidaan:
 
 Backend rakenne:
 
-* backend.py: Luodaan adminin kirjautumis ikkuna.
-* admin_window.py: Luodaan adminin ikkuna jossa admin voi poistaa esimerkiksi käyttäjiä
-* poista_moduuli.py: Tiedosto eri tietojen poisto fucntioille. 
-* tarkista_moduuli.py: Tiedosto fucntioille jotkaa päivittää input hakua.
+* backend.py: Luodaan adminin kirjautumisikkuna.
+* admin_window.py: Luodaan adminin ikkuna jossa admin voi poistaa eri tietoja
+* poista_moduuli.py: Moduuli tiedosto eri tietojen poisto functioille. 
+* tarkista_moduuli.py: Moduuli tiedosto functiolle joka päivittää input hakua.
 * createdb.py: Tiedosto databasen luontiin.
 
 ---
@@ -132,7 +138,7 @@ Tietokannan rakenne onnistui myös hyvin ja eri taulujen väliset suhteet toimiv
 # Kehitys ideoita tulevaisuudelle
 
 Kun jatkan projektia tulevaisuudessa, toteutan backendin Flaskilla Tkinterin sijaan. Flask sopii paremmin web-pohjaiseen sovellukseen ja helpottaa backendin laajentamista tulevaisuudessa. Parantaa tietoturvaa frondendissä.
-
+Lisätä että käyttäjä voi poistaa omia kalasaaliita.
 ---
 
 # Mitä opin

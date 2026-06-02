@@ -14,7 +14,19 @@ Tämä on nettisivu, jossa on tkinter backend, johon admin voi kirjautua ja pois
 - Python
 - phpmyadmin database
 
-# Lataa tarvittavat paketit
+# Venv luominen
+Mene terminaalissa backend kansioon:
+```
+cd backend 
+```
+Luo venv ja aktivoi venv:
+```
+python -m venv venv
+venv\Scripts\activate
+```
+Huom: venv pitää olla aktivoituna kun asenna paketit
+
+Lataa tarvittavat paketit:
 ```
 pip install -r requirements.txt
 ```

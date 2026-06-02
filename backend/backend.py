@@ -70,7 +70,7 @@ ctk.CTkButton(master=root, text="Login", command=get_input).place(x=510, y=270)
 
 def close():
     """
-    Jos painaa x:sää sulkee ikkunan.
+    Jos painaa x:sää sulkee ohjelman.
     """
     root.destroy()
 root.protocol("WM_DELETE_WINDOW", close)
