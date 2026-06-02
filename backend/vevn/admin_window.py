@@ -39,13 +39,6 @@ def tayttaa_input(hae, box):
     # lisää klikatun arvon inputtiin
     hae.insert(0, box.get())
 
-def lisaa_arvot(fetch, l):
-    """
-    lisää arvot listoihin
-    """
-    for x in fetch:
-        l.append(x[0])
-
 def paivittaa_list_haku(kayttajat_list, box):
     """
     Päivitää listoja jotka näkyy kun hakee inputissa
@@ -76,19 +69,23 @@ def admin_window(root):
     # lisää listoihin arvot tietokannasta jotka näkyy jos käyttäjä käyttää syöttö kenttää
     cursor.execute("SELECT email FROM kalastaja")
     kayttajat = cursor.fetchall()
-    lisaa_arvot(kayttajat, kayttajat_list)
+    for k in kayttajat:
+        kayttajat_list.append(k)
 
     cursor.execute("SELECT laji FROM laji")
     lajit = cursor.fetchall()
-    lisaa_arvot(lajit, lajit_list)
+    for l in lajit:
+        lajit_list.append(l)
 
     cursor.execute("SELECT vapa FROM vapa")
     vavat = cursor.fetchall()
-    lisaa_arvot(vavat, vavat_list)
+    for v in vavat:
+        vavat_list.append(v)
 
     cursor.execute("SELECT viehe FROM viehe")
     viehet = cursor.fetchall()
-    lisaa_arvot(viehet, viehet_list)
+    for vi in viehet:
+        viehet_list.append(vi)
 
     # luodaan ikkuna
     window = ctk.CTkToplevel(root)
