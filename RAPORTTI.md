@@ -132,7 +132,7 @@ Projektissa huomioitiin perustason tietoturva:
 # Mikä onnistui
 
 Frontend onnistui hyvin. Käyttöliittymästä tuli toimiva ja käyttäjä pystyy lisäämään sekä tarkastelemaan kalasaaliita helposti.
-Tietokannan rakenne onnistui myös hyvin ja eri taulujen väliset suhteet toimivat suunnitellusti.
+Tietokannan rakenne onnistui myös hyvin ja eri taulujen väliset suhteet toimivat suunnitellusti. Python koodia onnistuin hyvin vähentämään projektin edetessä.
 
 ---
 
