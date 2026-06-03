@@ -1,4 +1,5 @@
 """
+Luodaan tietokanta ja taulut.
 pymysql avulla yhdistää tietokantaan.
 dbinfosta saa databasen yhdistämiseen tarvittavat tiedot.
 """
