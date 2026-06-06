@@ -72,7 +72,7 @@ if (empty($_SESSION['csrf_token_r'])) {
             border: 1px solid #ddd;
             border-radius: 4px;
             transition: border-color 0.3s;
-            font-size: 75%;
+            font-size: 100%;
         }
 
         input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {

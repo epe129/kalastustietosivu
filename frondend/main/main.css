@@ -147,37 +147,3 @@ select, input {
 /* ---------------------------------------------------------------------------------------- */
 
 /* index.php css */
-
-/* otsikon css */
-.title {
-    text-align: center;
-    margin: auto;
-    font-size: 3rem;
-    color: black;
-    background-color: white;
-    border-radius: 5px;
-    width: 350px;
-    margin-top: 50px;
-    margin-bottom: 55px;
-}
-
-.main {
-    margin: 0 auto;
-    position: relative;
-    height: 100%;
-    width: 100%;
-}
-
-/* nayttaa css */
-.nayttaa {
-    margin: 0 auto;
-    position: relative;
-    padding: 20px;
-    font-size: 1.5rem;
-    height: 100%;
-    width: 450px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px black;
-    background-color: white;
-}

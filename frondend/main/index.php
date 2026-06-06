@@ -42,14 +42,97 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Kalastustiedot</title>
-        <link rel="stylesheet" href="main.css">          
+        <style>
+            html {
+                background-image: url('../kuvat/tausta.jpg'); 
+                background-repeat: no-repeat;
+                background-attachment: fixed;  
+                background-size: cover;
+            }
+            
+            /* navbar css */
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                background-color: #333333;
+                /* display: flex; */
+                /* border-radius: 5px; */
+                /* width: 100%; */
+                overflow: hidden;
+            }
+                       
+            ul li {
+               float: left;
+            }
+
+            ul li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+            
+            .a:hover {
+                background-color: #232323;
+            }
+
+            .logout {
+                padding: 14px 16px; 
+                background-color: white;
+                color: black;
+                text-decoration: none;
+            }
+
+            .logout:hover {
+                background-color: #dbdbdb;
+            }
+
+            /* otsikon css */
+            .title {
+                text-align: center;
+                margin: auto;
+                font-size: 3rem;
+                color: black;
+                background-color: white;
+                border-radius: 5px;
+                width: fit-content;
+                padding: 5px;
+                margin-top: 50px;
+                margin-bottom: 55px;
+            }
+
+            .main {
+                margin: 0 auto;
+                position: relative;
+                height: auto;
+                width: 100%;
+            }
+
+            /* nayttaa css */
+            .nayttaa {
+                margin: 0 auto;
+                position: relative;
+                padding: 10px;
+                font-size: 1.5rem;
+                height: auto;
+                min-width: fit-content;
+                max-width: 600px;
+                border: 1px solid gray;
+                border-radius: 5px;
+                box-shadow: 2px 2px 5px black;
+                background-color: white;
+            }
+
+        </style>       
     </head>
 <body>
     <!-- navbar -->
     <ul>
         <li class="li"><a class="a" href="index.php">Kalastustiedot</a></li>
         <li class="li"><a class="a" href="lisaa.php">Lisää kalastustietoja</a></li>
-        <li class="li" style="margin-left: auto;">
+        <li class="li" style="float: right;">
             <div style="display: flex; flex-direction:row;">
                 <?php
                 echo "<a class='a'>Terve, " . $_SESSION["nimi"]."</a>";
