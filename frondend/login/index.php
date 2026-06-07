@@ -41,7 +41,7 @@ if (empty($_SESSION['csrf_token_l'])) {
             text-align: center;
             margin: 0 auto;
             padding: 0;
-            max-width: 100%;
+            min-width: fit-content;
             max-width: 300px;
             height: auto;
         }
@@ -57,7 +57,7 @@ if (empty($_SESSION['csrf_token_l'])) {
         }
 
         label {
-            font-size: 100%;
+            font-size: 125%;
             display: block;
             margin-bottom: 8px;
             color: black;
@@ -72,7 +72,7 @@ if (empty($_SESSION['csrf_token_l'])) {
             border: 1px solid #ddd;
             border-radius: 4px;
             transition: border-color 0.3s;
-            font-size: 100%;
+            font-size: 120%;
         }
         input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
             outline: none;

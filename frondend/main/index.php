@@ -93,7 +93,7 @@ $kalastaja_id = $_SESSION["kalastaja_id"];
             .title {
                 text-align: center;
                 margin: auto;
-                font-size: 3rem;
+                font-size: clamp(2rem, 2.5vw, 3rem);
                 color: black;
                 background-color: white;
                 border-radius: 5px;
