@@ -1,7 +1,5 @@
 # Kalastuspäiväkirja- sivu
 
-Versio: 0.2 
-
 Tämä on nettisivu, jossa on flask backend, johon admin voi kirjautua ja poistaa käyttäjiä, lajeja, vieheitä ja vapoja sekä nähdä lajien, käyttäjien, vapojen ja vieheiden määrän. php frondend jossa käyttäjä voi kirjautua/rekisteröityä jonka jälkeen hän voi lisätä tietoja tietokantaan ja nähdä eri tietoja kalasaaleista esim. eri kalalajien saanti määrät.
 
 # Teknologiat: 
